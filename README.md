@@ -116,9 +116,20 @@ Every number above has a committed receipt under `model/receipts/` (official eva
 
 ## Roadmap
 
-- Failure-mode analysis of the power-of-two-adjacent (Fermat) family — characterized here (concentrated at `F_11`); a targeted fix is in progress.
-- Training script — to be released after the competition deadline.
-- Preprint.
+NeuralHorner is the most-scaffolded point — **"Level 0"** — of a planned scaffold-removal study, not the end state. The arc hands the fixed schedule back to the network in stages, to measure *how much algorithmic structure must be fixed* before neural modular arithmetic generalizes across primes:
+
+- **Level 0** (this repo): fixed Horner loop + learned per-step transition.
+- **Level 1**: learned controller (the network decides when to reduce / multiply) + learned transition.
+- **Level 2**: learned latent state, no explicit residue-bit representation.
+- **Level 3**: a Neural-GPU-style recurrent bit processor — no Horner phases.
+- **Level 4**: a looped / universal transformer.
+- **Level 5**: a monolithic transformer (the original wall).
+
+Nearer-term:
+- Failure-mode analysis + fix of the power-of-two-adjacent (Fermat) family (custom data distribution / targeted DAgger; the failure concentrates at `F_11`).
+- Trace-certification on the deep tiers + Fermat first-divergence localization.
+- Ablations: no modulus-conditioning, no DAgger, fixed-L vs dynamic-L.
+- Training-script release; preprint.
 
 ## Citation
 

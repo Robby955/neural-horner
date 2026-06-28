@@ -25,6 +25,10 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 \begin{document}
 \maketitle
 
+\begin{center}
+\textit{Draft in progress --- last updated 2026-06-28 16:40 UTC}
+\end{center}
+
 % ============================================================
 % ABSTRACT
 % ============================================================
@@ -760,14 +764,18 @@ ruling on the fixed loop schedule, and a leaderboard run at scale, are the gates
 between this local result and a verified one.
 
 \paragraph{Scaffold removal.}
-This entry is the most-scaffolded point of a longer study, not its endpoint. The
-schedule is fixed here; the natural arc hands it back to the network in stages --- a
-learned controller over the same transition, a learned latent state in place of
-explicit residue bits, then a recurrent bit processor, a looped transformer, and a
-monolithic model --- and measures where cross-prime transfer breaks. That ladder
-turns the present result into a quantitative question about how much algorithmic
-structure must be fixed before learned modular arithmetic generalizes, the
-algorithmic-alignment trade-off \citep{velickovic2021nar, bohde2024markov}.
+We propose, but do not yet evaluate, a scaffold-removal program in which this entry is
+the most-scaffolded point. The schedule is fixed here; the program would hand it back to
+the network in stages --- a learned controller over the same transition, a learned
+latent state in place of explicit residue bits, then a recurrent bit processor, a looped
+transformer, and a monolithic model --- and measure where cross-prime transfer breaks,
+the algorithmic-alignment trade-off \citep{velickovic2021nar, bohde2024markov}. Each
+rung's transfer must be read against a settled base: because the fixed-schedule cell here
+still carries the characterized power-of-two-adjacent residual
+(Section~\ref{sec:results:battery}), a higher rung's degradation would otherwise be
+confounded with that residual. We therefore report the ladder as a proposed program; it
+becomes a result once the first rung, a learned controller, yields a cross-prime transfer
+number against this base.
 
 % ============================================================
 % APPENDIX

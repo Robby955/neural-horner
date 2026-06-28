@@ -47,7 +47,7 @@ $b\bmod p$, and multiply the residues. On the challenge's official open-source s
 locally on a single H100, it scores exact-match $1.00$ on every one of tiers~$1$
 through~$10$, for \texttt{overall\_accuracy} $1.00$ and
 \texttt{highest\_tier\_above\_90} of~$10$, reproduced identically across three
-independent seeds. Each full run completes in $163$ to $174$ seconds, about
+scorer-operand seeds of the single trained checkpoint (training initialization fixed). Each full run completes in $163$ to $174$ seconds, about
 $125$ seconds inside the $300$-second budget, and the determinism re-run is
 identical. The same shared cell handles every tier because inference sizes the
 per-step state width to each prime's bit-length (dynamic-$L$); the dropped bits are
@@ -492,8 +492,8 @@ modulus-conditioned cell transfers to unseen primes across all ten.
 \label{sec:results:seeds}
 
 The result holds across seeds and inside the time budget (Table~\ref{tab:seeds}).
-Three independently seeded runs (\texttt{a1a1a1a1}, \texttt{b2b2b2b2},
-\texttt{c3c3c3c3}) each return \texttt{overall\_accuracy} $1.00$ and
+Three runs that reseed only the scorer's random operand draws on the single trained
+checkpoint (\texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3}) each return \texttt{overall\_accuracy} $1.00$ and
 \texttt{highest\_tier\_above\_90} $10$. A full ten-tier run completes in $163$ to
 $174$ seconds on the H100, about $125$ seconds under the $300$-second budget, and
 re-running a fixed seed reproduces both the answers and the score exactly.
@@ -510,7 +510,7 @@ re-running a fixed seed reproduces both the answers and the score exactly.
     \texttt{c3c3c3c3} & $1.00$ & $10$ & $163$--$174$ \\
     \bottomrule
   \end{tabular}
-  \caption{Three independent seeds on the official scorer (single H100). Each run
+  \caption{Three scorer-operand seeds of the single trained checkpoint on the official scorer (single H100). Each run
   clears all ten tiers within the $300$-second budget; wall-clock spans $163$ to
   $174$ seconds across the three. The determinism re-run is identical.}
   \label{tab:seeds}
@@ -552,18 +552,18 @@ load-bearing rather than incidental; randomizing the cell's weights collapses ev
 tier to $0/64$, so the trained weights, not the fixed loop, produce the answer.
 
 \paragraph{Layered verification.}
-We organize the exactness evidence in three levels of increasing coverage. Level~1
+We organize the exactness evidence in three complementary levels. Level~1
 is the Lean proof of the integer recurrence (Section~\ref{sec:lean}). Level~2 is the
 exhaustive single-step check above, $40954/40954$ on the small-prime domain. Level~3
-is \emph{trace certification}: along an evaluated rollout we log every triple
+is \emph{per-step trace verification}: along an evaluated rollout we log every triple
 $(s,x,d)$ the cell consumes and check the emitted $s'$ against $(2s + d\,x)\bmod p$,
-so a passing rollout carries a step-by-step certificate rather than only a matching
+so a passing rollout carries a step-by-step record rather than only a matching
 final answer, and a failing rollout is localized to its first divergent step. The harness verifies
 every transition on random-operand rollouts at every depth checked: $1440/1440$ on
 small primes, and $3088/3088$, $9228/9228$, and $12294/12294$ on tiers~$8$, $9$,
 and~$10$ ($256$-, $1024$-, and $2048$-bit primes). On the failing Fermat inputs it
 localizes the first divergent step (Section~\ref{sec:results:battery}). The levels are honest about
-scope: trace certification covers the evaluated rollouts, not all inputs, and the
+scope: this per-step check covers the evaluated rollouts, not all inputs, and the
 cell-to-step bridge to a global proof of the network remains open.
 
 \subsection{The fragility is narrow: power-of-two-adjacent operands}
@@ -591,8 +591,9 @@ $F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width rang
 paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
 pass. The residual is therefore localized twice over --- to power-of-two-adjacent
 operands, and within those to the extreme of the width range --- which points at a
-carry decision near the state boundary rather than a diffuse loss of accuracy. Trace
-certification localizes it exactly: on $F_{11}=2^{2048}+1$, $5$ of $8$ cases fail, and
+carry decision near the state boundary rather than a diffuse loss of accuracy. Per-step
+verification localizes it exactly: on a distinct $8$-case $F_{11}=2^{2048}+1$ probe with random
+multipliers (separate from the held-out battery), $5$ of $8$ cases fail, and
 in every failing case the first and only divergence is the last step of reducing $a$,
 at state $s=2^{2047}$: the largest modular wrap, $(2\cdot 2^{2047}+1)\bmod p =
 (2^{2048}+1)\bmod p$, with the $2048$ preceding doublings exact, so under this

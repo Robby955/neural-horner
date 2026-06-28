@@ -281,10 +281,24 @@ easiest tier. For the easier operation of modular \emph{addition},
 \citet{mccracken2025modadd} find that multilayer perceptrons and transformers
 converge on a common abstract algorithm, an approximate Chinese Remainder Theorem;
 multiplication is harder, and we supply the schedule rather than learn it. The
-observation here is that the wall tracks the monolithic framing rather than
+observation here is that the wall tracks the monolithic, cross-prime, large-modulus framing rather than
 learned modular multiplication as such. Conditioning a single bit-serial cell
 on the modulus, and reducing each operand and multiplying residues with the same
 shared weights, transfers across unseen primes through every tier.
+
+\paragraph{Grokking and mechanistic interpretability.}
+A parallel line shows monolithic networks can learn modular arithmetic \emph{exactly},
+but on a single fixed, small modulus. Networks grok modular tasks long after overfitting
+\citep{power2022grokking}; the learned circuit has been reverse-engineered as a
+discrete-Fourier ``clock'' for modular \emph{addition} \citep{nanda2023progress}, and
+analytic weight solutions are known \citep{gromov2023grokking}. Two gaps separate that
+setting from ours: the modulus is fixed and tiny, with no cross-prime transfer and no
+cryptographic bit-lengths, and the clean Fourier structure is specific to addition.
+Multiplication does not grok as cleanly --- a $100$k-step probe with weight decay (the
+canonical grokking setup) on the multiplication task produced no generalization jump,
+consistent with \citet{mccracken2025modadd} placing multiplication beyond the
+approximate-CRT addition circuit. The wall is therefore specific to cross-prime,
+large-modulus multiplication, not to learned modular arithmetic in general.
 
 \paragraph{Automata and finite-state readings of recurrent nets.}
 A long line treats recurrent networks as finite-state machines; deterministic
@@ -969,6 +983,12 @@ Gail Weiss, Yoav Goldberg, and Eran Yahav.
 \bibitem[Bohde et al.(2024)]{bohde2024markov} Montgomery Bohde, Meng Liu, Alexandra Saxton, and Shuiwang Ji. On the Markov property of neural algorithmic reasoning: analyses and methods. \emph{ICLR}, 2024. arXiv:2403.04929.
 
 \bibitem[Saxena et al.(2024)]{saxena2024modarith} Eshika Saxena, Alberto Alfarano, Fran\c{c}ois Charton, Zeyuan Allen-Zhu, Emily Wenger, and Kristin Lauter. Making hard problems easier with custom data distributions and loss regularization: a case study in modular arithmetic. arXiv preprint arXiv:2410.03569, 2024.
+
+\bibitem[Power et al.(2022)]{power2022grokking} Alethea Power, Yuri Burda, Harri Edwards, Igor Babuschkin, and Vedant Misra. Grokking: generalization beyond overfitting on small algorithmic datasets. arXiv preprint arXiv:2201.02177, 2022.
+
+\bibitem[Nanda et al.(2023)]{nanda2023progress} Neel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith, and Jacob Steinhardt. Progress measures for grokking via mechanistic interpretability. \emph{ICLR}, 2023. arXiv:2301.05217.
+
+\bibitem[Gromov(2023)]{gromov2023grokking} Andrey Gromov. Grokking modular arithmetic. arXiv preprint arXiv:2301.02679, 2023.
 
 \end{thebibliography}
 

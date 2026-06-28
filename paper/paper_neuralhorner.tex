@@ -15,8 +15,8 @@
 % ============================================================
 % TITLE
 % ============================================================
-\title{NeuralHorner: One Modulus-Conditioned Cell Clears All Ten Tiers
-of the Modular Arithmetic Challenge}
+\title{NeuralHorner: Learning a Modulus-Conditioned Transition for
+Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 
 \author{Robert Sneiderman \\ \texttt{robbysneiderman@gmail.com}}
 
@@ -104,6 +104,27 @@ the product needs: reduce $a \bmod p$ ($x{=}1$), reduce $b \bmod p$ ($x{=}1$), a
 multiply the residues ($x = a\bmod p$, control bits from $b\bmod p$). State is
 carried as bits throughout, per-argument preprocessing feeds one operand per hook,
 and the loop schedule and bit packing are fixed by hand; only the cell is learned.
+
+\begin{table}[t]
+  \centering\small
+  \begin{tabular}{lcl}
+    \toprule
+    Component & Learned? & Notes \\
+    \midrule
+    Bit order (MSB-first)            & No  & fixed schedule \\
+    Number/order of passes           & No  & reduce $a$, reduce $b$, multiply \\
+    Data bit $d$ vs.\ control $x$    & No  & hand-assigned per pass \\
+    State as a bit vector            & No  & fixed representation \\
+    Per-step transition $s'$         & Yes & the shared GRU cell \\
+    Dependence on the modulus $p$    & Yes & learned conditioning \\
+    Output decoding                  & No  & the official scorer \\
+    \bottomrule
+  \end{tabular}
+  \caption{What is learned versus fixed. The algorithmic schedule is hand-coded; the
+  per-step modular transition and its dependence on $p$ are learned. We claim the
+  learned transition and its cross-prime transfer, not discovery of the schedule.}
+  \label{tab:learned-vs-fixed}
+\end{table}
 
 \paragraph{One cell across every width, by dynamic sizing.}
 A single weight set covers tiers whose primes span many bit-lengths because

@@ -29,10 +29,10 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 % ABSTRACT
 % ============================================================
 \begin{abstract}
-Computing $(a\,b)\bmod p$ across primes has a wall: monolithic learners fit the
-primes they train on and transfer near zero to primes they did not see
-\citep{lauter2024modular} in the sequence-length and architecture regimes they
-study. NeuralHorner clears that wall across all ten tiers of the challenge's
+Computing $(a\,b)\bmod p$ across primes has a wall: monolithic learners reach
+only limited success --- circular regression and a sequence-to-sequence transformer
+both fall short \citep{lauter2024modular} --- and the sharper question is
+cross-prime: whether one model can handle primes it never trained on. NeuralHorner clears that wall across all ten tiers of the challenge's
 official scorer. The split of responsibility is stated plainly: a fixed,
 hand-coded bit-serial Horner loop supplies the schedule, and a single learned cell
 supplies the arithmetic; we claim the learned per-step transition and its
@@ -77,8 +77,8 @@ challenge's intent.
 \label{sec:intro}
 
 Learning $(a\,b)\bmod p$ across primes runs into a wall. A monolithic learner that
-reads the whole operand pair and emits the whole product fits the primes it trains
-on and transfers near $0\%$ to primes it did not see \citep{lauter2024modular}; the
+reads the whole operand pair and emits the whole product reaches only
+limited success \citep{lauter2024modular}; the
 same brittleness was recorded a decade earlier for bit-serial neural arithmetic
 \citep{kaiser2016neural, price2016neural}. The SAIR Modular Arithmetic
 Challenge\footnote{Official challenge repository: \url{https://github.com/SAIRcompetition/modular-arithmetic-challenge}.}
@@ -91,7 +91,7 @@ cell, reused across a fixed bit-serial Horner loop, scores exact-match $1.00$ on
 each of tiers~$1$ through~$10$ of the official scorer, for
 \texttt{overall\_accuracy} $1.00$ and \texttt{highest\_tier\_above\_90} of~$10$,
 reproduced identically across three seeds and within the time budget. Where the
-monolithic framing yields effectively no cross-prime transfer, the conditioned
+monolithic framing reaches only limited success, the conditioned
 cell transfers to unseen primes across the full tier ladder.
 
 \paragraph{The construction.}
@@ -168,7 +168,7 @@ no cell. ``Provably exact'' attaches to the algorithm alone.
 whose single shared cell scores exact-match $1.00$ on every one of tiers~$1$
 through~$10$ on the official open-source scorer (run locally, three seeds, within
 budget), for an overall accuracy of $1.00$ and a highest cleared tier of~$10$, with cross-prime transfer where
-monolithic learners report near-zero transfer. This is an application of existing
+monolithic learners reach only limited success \citep{lauter2024modular}. This is an application of existing
 mechanisms, not a new architecture.
 \item \textbf{Dynamic-$L$ inference and a per-step-compute speed finding.} Sizing the
 per-step state width to each prime's bit-length is exact for the symbolic recurrence and empirically output-identical to full-width inference on every evaluated case (dropped bits
@@ -245,8 +245,8 @@ the looping, is the source of the transfer result reported below.
 
 \paragraph{The monolithic modular-multiplication wall.}
 \citet{lauter2024modular} study modular multiplication with circular regression and
-a sequence-to-sequence transformer and report that monolithic learners do not
-transfer across primes, with cross-prime accuracy near zero. The monolithic
+a sequence-to-sequence transformer and report only limited success, which
+they read as evidence of the task's hardness. The monolithic
 reference baselines shipped with the challenge agree, clearing only the easiest
 tier. The observation here is that the wall tracks the monolithic framing rather
 than learned modular multiplication as such. Conditioning a single bit-serial cell
@@ -266,7 +266,7 @@ None of the above is claimed as a new mechanism. Bit-serial neural arithmetic,
 weight sharing in a loop, and the transducer reading are all prior art. Two
 elements are specific to this work. The first is modulus-conditioning of a single
 shared cell, which yields cross-prime transfer across the full tier ladder where
-the monolithic framing of \citet{lauter2024modular} yields effectively none. The
+the monolithic framing of \citet{lauter2024modular} reaches only limited success. The
 second is the characterized exactness boundary: a clean random-operand pass on
 every tier together with a narrow power-of-two-adjacent fragility, with receipts,
 which refines the residual of \citet{price2016neural}. We claim the application and
@@ -418,7 +418,7 @@ tiers~$1$--$10$ is $1.00$ and \texttt{highest\_tier\_above\_90} is $10$. Each ti
 is scored at $64$ cases; under the trained weights every tier is $64/64$, and under
 the weight-perturbation anti-cheat every tier drops to $0/64$. The three monolithic
 reference learners shipped with the challenge clear only the easiest tier, matching
-the near-zero cross-prime transfer reported by \citet{lauter2024modular}; the
+the limited success of monolithic learners reported by \citet{lauter2024modular}; the
 modulus-conditioned cell transfers to unseen primes across all ten.
 
 \begin{table}[t]
@@ -685,7 +685,7 @@ circuits.
 \label{sec:conclusion}
 
 Monolithic learners hit a wall on cross-prime modular multiplication: they fit
-their training primes and transfer near zero to unseen ones. A single
+their training primes; monolithic learning of the task has had only limited success. A single
 modulus-conditioned recurrent cell, reused across the reduce-reduce-multiply
 schedule of a fixed bit-serial Horner loop, clears all ten tiers of the Modular
 Arithmetic Challenge at exact-match $1.00$ on the official scorer, with

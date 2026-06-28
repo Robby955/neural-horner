@@ -1,0 +1,4 @@
+torch>=2.4
+numpy
+# Official scorer (modchallenge): install from
+# https://github.com/SAIRcompetition/modular-arithmetic-challenge

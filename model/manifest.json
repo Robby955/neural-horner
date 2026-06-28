@@ -1,0 +1,7 @@
+{
+  "entry_class": "model.BitSerialReducer",
+  "output_base": 2,
+  "framework": "pytorch",
+  "model_description": "One shared, p-conditioned recurrent transition cell (~471K-param bidirectional 2-layer GRU + control-bit embedding + per-bit head) applied in a fixed bit-serial Horner loop at 1024-bit state width. Same weights reduce a mod p, reduce b mod p (multiplicand 1), and multiply the residues (multiplicand a mod p, control bits scanning b mod p); state carried as bits, modulus fed via 32-bit limbs. Output base-2; the scorer's decoder reconstructs the integer. Trained regime: primes below 2^1024, operands up to ~2048 bits (tiers 1-9); outside it the model abstains and emits a single zero.",
+  "training_description": "Warm-started from the L=512 dagger2 cell (the transition is width-agnostic) and fine-tuned at L=1024 on one-step transitions s' = (2*s + d*x) mod p (bit-length stratified, wrap-boundary oversampled; AdamW, lr warmup + cosine decay, best-by-validation). No precomputed tables, no hand-coded reduction or multiplication. Randomising the weights collapses every solved tier to 0. Evaluation primes are unseen during training."
+}

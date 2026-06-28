@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "NeuralHorner: a learned bit-serial modular reducer"
+authors:
+  - family-names: Sneiderman
+    given-names: Robert
+url: "https://github.com/Robby955/neural-horner"
+date-released: 2026-06-28

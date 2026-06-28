@@ -69,9 +69,11 @@ Official open-source scorer, full 1100-problem battery, run locally on a single 
 | Per-step transition | exact on all 40954 states of all primes < 64 (exhaustive) |
 | Held-out adversarial battery | 759/768 = 98.83% (disjoint families) |
 
+_Exact Clopper–Pearson 95% CIs: each cleared tier (100/100) [0.964, 1.000]; full 1100-problem battery [0.9967, 1.000]; held-out battery [0.978, 0.995]; Fermat family (119/128) [0.871, 0.967]._
+
 - **Cross-prime transfer.** Trained on one width regime, the cell reduces and multiplies modulo primes it never saw during training. A monolithic learner on this setting reports ~0% (Lauter 2024).
 - **Learned, not a circuit.** Randomizing the weights collapses every tier to 0.00 (the organizers' named weight-perturbation anti-cheat). The forward path contains no symbolic-math library, no big-integer modular multiply, no lookup table, and no compare-against-`p` on the operands.
-- **Not exact.** The held-out adversarial battery scores 759/768 = 98.83%; the only failing family is Fermat numbers (`2^(2^n) + 1`), i.e. power-of-two-adjacent operands. The fragility is narrow and characterized, but real.
+- **Not exact.** The held-out adversarial battery scores 759/768 = 98.83%; the only failing family is Fermat numbers (`2^(2^n) + 1`), i.e. power-of-two-adjacent operands — and within that family the failures concentrate at the largest tested operand, `F_11 = 2^2048 + 1` (the top of the trained width range). The fragility is narrow and characterized, but real.
 
 ## Speed: dynamic state-width sizing
 
@@ -112,11 +114,18 @@ Every number above has a committed receipt under `model/receipts/` (official eva
 - **Timing under the competition's evaluation.** The automated evaluation reported 260s on submission (slower than our 174s H100 runs), still inside the 300s budget.
 - **Proof scope.** The Lean package proves the integer algorithm, not the trained network.
 
+## Roadmap
+
+- Failure-mode analysis of the power-of-two-adjacent (Fermat) family — characterized here (concentrated at `F_11`); a targeted fix is in progress.
+- Training script — to be released after the competition deadline.
+- Preprint.
+
+## Citation
+
+See [`CITATION.cff`](CITATION.cff). Robert Sneiderman, *NeuralHorner: a learned bit-serial modular reducer*, 2026. https://github.com/Robby955/neural-horner
+
 ## Author
 
 Robert Sneiderman
 
 Corrections and issues welcome.
-
-
-============================================================

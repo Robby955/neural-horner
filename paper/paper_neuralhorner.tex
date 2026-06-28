@@ -505,6 +505,18 @@ multiple of $p$ (the reduction boundary), and primes $p \equiv 3 \pmod 4$. The
 single exception is Fermat numbers $2^{2^n}+1$, at $119/128$. All $9$ failures in
 the battery are Fermat cases. Overall the battery is $759/768 = 98.83\%$.
 
+Reporting these as rates alone understates the picture, so we give exact
+(Clopper--Pearson) $95\%$ confidence intervals: each cleared tier ($100/100$) is
+$[0.964, 1.000]$, the full $1100$-problem battery ($1100/1100$) is $[0.9967,
+1.000]$, the held-out battery ($759/768$) is $[0.978, 0.995]$, and the Fermat family
+($119/128$) is $[0.871, 0.967]$. The failures are not spread across the Fermat
+family either: they concentrate at the largest tested power-of-two-plus-one operand,
+$F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width range),
+paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
+pass. The residual is therefore localized twice over --- to power-of-two-adjacent
+operands, and within those to the extreme of the width range --- which points at a
+carry decision near the state boundary rather than a diffuse loss of accuracy.
+
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and
 it is not a general loss of accuracy on structured or out-of-training inputs. The

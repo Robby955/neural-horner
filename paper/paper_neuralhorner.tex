@@ -243,13 +243,27 @@ role inside a Horner schedule. The point of difference is the conditioning input
 single modulus value steers one cell across many primes, and that conditioning, not
 the looping, is the source of the transfer result reported below.
 
+\paragraph{Neural algorithmic reasoning.}
+Training a network to align with a classical algorithm, rather than to discover it
+end to end, is the premise of neural algorithmic reasoning \citep{velickovic2021nar};
+relatedly, transformers length-generalize on a task when it admits a short program in
+a transformer-expressible language \citep{zhou2023rasp}. Fixing the Horner schedule
+and learning only the per-step transition is one extreme of that trade-off, maximal
+algorithmic alignment, and it raises the question of how much of the schedule can be
+handed back to the network before transfer breaks.
+
 \paragraph{The monolithic modular-multiplication wall.}
 \citet{lauter2024modular} study modular multiplication with circular regression and
 a sequence-to-sequence transformer and report only limited success, which
-they read as evidence of the task's hardness. The monolithic
-reference baselines shipped with the challenge agree, clearing only the easiest
-tier. The observation here is that the wall tracks the monolithic framing rather
-than learned modular multiplication as such. Conditioning a single bit-serial cell
+they read as evidence of the task's hardness; the same crypto-ML line trains
+transformers on modular arithmetic inside lattice attacks \citep{salsa2022}. The
+monolithic reference baselines shipped with the challenge agree, clearing only the
+easiest tier. For the easier operation of modular \emph{addition},
+\citet{mccracken2025modadd} find that multilayer perceptrons and transformers
+converge on a common abstract algorithm, an approximate Chinese Remainder Theorem;
+multiplication is harder, and we supply the schedule rather than learn it. The
+observation here is that the wall tracks the monolithic framing rather than
+learned modular multiplication as such. Conditioning a single bit-serial cell
 on the modulus, and reducing each operand and multiplying residues with the same
 shared weights, transfers across unseen primes through every tier.
 
@@ -651,7 +665,10 @@ This is the central limitation and the reason the result is stated as a clean pa
 of the benchmark distribution with cross-prime transfer, not as exact modular
 multiplication. The power-of-two-adjacent residual (held-out $98.83\%$,
 Section~\ref{sec:results:battery}) is real, and the random-operand scorer hides it.
-A reader should not read $1.00$ on the scorer as exactness.
+A reader should not read $1.00$ on the scorer as exactness. A candidate remedy,
+untested here, is an embedding that respects the cyclic modular boundary, as used in
+transformer attacks on lattice cryptography \citep{salsafresca2024}, together with
+counterexample-driven training on the failing family.
 
 \paragraph{The proof covers the algorithm, not the network.}
 The machine-checked theorem (Section~\ref{sec:lean}) certifies the integer
@@ -876,6 +893,16 @@ Gail Weiss, Yoav Goldberg, and Eran Yahav.
   arXiv:2106.06981.
 
 \bibitem[Ross et al.(2011)]{DAgger2011} S.~Ross, G.~Gordon, and J.~A. Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. \emph{AISTATS}, 2011.
+
+\bibitem[Velickovic and Blundell(2021)]{velickovic2021nar} Petar Veli\v{c}kovi\'c and Charles Blundell. Neural algorithmic reasoning. \emph{Patterns}, 2(7), 2021. arXiv:2105.02761.
+
+\bibitem[Zhou et al.(2024)]{zhou2023rasp} Hattie Zhou, Arwen Bradley, Etai Littwin, Noam Razin, Omid Saremi, Josh Susskind, Samy Bengio, and Preetum Nakkiran. What algorithms can transformers learn? A study in length generalization. \emph{ICLR}, 2024. arXiv:2310.16028.
+
+\bibitem[McCracken et al.(2025)]{mccracken2025modadd} Gavin McCracken, Gabriela Moisescu-Pareja, Vincent Letourneau, Doina Precup, and Jonathan Love. Uncovering a universal abstract algorithm for modular addition in neural networks. arXiv preprint arXiv:2505.18266, 2025.
+
+\bibitem[Wenger et al.(2022)]{salsa2022} Emily Wenger, Mingjie Chen, Fran\c{c}ois Charton, and Kristin Lauter. SALSA: Attacking lattice cryptography with transformers. \emph{NeurIPS}, 2022. arXiv:2207.04785.
+
+\bibitem[Wenger et al.(2024)]{salsafresca2024} Emily Wenger, Eshika Saxena, Mohamed Malhou, Ellie Thieu, and Kristin Lauter. Salsa Fresca: Angular embeddings and pre-training for ML attacks on learning with errors. arXiv preprint arXiv:2402.01082, 2024.
 
 \end{thebibliography}
 

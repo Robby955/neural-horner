@@ -633,11 +633,17 @@ fixed-Hamming-weight, and straddle operands, drop to $122$, $119$, and $116$ of 
 for $741/768$ overall, below the submitted model's $759/768$. The coverage limit is
 relocated across families, not eliminated. We therefore keep the checkpoint whose
 failures are concentrated in a single family (Fermat, $759/768$) as the reported model.
-Both fixes we tried shared a gap: the on-policy harvest and the regression gate covered
-the Fermat and scored-tier distributions but not the other adversarial families, so it
-is unsurprising those drifted. Whether jointly harvesting and gating on all families at
-once removes the residual, or whether it is a fixed capacity budget that any targeted
-fix only relocates, is open and untested here.
+We then tested the capacity question directly. A frozen one-step overfit --- training
+only the cell on a fixed corpus of exact transitions spanning all six families, the
+subtract-count boundary states, and scored-random operands --- reaches held-out one-step
+exact-match of $1.0$ on every family, so the cell can represent each family's transition:
+the residual is a coverage and rollout-drift limit, not a capacity ceiling. Closing it is
+nonetheless hard. Five targeted methods --- an off-policy boundary curriculum, on-policy
+Fermat DAgger, all-family DAgger under a per-family no-regression gate, a subtract-count
+boundary sweep, and PCGrad gradient surgery --- each relocate the failure to another
+family or fall below the $759/768$ baseline rather than close it. We therefore report the
+power-of-two-adjacent residual as an open coverage problem at sufficient capacity, and
+keep the checkpoint whose failures are concentrated in one family as the reported model.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and
@@ -805,9 +811,16 @@ the algorithmic-alignment trade-off \citep{velickovic2021nar, bohde2024markov}. 
 rung's transfer must be read against a settled base: because the fixed-schedule cell here
 still carries the characterized power-of-two-adjacent residual
 (Section~\ref{sec:results:battery}), a higher rung's degradation would otherwise be
-confounded with that residual. We therefore report the ladder as a proposed program; it
-becomes a result once the first rung, a learned controller, yields a cross-prime transfer
-number against this base.
+confounded with that residual. We give the first rung a number. A small GRU controller, trained by imitation to drive
+the loop schedule while the transition cell stays frozen, reproduces the Horner schedule
+and extrapolates the per-step advance rule to twice the trained operand length at full
+advance accuracy. But the per-step schedule error (about $1.6\%$ of continue steps)
+compounds over the thousand-step rollout, so no full schedule is exactly correct at that
+depth (zero whole-sequence-exact). Rung 1 thus measures the cost of removing the
+hand-coded loop: a learned controller matches the schedule locally but not its exact
+execution at depth, so the scaffold's contribution is the zero-error guarantee a learned
+module does not reach over thousands of steps. The higher rungs --- learned latent state,
+recurrent bit processor, looped transformer, monolithic --- remain future work.
 
 % ============================================================
 % APPENDIX

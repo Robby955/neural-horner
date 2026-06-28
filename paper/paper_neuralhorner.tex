@@ -245,9 +245,13 @@ the looping, is the source of the transfer result reported below.
 
 \paragraph{Neural algorithmic reasoning.}
 Training a network to align with a classical algorithm, rather than to discover it
-end to end, is the premise of neural algorithmic reasoning \citep{velickovic2021nar};
-relatedly, transformers length-generalize on a task when it admits a short program in
-a transformer-expressible language \citep{zhou2023rasp}. Fixing the Horner schedule
+end to end, is the premise of neural algorithmic reasoning \citep{velickovic2021nar}; the
+idea of a learned executor separate from program structure goes back to neural
+programmer-interpreters \citep{reed2016npi}, and \citet{bohde2024markov} argue that
+algorithmic steps are Markovian, so a learned transition over the current state
+generalizes better than one carrying history --- which is what the per-step cell here
+does. Relatedly, transformers length-generalize on a task when it admits a short
+program in a transformer-expressible language \citep{zhou2023rasp}. Fixing the Horner schedule
 and learning only the per-step transition is one extreme of that trade-off, maximal
 algorithmic alignment, and it raises the question of how much of the schedule can be
 handed back to the network before transfer breaks.
@@ -256,7 +260,9 @@ handed back to the network before transfer breaks.
 \citet{lauter2024modular} study modular multiplication with circular regression and
 a sequence-to-sequence transformer and report only limited success, which
 they read as evidence of the task's hardness; the same crypto-ML line trains
-transformers on modular arithmetic inside lattice attacks \citep{salsa2022}. The
+transformers on modular arithmetic inside lattice attacks \citep{salsa2022}, but for
+probabilistic secret recovery rather than exact arithmetic, so exact cross-prime
+extrapolation is a different bar. The
 monolithic reference baselines shipped with the challenge agree, clearing only the
 easiest tier. For the easier operation of modular \emph{addition},
 \citet{mccracken2025modadd} find that multilayer perceptrons and transformers
@@ -527,7 +533,9 @@ The weight-perturbation provenance check
 (Section~\ref{sec:method:output}) supports that the answers are carried by the learned cell: every solved tier collapses from
 $64/64$ to $0/64$ when the trained weights are replaced by random values of the
 same shape, so the answers are carried by the learned cell rather than by a hidden
-solver.
+solver. This is the organizers' anti-cheat condition; on its own it shows only that
+the fixed schedule does not compute the answer and the trained weights do, which is
+the property that separates the entry from a hand-coded circuit.
 
 \paragraph{Layered verification.}
 We organize the exactness evidence in three levels of increasing coverage. Level~1
@@ -569,7 +577,14 @@ $F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width rang
 paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
 pass. The residual is therefore localized twice over --- to power-of-two-adjacent
 operands, and within those to the extreme of the width range --- which points at a
-carry decision near the state boundary rather than a diffuse loss of accuracy.
+carry decision near the state boundary rather than a diffuse loss of accuracy. We
+offer a mechanism as a hypothesis, not a verified claim: $F_{11}=2^{2048}+1$ is two
+set bits separated by $2047$ zeros, so the cell must carry the modular state across
+$2047$ near-identical zero-input steps, where small drift accumulates before the
+final set bit arrives --- the long-homogeneous-trajectory failure \citet{price2016neural}
+report for the Neural GPU. Targeted training on this structured slice, in the spirit
+of the custom modular-arithmetic distributions of \citet{saxena2024modarith}, is the
+natural fix.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and
@@ -903,6 +918,12 @@ Gail Weiss, Yoav Goldberg, and Eran Yahav.
 \bibitem[Wenger et al.(2022)]{salsa2022} Emily Wenger, Mingjie Chen, Fran\c{c}ois Charton, and Kristin Lauter. SALSA: Attacking lattice cryptography with transformers. \emph{NeurIPS}, 2022. arXiv:2207.04785.
 
 \bibitem[Wenger et al.(2024)]{salsafresca2024} Emily Wenger, Eshika Saxena, Mohamed Malhou, Ellie Thieu, and Kristin Lauter. Salsa Fresca: Angular embeddings and pre-training for ML attacks on learning with errors. arXiv preprint arXiv:2402.01082, 2024.
+
+\bibitem[Reed and de Freitas(2016)]{reed2016npi} Scott Reed and Nando de Freitas. Neural programmer-interpreters. \emph{ICLR}, 2016. arXiv:1511.06279.
+
+\bibitem[Bohde et al.(2024)]{bohde2024markov} Montgomery Bohde, Meng Liu, Alexandra Saxton, and Shuiwang Ji. On the Markov property of neural algorithmic reasoning: analyses and methods. \emph{ICLR}, 2024. arXiv:2403.04929.
+
+\bibitem[Saxena et al.(2024)]{saxena2024modarith} Eshika Saxena, Alberto Alfarano, Fran\c{c}ois Charton, Zeyuan Allen-Zhu, Emily Wenger, and Kristin Lauter. Making hard problems easier with custom data distributions and loss regularization: a case study in modular arithmetic. arXiv preprint arXiv:2410.03569, 2024.
 
 \end{thebibliography}
 

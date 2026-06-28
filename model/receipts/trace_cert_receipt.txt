@@ -12,3 +12,9 @@ F_11 = 2^2048+1 localization (8 cases):
   transitions verified : 48597/49160  (against s' = (2s + d x) mod p)
 first divergence (all failing cases): phase=reduce_a step=2048, state s = 2^2047 (the 2048 doublings are exact; the single final reduction (2^2048+1) mod p diverges)
 failing rollouts localized at reduce_a step 2048: 5
+
+=== Ablations (shared problem set, seed 42, 6 cases) ===
+dynamic-L (baseline)      : 6/6 correct, 1176/1176 transitions verified
+fixed-L (full 2048-wide)  : 6/6 correct, 13080/13080 transitions verified  -> output-equivalent to dynamic-L
+no modulus conditioning   : 0/6 correct (p zeroed)                          -> conditioning is load-bearing
+randomized weights        : 0/64 per tier (anti-cheat, separate run)        -> learned weights, not the loop, compute it

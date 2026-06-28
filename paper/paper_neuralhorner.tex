@@ -132,7 +132,9 @@ inference sizes the per-step state width to each prime's bit-length (dynamic-$L$
 A canonical residue $s < p$ fits in $\lceil \log_2 p \rceil$ bits, so the bits a
 narrower state would drop are always zero; reducing the width is therefore
 exact for the symbolic recurrence; empirically, dynamic-$L$ and full-width inference
-produce identical scorer outputs on every evaluated case (both score $1.00$). The scorer batches problems within a
+produce identical scorer outputs on every evaluated case: on a shared problem set,
+fixed-$L$ (the full $2048$-wide state) and dynamic-$L$ both score $6/6$ with every
+transition verified. The scorer batches problems within a
 tier, whose primes share a bit-length, so each batch sizes to a single width; any
 modest within-tier spread is handled by sizing to the batch maximum, and the dropped
 high bits stay zero, so batch masking does not change any answer. This sizing also removes the wasted
@@ -536,6 +538,14 @@ same shape, so the answers are carried by the learned cell rather than by a hidd
 solver. This is the organizers' anti-cheat condition; on its own it shows only that
 the fixed schedule does not compute the answer and the trained weights do, which is
 the property that separates the entry from a hand-coded circuit.
+
+\paragraph{Ablations.}
+Two interventions on a shared problem set isolate what carries the computation.
+Fixed-$L$ inference (the full $2048$-wide state) and dynamic-$L$ both score $6/6$ with
+every transition verified, so dynamic-$L$ is output-equivalent on the evaluated cases.
+Zeroing the modulus conditioning drops accuracy to $0/6$, so the dependence on $p$ is
+load-bearing rather than incidental; randomizing the cell's weights collapses every
+tier to $0/64$, so the trained weights, not the fixed loop, produce the answer.
 
 \paragraph{Layered verification.}
 We organize the exactness evidence in three levels of increasing coverage. Level~1

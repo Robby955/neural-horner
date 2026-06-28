@@ -1,0 +1,9 @@
+FORWARD-PATH AUDIT
+
+  file: model.py
+    no banned arithmetic operations detected
+
+Allowed in a clean forward path: bit extraction, tensor indexing, the learned
+cell, and output decoding by the official scorer.
+
+RESULT: PASS -- no classical modular arithmetic / lookup / compare-against-p in the forward path.

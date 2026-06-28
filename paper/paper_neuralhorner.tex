@@ -632,9 +632,12 @@ removing it: three families that were exact under the submitted checkpoint, Fibo
 fixed-Hamming-weight, and straddle operands, drop to $122$, $119$, and $116$ of $128$,
 for $741/768$ overall, below the submitted model's $759/768$. The coverage limit is
 relocated across families, not eliminated. We therefore keep the checkpoint whose
-failures are concentrated in a single family (Fermat, $759/768$) as the reported model,
-and read the residual as a fixed exactness budget that targeted training, off-policy or
-on-policy, relocates rather than removes.
+failures are concentrated in a single family (Fermat, $759/768$) as the reported model.
+Both fixes we tried shared a gap: the on-policy harvest and the regression gate covered
+the Fermat and scored-tier distributions but not the other adversarial families, so it
+is unsurprising those drifted. Whether jointly harvesting and gating on all families at
+once removes the residual, or whether it is a fixed capacity budget that any targeted
+fix only relocates, is open and untested here.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and

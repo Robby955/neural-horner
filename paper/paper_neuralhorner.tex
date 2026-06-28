@@ -515,6 +515,21 @@ $64/64$ to $0/64$ when the trained weights are replaced by random values of the
 same shape, so the answers are carried by the learned cell rather than by a hidden
 solver.
 
+\paragraph{Layered verification.}
+We organize the exactness evidence in three levels of increasing coverage. Level~1
+is the Lean proof of the integer recurrence (Section~\ref{sec:lean}). Level~2 is the
+exhaustive single-step check above, $40954/40954$ on the small-prime domain. Level~3
+is \emph{trace certification}: along an evaluated rollout we log every triple
+$(s,x,d)$ the cell consumes and check the emitted $s'$ against $(2s + d\,x)\bmod p$,
+so a passing rollout carries a step-by-step certificate rather than only a matching
+final answer, and a failing rollout is localized to its first divergent step. On a
+validation set of small-prime rollouts the harness verifies every transition
+($1440/1440$); applying the same procedure to the deep tiers and to the Fermat
+failures, where it pinpoints where the learned step first leaves the exact
+recurrence, is the natural large-hardware extension. The levels are honest about
+scope: trace certification covers the evaluated rollouts, not all inputs, and the
+cell-to-step bridge to a global proof of the network remains open.
+
 \subsection{The fragility is narrow: power-of-two-adjacent operands}
 \label{sec:results:battery}
 

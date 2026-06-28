@@ -26,7 +26,7 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 \maketitle
 
 \begin{center}
-\textit{Draft in progress --- last updated 2026-06-28 16:40 UTC}
+\textit{Draft in progress, last updated 2026-06-28 16:40 UTC}
 \end{center}
 
 % ============================================================
@@ -34,8 +34,8 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 % ============================================================
 \begin{abstract}
 Computing $(a\,b)\bmod p$ across primes has a wall: monolithic learners reach
-only limited success --- circular regression and a sequence-to-sequence transformer
-both fall short \citep{lauter2024modular} --- and the sharper question is
+only limited success, circular regression and a sequence-to-sequence transformer
+both fall short \citep{lauter2024modular}, and the sharper question is
 cross-prime: whether one model can handle primes it never trained on. NeuralHorner clears that wall across all ten tiers of the challenge's
 official scorer. The split of responsibility is stated plainly: a fixed,
 hand-coded bit-serial Horner loop supplies the schedule, and a single learned cell
@@ -110,24 +110,24 @@ carried as bits throughout, per-argument preprocessing feeds one operand per hoo
 and the loop schedule and bit packing are fixed by hand; only the cell is learned.
 
 \begin{table}[t]
-  \centering\small
-  \begin{tabular}{lcl}
-    \toprule
-    Component & Learned? & Notes \\
-    \midrule
-    Bit order (MSB-first)            & No  & fixed schedule \\
-    Number/order of passes           & No  & reduce $a$, reduce $b$, multiply \\
-    Data bit $d$ vs.\ control $x$    & No  & hand-assigned per pass \\
-    State as a bit vector            & No  & fixed representation \\
-    Per-step transition $s'$         & Yes & the shared GRU cell \\
-    Dependence on the modulus $p$    & Yes & learned conditioning \\
-    Output decoding                  & No  & the official scorer \\
-    \bottomrule
-  \end{tabular}
-  \caption{What is learned versus fixed. The algorithmic schedule is hand-coded; the
-  per-step modular transition and its dependence on $p$ are learned. We claim the
-  learned transition and its cross-prime transfer, not discovery of the schedule.}
-  \label{tab:learned-vs-fixed}
+ \centering\small
+ \begin{tabular}{lcl}
+ \toprule
+ Component & Learned? & Notes \\
+ \midrule
+ Bit order (MSB-first) & No & fixed schedule \\
+ Number/order of passes & No & reduce $a$, reduce $b$, multiply \\
+ Data bit $d$ vs.\ control $x$ & No & hand-assigned per pass \\
+ State as a bit vector & No & fixed representation \\
+ Per-step transition $s'$ & Yes & the shared GRU cell \\
+ Dependence on the modulus $p$ & Yes & learned conditioning \\
+ Output decoding & No & the official scorer \\
+ \bottomrule
+ \end{tabular}
+ \caption{What is learned versus fixed. The algorithmic schedule is hand-coded; the
+ per-step modular transition and its dependence on $p$ are learned. We claim the
+ learned transition and its cross-prime transfer, not discovery of the schedule.}
+ \label{tab:learned-vs-fixed}
 \end{table}
 
 \paragraph{One cell across every width, by dynamic sizing.}
@@ -262,7 +262,7 @@ end to end, is the premise of neural algorithmic reasoning \citep{velickovic2021
 idea of a learned executor separate from program structure goes back to neural
 programmer-interpreters \citep{reed2016npi}, and \citet{bohde2024markov} argue that
 algorithmic steps are Markovian, so a learned transition over the current state
-generalizes better than one carrying history --- which is what the per-step cell here
+generalizes better than one carrying history, which is what the per-step cell here
 does. Relatedly, transformers length-generalize on a task when it admits a short
 program in a transformer-expressible language \citep{zhou2023rasp}. Fixing the Horner schedule
 and learning only the per-step transition is one extreme of that trade-off, maximal
@@ -294,7 +294,7 @@ discrete-Fourier ``clock'' for modular \emph{addition} \citep{nanda2023progress}
 analytic weight solutions are known \citep{gromov2023grokking}. Two gaps separate that
 setting from ours: the modulus is fixed and tiny, with no cross-prime transfer and no
 cryptographic bit-lengths, and the clean Fourier structure is specific to addition.
-Multiplication does not grok as cleanly --- a $100$k-step probe with weight decay (the
+Multiplication does not grok as cleanly, a $100$k-step probe with weight decay (the
 canonical grokking setup) on the multiplication task produced no generalization jump,
 consistent with \citet{mccracken2025modadd} placing multiplication beyond the
 approximate-CRT addition circuit. The wall is therefore specific to cross-prime,
@@ -344,8 +344,8 @@ Write the state $s \in \{0,1,\dots,p-1\}$ as a canonical residue, take a control
 multiplier $x$, and read a single binary data bit $d \in \{0,1\}$. The transition
 is
 \begin{equation}
-  s' \;=\; (2s + d\,x) \bmod p .
-  \label{eq:step}
+ s' \;=\; (2s + d\,x) \bmod p .
+ \label{eq:step}
 \end{equation}
 Starting from $s=0$ and iterating \eqref{eq:step} most-significant-bit (MSB) first
 over the bits of an integer $m$ computes $(x \cdot m) \bmod p$, the left-to-right
@@ -468,45 +468,55 @@ reference learners shipped with the challenge clear only the easiest tier, match
 the limited success of monolithic learners reported by \citet{lauter2024modular}; the
 modulus-conditioned cell transfers to unseen primes across all ten.
 
+Outside the scored tiers, the scorer reports a Tier-0 diagnostic that isolates
+multiplication from modular reduction. The cell scores $40/100$ there, failing on the
+large operands (where it returns $0$). This is informative rather than incidental: the
+learned computation realizes $(a\,b)\bmod p$ inside the reduce-reduce-multiply regime it
+is trained in, and does not behave as a general large-integer multiplier in the
+no-reduction regime the diagnostic probes. We therefore scope the claim to modular
+multiplication on the scored distribution, not pure multiplication, and read the Tier-0
+gap as the same class of distribution-specific brittleness as the power-of-two-adjacent
+residual: the cell is exact where it is exercised and degrades off that distribution.
+
 \begin{table}[t]
-  \centering
-  \small
-  \begin{tabular}{cccccc}
-    \toprule
-    Tier & Seed \texttt{a1a1a1a1} & Seed \texttt{b2b2b2b2} & Seed \texttt{c3c3c3c3}
-      & Pooled & Randomized weights \\
-    \midrule
-    1  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    2  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    3  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    4  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    5  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    6  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    7  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    8  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    9  & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    10 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
-    \midrule
-    \multicolumn{4}{l}{\texttt{overall\_accuracy}} & $1.00$ & $0.00$ \\
-    \multicolumn{4}{l}{\texttt{highest\_tier\_above\_90}} & $10$ & $0$ \\
-    \bottomrule
-  \end{tabular}
-  \caption{Per-tier exact-match on the official scorer (single H100), for each of
-  the three seeds and pooled across them, beside the weight-perturbation anti-cheat
-  column. Every tier is $64/64$ under the trained weights and $0/64$ under
-  randomized weights. Pooling the three seeds gives $192/192$ per tier, a $95\%$
-  Clopper--Pearson interval of $[0.981, 1.000]$ on the per-tier exact-match rate.}
-  \label{tab:tiers}
+ \centering
+ \small
+ \begin{tabular}{cccccc}
+ \toprule
+ Tier & Seed \texttt{a1a1a1a1} & Seed \texttt{b2b2b2b2} & Seed \texttt{c3c3c3c3}
+ & Pooled & Randomized weights \\
+ \midrule
+ 1 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 2 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 3 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 4 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 5 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 6 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 7 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 8 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 9 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ 10 & 64/64 & 64/64 & 64/64 & 192/192 & 0/64 \\
+ \midrule
+ \multicolumn{4}{l}{\texttt{overall\_accuracy}} & $1.00$ & $0.00$ \\
+ \multicolumn{4}{l}{\texttt{highest\_tier\_above\_90}} & $10$ & $0$ \\
+ \bottomrule
+ \end{tabular}
+ \caption{Per-tier exact-match on the official scorer (single H100), for each of
+ the three seeds and pooled across them, beside the weight-perturbation anti-cheat
+ column. Every tier is $64/64$ under the trained weights and $0/64$ under
+ randomized weights. Pooling the three seeds gives $192/192$ per tier, a $95\%$
+ Clopper--Pearson interval of $[0.981, 1.000]$ on the per-tier exact-match rate.}
+ \label{tab:tiers}
 \end{table}
 
 \begin{figure}[t]
-  \centering
-  \includegraphics[width=0.78\linewidth]{figs/tier_progression.png}
-  \caption{Exact-match on the official scorer for every scored tier. The trained
-  cell scores $1.00$ on all ten tiers (\texttt{highest\_tier\_above\_90}~$=10$,
-  \texttt{overall\_accuracy}~$=1.00$), reproduced across three seeds; randomizing
-  the weights collapses every tier to $0$, the organizers' anti-cheat condition.}
-  \label{fig:tier-progression}
+ \centering
+ \includegraphics[width=0.78\linewidth]{figs/tier_progression.png}
+ \caption{Exact-match on the official scorer for every scored tier. The trained
+ cell scores $1.00$ on all ten tiers (\texttt{highest\_tier\_above\_90}~$=10$,
+ \texttt{overall\_accuracy}~$=1.00$), reproduced across three seeds; randomizing
+ the weights collapses every tier to $0$, the organizers' anti-cheat condition.}
+ \label{fig:tier-progression}
 \end{figure}
 
 \subsection{Three seeds, timing, and determinism}
@@ -520,21 +530,21 @@ $174$ seconds on the H100, about $125$ seconds under the $300$-second budget, an
 re-running a fixed seed reproduces both the answers and the score exactly.
 
 \begin{table}[t]
-  \centering
-  \small
-  \begin{tabular}{lccc}
-    \toprule
-    Seed & \texttt{overall\_accuracy} & \texttt{highest\_tier\_above\_90} & Wall-clock (s) \\
-    \midrule
-    \texttt{a1a1a1a1} & $1.00$ & $10$ & $163$--$174$ \\
-    \texttt{b2b2b2b2} & $1.00$ & $10$ & $163$--$174$ \\
-    \texttt{c3c3c3c3} & $1.00$ & $10$ & $163$--$174$ \\
-    \bottomrule
-  \end{tabular}
-  \caption{Three scorer-operand seeds of the single trained checkpoint on the official scorer (single H100). Each run
-  clears all ten tiers within the $300$-second budget; wall-clock spans $163$ to
-  $174$ seconds across the three. The determinism re-run is identical.}
-  \label{tab:seeds}
+ \centering
+ \small
+ \begin{tabular}{lccc}
+ \toprule
+ Seed & \texttt{overall\_accuracy} & \texttt{highest\_tier\_above\_90} & Wall-clock (s) \\
+ \midrule
+ \texttt{a1a1a1a1} & $1.00$ & $10$ & $163$--$174$ \\
+ \texttt{b2b2b2b2} & $1.00$ & $10$ & $163$--$174$ \\
+ \texttt{c3c3c3c3} & $1.00$ & $10$ & $163$--$174$ \\
+ \bottomrule
+ \end{tabular}
+ \caption{Three scorer-operand seeds of the single trained checkpoint on the official scorer (single H100). Each run
+ clears all ten tiers within the $300$-second budget; wall-clock spans $163$ to
+ $174$ seconds across the three. The determinism re-run is identical.}
+ \label{tab:seeds}
 \end{table}
 
 \subsection{Precision: bf16 decisions match fp32}
@@ -610,8 +620,8 @@ $[0.964, 1.000]$, the full $1100$-problem battery ($1100/1100$) is $[0.9967,
 family either: they concentrate at the largest tested power-of-two-plus-one operand,
 $F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width range),
 paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
-pass. The residual is therefore localized twice over --- to power-of-two-adjacent
-operands, and within those to the extreme of the width range --- which points at a
+pass. The residual is therefore localized twice over, to power-of-two-adjacent
+operands, and within those to the extreme of the width range, which points at a
 carry decision near the state boundary rather than a diffuse loss of accuracy. Per-step
 verification localizes it exactly: on a distinct $8$-case $F_{11}=2^{2048}+1$ probe with random
 multipliers (separate from the held-out battery), $5$ of $8$ cases fail, and
@@ -627,20 +637,20 @@ distributed coverage limit rather than a single missing sample. On-policy retrai
 the model's own visited states (DAgger), in the spirit of the custom modular-arithmetic
 distributions of \citet{saxena2024modarith} but with a replay floor and a regression
 gate on the scored tiers, does close the Fermat family (held-out $128/128$, up from
-$119$) with no scored-tier regression --- but it redistributes the residual rather than
+$119$) with no scored-tier regression, but it redistributes the residual rather than
 removing it: three families that were exact under the submitted checkpoint, Fibonacci,
 fixed-Hamming-weight, and straddle operands, drop to $122$, $119$, and $116$ of $128$,
 for $741/768$ overall, below the submitted model's $759/768$. The coverage limit is
 relocated across families, not eliminated. We therefore keep the checkpoint whose
 failures are concentrated in a single family (Fermat, $759/768$) as the reported model.
-We then tested the capacity question directly. A frozen one-step overfit --- training
+We then tested the capacity question directly. A frozen one-step overfit, training
 only the cell on a fixed corpus of exact transitions spanning all six families, the
-subtract-count boundary states, and scored-random operands --- reaches held-out one-step
+subtract-count boundary states, and scored-random operands, reaches held-out one-step
 exact-match of $1.0$ on every family, so the cell can represent each family's transition:
 the residual is a coverage and rollout-drift limit, not a capacity ceiling. Closing it is
-nonetheless hard. Five targeted methods --- an off-policy boundary curriculum, on-policy
+nonetheless hard. Five targeted methods, an off-policy boundary curriculum, on-policy
 Fermat DAgger, all-family DAgger under a per-family no-regression gate, a subtract-count
-boundary sweep, and PCGrad gradient surgery --- each relocate the failure to another
+boundary sweep, and PCGrad gradient surgery, each relocate the failure to another
 family or fall below the $759/768$ baseline rather than close it. We therefore report the
 power-of-two-adjacent residual as an open coverage problem at sufficient capacity, and
 keep the checkpoint whose failures are concentrated in one family as the reported model.
@@ -653,37 +663,37 @@ the same data the battery probes; the residual is a characterized property of th
 cell, not a scorer artifact.
 
 \begin{table}[t]
-  \centering
-  \small
-  \begin{tabular}{lccc}
-    \toprule
-    Held-out case family & Cases & Exact & Rate \\
-    \midrule
-    Fibonacci values                          & 128 & 128 & 1.000 \\
-    Alternating bits                           & 128 & 128 & 1.000 \\
-    Fixed Hamming weight                       & 128 & 128 & 1.000 \\
-    Product straddles $k p$ (reduction edge)   & 128 & 128 & 1.000 \\
-    Prime $p \equiv 3 \pmod 4$                 & 128 & 128 & 1.000 \\
-    Fermat $2^{2^n}+1$ (power-of-two-adjacent)   & 128 & 119 & 0.930 \\
-    \midrule
-    Total                                      & 768 & 759 & 0.9883 \\
-    \bottomrule
-  \end{tabular}
-  \caption{Held-out adversarial battery. Families are disjoint from the training
-  data. Every family is exact except Fermat numbers $2^{2^n}+1$; all $9$ failures are
-  Fermat cases, isolating the fragility to power-of-two-adjacent operands. Counts
-  are reported, not rounded rates, so the support per cell is visible.}
-  \label{tab:battery}
+ \centering
+ \small
+ \begin{tabular}{lccc}
+ \toprule
+ Held-out case family & Cases & Exact & Rate \\
+ \midrule
+ Fibonacci values & 128 & 128 & 1.000 \\
+ Alternating bits & 128 & 128 & 1.000 \\
+ Fixed Hamming weight & 128 & 128 & 1.000 \\
+ Product straddles $k p$ (reduction edge) & 128 & 128 & 1.000 \\
+ Prime $p \equiv 3 \pmod 4$ & 128 & 128 & 1.000 \\
+ Fermat $2^{2^n}+1$ (power-of-two-adjacent) & 128 & 119 & 0.930 \\
+ \midrule
+ Total & 768 & 759 & 0.9883 \\
+ \bottomrule
+ \end{tabular}
+ \caption{Held-out adversarial battery. Families are disjoint from the training
+ data. Every family is exact except Fermat numbers $2^{2^n}+1$; all $9$ failures are
+ Fermat cases, isolating the fragility to power-of-two-adjacent operands. Counts
+ are reported, not rounded rates, so the support per cell is visible.}
+ \label{tab:battery}
 \end{table}
 
 \begin{figure}[t]
-  \centering
-  \includegraphics[width=0.82\linewidth]{figs/exactness_vs_depth.png}
-  \caption{Held-out exact-match by operand family. The official scorer passes at
-  $1.00$, yet the disjoint battery is not exact: five families are perfect and the
-  only residual is the power-of-two-adjacent Fermat family ($119/128$), for an
-  overall $759/768 = 98.83\%$.}
-  \label{fig:exactness}
+ \centering
+ \includegraphics[width=0.82\linewidth]{figs/exactness_vs_depth.png}
+ \caption{Held-out exact-match by operand family. The official scorer passes at
+ $1.00$, yet the disjoint battery is not exact: five families are perfect and the
+ only residual is the power-of-two-adjacent Fermat family ($119/128$), for an
+ overall $759/768 = 98.83\%$.}
+ \label{fig:exactness}
 \end{figure}
 
 % ============================================================
@@ -699,7 +709,7 @@ the gap between the two is stated explicitly.
 \paragraph{The verified algorithm.}
 Define the fold step
 \[
-  \mathrm{step}(s,d) \;=\; \bigl(2s + (\text{if } d \text{ then } x \text{ else } 0)\bigr) \bmod p ,
+ \mathrm{step}(s,d) \;=\; \bigl(2s + (\text{if } d \text{ then } x \text{ else } 0)\bigr) \bmod p ,
 \]
 run most-significant-bit-first over the bits of $b \bmod p$ with $x = a \bmod p$ and
 initial state $s = 0$. The development machine-checks the following.
@@ -739,8 +749,11 @@ This is the central limitation and the reason the result is stated as a clean pa
 of the benchmark distribution with cross-prime transfer, not as exact modular
 multiplication. The power-of-two-adjacent residual (held-out $98.83\%$,
 Section~\ref{sec:results:battery}) is real, and the random-operand scorer hides it.
-A reader should not read $1.00$ on the scorer as exactness. Counterexample-driven
-training on the failing family, attempted here off-policy, did not cleanly close it ---
+A reader should not read $1.00$ on the scorer as exactness. The scorer's Tier-0
+pure-multiplication diagnostic ($40/100$, Section~\ref{sec:results:tiers}) is a second,
+sharper symptom of the same scoping: the cell realizes the modular product in its
+training regime, not a general large-integer multiply. Counterexample-driven
+training on the failing family, attempted here off-policy, did not cleanly close it,
 it relocated the divergence to the multiply phase (Section~\ref{sec:results:battery}).
 The remaining candidates are an embedding that respects the cyclic modular boundary, as
 used in transformer attacks on lattice cryptography \citep{salsafresca2024}, and
@@ -760,14 +773,14 @@ our H100, and the organizers' hardware may differ; the roughly $125$\,s margin
 should cover the difference but this is unconfirmed.
 
 \paragraph{Compliance posture.}
-The Horner schedule that drives the cell --- the step count, the bit order, and
-which argument supplies the control multiplier versus the data stream --- is fixed
+The Horner schedule that drives the cell, the step count, the bit order, and
+which argument supplies the control multiplier versus the data stream, is fixed
 in advance rather than learned. Whether a fixed orchestration around a fully learned
 arithmetic step falls on the permitted side of the
 trained-parameters-versus-hand-coded-algorithm distinction is a question for the
 organizers. As of this writing (June~2026) we have posed it and no ruling has been
 issued. We note that the entry satisfies the weight-perturbation anti-cheat
-condition --- randomizing the cell's weights collapses every tier to zero --- which
+condition, randomizing the cell's weights collapses every tier to zero, which
 is the property the challenge names to separate learned models from hand-coded
 circuits.
 
@@ -804,9 +817,9 @@ between this local result and a verified one.
 \paragraph{Scaffold removal.}
 We propose, but do not yet evaluate, a scaffold-removal program in which this entry is
 the most-scaffolded point. The schedule is fixed here; the program would hand it back to
-the network in stages --- a learned controller over the same transition, a learned
+the network in stages, a learned controller over the same transition, a learned
 latent state in place of explicit residue bits, then a recurrent bit processor, a looped
-transformer, and a monolithic model --- and measure where cross-prime transfer breaks,
+transformer, and a monolithic model, and measure where cross-prime transfer breaks,
 the algorithmic-alignment trade-off \citep{velickovic2021nar, bohde2024markov}. Each
 rung's transfer must be read against a settled base: because the fixed-schedule cell here
 still carries the characterized power-of-two-adjacent residual
@@ -819,8 +832,8 @@ compounds over the thousand-step rollout, so no full schedule is exactly correct
 depth (zero whole-sequence-exact). Rung 1 thus measures the cost of removing the
 hand-coded loop: a learned controller matches the schedule locally but not its exact
 execution at depth, so the scaffold's contribution is the zero-error guarantee a learned
-module does not reach over thousands of steps. The higher rungs --- learned latent state,
-recurrent bit processor, looped transformer, monolithic --- remain future work.
+module does not reach over thousands of steps. The higher rungs, learned latent state,
+recurrent bit processor, looped transformer, monolithic, remain future work.
 
 % ============================================================
 % APPENDIX
@@ -914,8 +927,8 @@ comparison against $p$), and the bf16-vs-fp32 check ($0$ flips, $\min|\text{logi
 \texttt{sorry}/\texttt{admit}-free, and reports axioms \texttt{propext},
 \texttt{Quot.sound}. Commands:
 \begin{verbatim}
-modchallenge evaluate <submission> --total 1100        # tiers 1-10, 100/tier
-python scripts/verify_no_shortcut.py <submission> --randomize  # -> 0/64 every tier
+modchallenge evaluate <submission> --total 1100 # tiers 1-10, 100/tier
+python scripts/verify_no_shortcut.py <submission> --randomize # -> 0/64 every tier
 python scripts/held_out_battery.py <submission> --n 128
 python scripts/audit_forward_path.py <submission>/model.py
 cd lean && lake build
@@ -957,7 +970,7 @@ Ying Fan, Yilun Du, Kannan Ramchandran, and Kangwook Lee.
 \L{}ukasz Kaiser and Ilya Sutskever.
 \newblock Neural {GPU}s learn algorithms.
 \newblock In \emph{International Conference on Learning Representations (ICLR)}, 2016.
-  arXiv:1511.08228.
+ arXiv:1511.08228.
 
 \bibitem[Lauter et al.(2024)]{lauter2024modular}
 Kristin Lauter, Cathy Yuanchen Li, Krystal Maughan, Rachel Newton, and Megha Srivastava.
@@ -966,10 +979,10 @@ Kristin Lauter, Cathy Yuanchen Li, Krystal Maughan, Rachel Newton, and Megha Sri
 
 \bibitem[Lindner et al.(2023)]{lindner2023tracr}
 David Lindner, J\'anos Kram\'ar, Sebastian Farquhar, Matthew Rahtz, Thomas McGrath,
-  and Vladimir Mikulik.
+ and Vladimir Mikulik.
 \newblock Tracr: Compiled transformers as a laboratory for interpretability.
 \newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2023.
-  arXiv:2301.05062.
+ arXiv:2301.05062.
 
 \bibitem[Price et al.(2016)]{price2016neural}
 Eric Price, Wojciech Zaremba, and Ilya Sutskever.
@@ -979,15 +992,15 @@ Eric Price, Wojciech Zaremba, and Ilya Sutskever.
 \bibitem[Weiss et al.(2018)]{weiss2018automata}
 Gail Weiss, Yoav Goldberg, and Eran Yahav.
 \newblock Extracting automata from recurrent neural networks using queries and
-  counterexamples.
+ counterexamples.
 \newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
-  arXiv:1711.09576.
+ arXiv:1711.09576.
 
 \bibitem[Weiss et al.(2021)]{weiss2021rasp}
 Gail Weiss, Yoav Goldberg, and Eran Yahav.
 \newblock Thinking like transformers.
 \newblock In \emph{International Conference on Machine Learning (ICML)}, 2021.
-  arXiv:2106.06981.
+ arXiv:2106.06981.
 
 \bibitem[Ross et al.(2011)]{DAgger2011} S.~Ross, G.~Gordon, and J.~A. Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. \emph{AISTATS}, 2011.
 

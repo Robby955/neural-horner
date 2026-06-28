@@ -53,9 +53,6 @@ identical. The same shared cell handles every tier because inference sizes the
 per-step state width to each prime's bit-length (dynamic-$L$); the dropped bits are
 always zero, so this is exact for the symbolic recurrence and, on every evaluated
 case, output-identical to full-width inference, and it brings the run under budget.
-Telling for the engineering: the per-step cost scales with the state width, so CUDA
-graphs were slower than the eager baseline ($402$\,s versus $383$\,s) and narrowing
-the per-step state, not amortizing launches, produced the speedup ($383$\,s to $163$--$174$\,s).
 
 The model is not exact, and we say where. Randomizing the weights collapses every
 tier from $64/64$ to $0/64$, the organizers' named anti-cheat condition, so the
@@ -468,15 +465,12 @@ reference learners shipped with the challenge clear only the easiest tier, match
 the limited success of monolithic learners reported by \citet{lauter2024modular}; the
 modulus-conditioned cell transfers to unseen primes across all ten.
 
-Outside the scored tiers, the scorer reports a Tier-0 diagnostic that isolates
-multiplication from modular reduction. The cell scores $40/100$ there, failing on the
-large operands (where it returns $0$). This is informative rather than incidental: the
-learned computation realizes $(a\,b)\bmod p$ inside the reduce-reduce-multiply regime it
-is trained in, and does not behave as a general large-integer multiplier in the
-no-reduction regime the diagnostic probes. We therefore scope the claim to modular
-multiplication on the scored distribution, not pure multiplication, and read the Tier-0
-gap as the same class of distribution-specific brittleness as the power-of-two-adjacent
-residual: the cell is exact where it is exercised and degrades off that distribution.
+Outside the scored tiers, the scorer's Tier-0 diagnostic isolates multiplication from
+modular reduction; the cell scores $40/100$ there, failing on large operands. The learned
+computation realizes $(a\,b)\bmod p$ inside its reduce-reduce-multiply training regime,
+not as a general large-integer multiplier. We therefore scope the claim to modular
+multiplication on the scored distribution, not pure multiplication, the same
+distribution-specific brittleness as the power-of-two-adjacent residual.
 
 \begin{table}[t]
  \centering
@@ -779,10 +773,9 @@ in advance rather than learned. Whether a fixed orchestration around a fully lea
 arithmetic step falls on the permitted side of the
 trained-parameters-versus-hand-coded-algorithm distinction is a question for the
 organizers. As of this writing (June~2026) we have posed it and no ruling has been
-issued. We note that the entry satisfies the weight-perturbation anti-cheat
-condition, randomizing the cell's weights collapses every tier to zero, which
-is the property the challenge names to separate learned models from hand-coded
-circuits.
+issued. The entry satisfies the weight-perturbation anti-cheat condition: randomizing
+the cell's weights collapses every tier to zero, the property the challenge names to
+separate learned models from hand-coded circuits.
 
 % ============================================================
 % CONCLUSION

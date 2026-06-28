@@ -626,8 +626,15 @@ phase and regressed a small full-width spot-check, so the residual behaves as a
 distributed coverage limit rather than a single missing sample. On-policy retraining on
 the model's own visited states (DAgger), in the spirit of the custom modular-arithmetic
 distributions of \citet{saxena2024modarith} but with a replay floor and a regression
-gate on the scored tiers, is the principled follow-up --- in progress, not a settled
-fix.
+gate on the scored tiers, does close the Fermat family (held-out $128/128$, up from
+$119$) with no scored-tier regression --- but it redistributes the residual rather than
+removing it: three families that were exact under the submitted checkpoint, Fibonacci,
+fixed-Hamming-weight, and straddle operands, drop to $122$, $119$, and $116$ of $128$,
+for $741/768$ overall, below the submitted model's $759/768$. The coverage limit is
+relocated across families, not eliminated. We therefore keep the checkpoint whose
+failures are concentrated in a single family (Fermat, $759/768$) as the reported model,
+and read the residual as a fixed exactness budget that targeted training, off-policy or
+on-policy, relocates rather than removes.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and

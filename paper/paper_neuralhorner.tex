@@ -590,12 +590,17 @@ operands, and within those to the extreme of the width range --- which points at
 carry decision near the state boundary rather than a diffuse loss of accuracy. Trace
 certification localizes it exactly: on $F_{11}=2^{2048}+1$, $5$ of $8$ cases fail, and
 in every failing case the first and only divergence is the last step of reducing $a$,
-at state $s=2^{2047}$. The $2048$ preceding doublings are exact, so this is not
-cumulative drift but a single undertrained reduction --- the largest modular wrap,
-$(2\cdot 2^{2047}+1)\bmod p = (2^{2048}+1)\bmod p$, which uniform training rarely
-samples. This matches the long-carry brittleness \citet{price2016neural} report for the
-Neural GPU; targeted training on the extreme-boundary reduction, in the spirit of the
-custom modular-arithmetic distributions of \citet{saxena2024modarith}, is the natural
+at state $s=2^{2047}$: the largest modular wrap, $(2\cdot 2^{2047}+1)\bmod p =
+(2^{2048}+1)\bmod p$, with the $2048$ preceding doublings exact, so under this
+checkpoint the divergence surfaces at a single transition. This matches the long-carry
+brittleness \citet{price2016neural} report for the Neural GPU. We resist reading it as
+one undersampled point: a targeted off-policy fine-tune that oversampled this exact
+boundary closed the reduce step but \emph{relocated} the divergence to the multiply
+phase and regressed a small full-width spot-check, so the residual behaves as a
+distributed coverage limit rather than a single missing sample. On-policy retraining on
+the model's own visited states (DAgger), in the spirit of the custom modular-arithmetic
+distributions of \citet{saxena2024modarith} but with a replay floor and a regression
+gate on the scored tiers, is the principled follow-up --- in progress, not a settled
 fix.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
@@ -692,10 +697,12 @@ This is the central limitation and the reason the result is stated as a clean pa
 of the benchmark distribution with cross-prime transfer, not as exact modular
 multiplication. The power-of-two-adjacent residual (held-out $98.83\%$,
 Section~\ref{sec:results:battery}) is real, and the random-operand scorer hides it.
-A reader should not read $1.00$ on the scorer as exactness. A candidate remedy,
-untested here, is an embedding that respects the cyclic modular boundary, as used in
-transformer attacks on lattice cryptography \citep{salsafresca2024}, together with
-counterexample-driven training on the failing family.
+A reader should not read $1.00$ on the scorer as exactness. Counterexample-driven
+training on the failing family, attempted here off-policy, did not cleanly close it ---
+it relocated the divergence to the multiply phase (Section~\ref{sec:results:battery}).
+The remaining candidates are an embedding that respects the cyclic modular boundary, as
+used in transformer attacks on lattice cryptography \citep{salsafresca2024}, and
+on-policy retraining with a regression gate on the scored tiers.
 
 \paragraph{The proof covers the algorithm, not the network.}
 The machine-checked theorem (Section~\ref{sec:lean}) certifies the integer

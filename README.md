@@ -109,7 +109,7 @@ Every number above has a committed receipt under `model/receipts/` (official eva
 ## What is not established
 
 - **Automated leaderboard evaluation: 100% on all ten tiers; final ranked standing pending.** On submission, the competition's automated evaluation scored the model tiers 1-10 = 100% (htA90 = 10) at 260s, inside the 300s budget. This is the competition's automated scorer, not a human or organizer verification, and the final ranking is not decided. The local 3-seed runs (163-174s) agree.
-- **Compliance ruling pending.** Official rulings depend on organizers and judges only. The entry passes the organizers' weight-perturbation test, and looped models whose answer comes from trained parameters are permitted, but the schedule-specific ruling or review has not occurred.
+- **Compliance ruling pending.**  While the work stands on its own, this is seperate from the official SAIR competition rulings, which depend on organizers and judges only. The entry passes the organizers' weight-perturbation test, but no official review or scoring has occurred.
 - **Not exact.** See the held-out battery above (759/768; Fermat-number failures). Tier-level scores of 1.00 are on the scorer's random-operand distribution, not a proof of exactness.
 - **Timing under the competition's evaluation.** The automated evaluation reported 260s on submission (slower than our 174s H100 runs), still inside the 300s budget.
 - **Proof scope.** The Lean package proves the integer algorithm, not the trained network.

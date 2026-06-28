@@ -46,8 +46,9 @@ through~$10$, for \texttt{overall\_accuracy} $1.00$ and
 independent seeds. Each full run completes in $163$ to $174$ seconds, about
 $125$ seconds inside the $300$-second budget, and the determinism re-run is
 identical. The same shared cell handles every tier because inference sizes the
-per-step state width to each prime's bit-length (dynamic-$L$); this is exact, the
-dropped bits being always zero, and it is what brings the run under budget.
+per-step state width to each prime's bit-length (dynamic-$L$); the dropped bits are
+always zero, so this is exact for the symbolic recurrence and, on every evaluated
+case, output-identical to full-width inference, and it brings the run under budget.
 Telling for the engineering: the per-step cost scales with the state width, so CUDA
 graphs were slower than the eager baseline ($402$\,s versus $383$\,s) and narrowing
 the per-step state, not amortizing launches, produced the speedup ($383$\,s to $163$--$174$\,s).
@@ -109,7 +110,8 @@ A single weight set covers tiers whose primes span many bit-lengths because
 inference sizes the per-step state width to each prime's bit-length (dynamic-$L$).
 A canonical residue $s < p$ fits in $\lceil \log_2 p \rceil$ bits, so the bits a
 narrower state would drop are always zero; reducing the width is therefore
-answer-preserving rather than approximate. The scorer batches problems within a
+exact for the symbolic recurrence; empirically, dynamic-$L$ and full-width inference
+produce identical scorer outputs on every evaluated case (both score $1.00$). The scorer batches problems within a
 tier, whose primes share a bit-length, so each batch sizes to a single width; any
 modest within-tier spread is handled by sizing to the batch maximum, and the dropped
 high bits stay zero, so batch masking does not change any answer. This sizing also removes the wasted
@@ -126,7 +128,7 @@ big-integer modular multiply, no lookup table, and no comparison against $p$ in
 Python or in tensor operations; randomizing the cell's weights collapses every
 tier from $64/64$ to $0/64$ exact-match, the organizers' own named anti-cheat
 condition. Per step, the learned transition matches $(2s + d\,x)\bmod p$ on all
-$40954$ state-and-prime combinations for primes below $64$, checked exhaustively. Against a per-step-independent null, a rollout that is correct over the $k\sim10^4$ steps of the deep tiers requires a per-step error below about $10^{-4}$ (since accuracy $\approx(1-\epsilon)^k$); the exhaustive zero-error per-step result and the $1.00$ rollout are consistent with a per-step error below the rollout's resolution.
+$40954$ state-and-prime combinations for primes below $64$, checked exhaustively.
 The full chain is another matter. A held-out adversarial battery of genuinely
 disjoint operand families scores $759/768$ ($98.83\%$): Fibonacci-valued operands,
 alternating bits, fixed-Hamming-weight operands, products that straddle a multiple
@@ -148,7 +150,7 @@ budget), for an overall accuracy of $1.00$ and a highest cleared tier of~$10$, w
 monolithic learners report near-zero transfer. This is an application of existing
 mechanisms, not a new architecture.
 \item \textbf{Dynamic-$L$ inference and a per-step-compute speed finding.} Sizing the
-per-step state width to each prime's bit-length is answer-preserving (dropped bits
+per-step state width to each prime's bit-length is exact for the symbolic recurrence and empirically output-identical to full-width inference on every evaluated case (dropped bits
 are always zero) and brings a ten-tier run to $163$--$174$\,s, about $125$\,s under
 budget. The workload is depth-bound, so CUDA graphs lost to the eager baseline and
 the speedup came from narrowing the state rather than from kernel fusion.
@@ -483,11 +485,11 @@ floating-point path.
 The learned transition was checked directly against $(2s + d\,x)\bmod p$.
 Exhaustively, over every state $s \in [0,p)$, every multiplier $x \in [0,p)$, and
 both control bits $d \in \{0,1\}$, for every prime $p < 64$, all $40954$
-transitions matched ($40954/40954$). This certifies the single-step map; it does
+transitions matched ($40954/40954$). This certifies the single-step map on this finite small-prime domain; it does
 not by itself certify the full Horner chain at large prime sizes, where the
 composition of many soft steps is exactly what the held-out battery below probes.
 The weight-perturbation provenance check
-(Section~\ref{sec:method:output}) confirms that every solved tier collapses from
+(Section~\ref{sec:method:output}) supports that the answers are carried by the learned cell: every solved tier collapses from
 $64/64$ to $0/64$ when the trained weights are replaced by random values of the
 same shape, so the answers are carried by the learned cell rather than by a hidden
 solver.
@@ -505,8 +507,10 @@ multiple of $p$ (the reduction boundary), and primes $p \equiv 3 \pmod 4$. The
 single exception is Fermat numbers $2^{2^n}+1$, at $119/128$. All $9$ failures in
 the battery are Fermat cases. Overall the battery is $759/768 = 98.83\%$.
 
-Reporting these as rates alone understates the picture, so we give exact
-(Clopper--Pearson) $95\%$ confidence intervals: each cleared tier ($100/100$) is
+The official scorer evaluates $100$ problems per tier ($1100$ in total), distinct
+from the separate $64$-case-per-tier weight-perturbation battery used for the
+anti-cheat check (Table~\ref{tab:tiers}). On the scorer counts, exact
+(Clopper--Pearson) $95\%$ confidence intervals are: each cleared tier ($100/100$) is
 $[0.964, 1.000]$, the full $1100$-problem battery ($1100/1100$) is $[0.9967,
 1.000]$, the held-out battery ($759/768$) is $[0.978, 0.995]$, and the Fermat family
 ($119/128$) is $[0.871, 0.967]$. The failures are not spread across the Fermat
@@ -529,7 +533,7 @@ cell, not a scorer artifact.
   \small
   \begin{tabular}{lccc}
     \toprule
-    Held-out family & Cases & Exact & Rate \\
+    Held-out case family & Cases & Exact & Rate \\
     \midrule
     Fibonacci values                          & 128 & 128 & 1.000 \\
     Alternating bits                           & 128 & 128 & 1.000 \\
@@ -723,7 +727,7 @@ a $95\%$ Clopper--Pearson interval of $[0.981, 1.000]$. A full run completes in
 $163$--$174$ seconds, about $125$ seconds under the $300$-second budget, and the
 determinism re-run is identical. The weight-perturbation provenance check
 (Section~\ref{sec:method:output}) replaces the trained weights with random values
-of matched shape and confirms that every tier collapses from $64/64$ to $0/64$.
+of matched shape and shows that every tier collapses from $64/64$ to $0/64$.
 
 \paragraph{Precision and speed measurements.}
 The $\mathrm{bf16}$ decision check (Section~\ref{sec:results:bf16}) records $0$

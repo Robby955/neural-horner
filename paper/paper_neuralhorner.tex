@@ -544,11 +544,11 @@ exhaustive single-step check above, $40954/40954$ on the small-prime domain. Lev
 is \emph{trace certification}: along an evaluated rollout we log every triple
 $(s,x,d)$ the cell consumes and check the emitted $s'$ against $(2s + d\,x)\bmod p$,
 so a passing rollout carries a step-by-step certificate rather than only a matching
-final answer, and a failing rollout is localized to its first divergent step. On a
-validation set of small-prime rollouts the harness verifies every transition
-($1440/1440$); applying the same procedure to the deep tiers and to the Fermat
-failures, where it pinpoints where the learned step first leaves the exact
-recurrence, is the natural large-hardware extension. The levels are honest about
+final answer, and a failing rollout is localized to its first divergent step. The harness verifies
+every transition on random-operand rollouts at every depth checked: $1440/1440$ on
+small primes, and $3088/3088$, $9228/9228$, and $12294/12294$ on tiers~$8$, $9$,
+and~$10$ ($256$-, $1024$-, and $2048$-bit primes). On the failing Fermat inputs it
+localizes the first divergent step (Section~\ref{sec:results:battery}). The levels are honest about
 scope: trace certification covers the evaluated rollouts, not all inputs, and the
 cell-to-step bridge to a global proof of the network remains open.
 
@@ -577,14 +577,16 @@ $F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width rang
 paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
 pass. The residual is therefore localized twice over --- to power-of-two-adjacent
 operands, and within those to the extreme of the width range --- which points at a
-carry decision near the state boundary rather than a diffuse loss of accuracy. We
-offer a mechanism as a hypothesis, not a verified claim: $F_{11}=2^{2048}+1$ is two
-set bits separated by $2047$ zeros, so the cell must carry the modular state across
-$2047$ near-identical zero-input steps, where small drift accumulates before the
-final set bit arrives --- the long-homogeneous-trajectory failure \citet{price2016neural}
-report for the Neural GPU. Targeted training on this structured slice, in the spirit
-of the custom modular-arithmetic distributions of \citet{saxena2024modarith}, is the
-natural fix.
+carry decision near the state boundary rather than a diffuse loss of accuracy. Trace
+certification localizes it exactly: on $F_{11}=2^{2048}+1$, $5$ of $8$ cases fail, and
+in every failing case the first and only divergence is the last step of reducing $a$,
+at state $s=2^{2047}$. The $2048$ preceding doublings are exact, so this is not
+cumulative drift but a single undertrained reduction --- the largest modular wrap,
+$(2\cdot 2^{2047}+1)\bmod p = (2^{2048}+1)\bmod p$, which uniform training rarely
+samples. This matches the long-carry brittleness \citet{price2016neural} report for the
+Neural GPU; targeted training on the extreme-boundary reduction, in the spirit of the
+custom modular-arithmetic distributions of \citet{saxena2024modarith}, is the natural
+fix.
 
 The reading is that the fragility is narrow and structural. It is concentrated at
 operands adjacent to a power of two, where a single carry decides the result, and

@@ -1,0 +1,14 @@
+=== NeuralHorner trace-certification (H100) ===
+Deep certs (random operands), every transition vs (2s+dx) mod p:
+===TIER9===
+  final-answer correct : 3/3
+  transitions verified : 9228/9228  (against s' = (2s + d x) mod p)
+===TIER10===
+  final-answer correct : 2/2
+  transitions verified : 12294/12294  (against s' = (2s + d x) mod p)
+
+F_11 = 2^2048+1 localization (8 cases):
+  final-answer correct : 3/8
+  transitions verified : 48597/49160  (against s' = (2s + d x) mod p)
+first divergence (all failing cases): phase=reduce_a step=2048, state s = 2^2047 (the 2048 doublings are exact; the single final reduction (2^2048+1) mod p diverges)
+failing rollouts localized at reduce_a step 2048: 5

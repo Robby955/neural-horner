@@ -170,29 +170,36 @@ no cell. ``Provably exact'' attaches to the algorithm alone.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item \textbf{Clearing the benchmark.} A modulus-conditioned bit-serial reducer
-whose single shared cell scores exact-match $1.00$ on every one of tiers~$1$
-through~$10$ on the official open-source scorer (run locally, three seeds, within
-budget), for an overall accuracy of $1.00$ and a highest cleared tier of~$10$, with cross-prime transfer where
-monolithic learners reach only limited success \citep{lauter2024modular}. This is an application of existing
-mechanisms, not a new architecture.
-\item \textbf{Dynamic-$L$ inference and a per-step-compute speed finding.} Sizing the
-per-step state width to each prime's bit-length is exact for the symbolic recurrence and empirically output-identical to full-width inference on every evaluated case (dropped bits
-are always zero) and brings a ten-tier run to $163$--$174$\,s, about $125$\,s under
-budget. The workload is depth-bound, so CUDA graphs lost to the eager baseline and
-the speedup came from narrowing the state rather than from kernel fusion.
-\item \textbf{A precise fragility characterization.} Per-step exactness receipts
-(exhaustive over all $40954$ states of every prime below $64$), the
+\item \textbf{Cross-prime transfer of a learned transition.} One shared
+modulus-conditioned cell, reused across a fixed bit-serial Horner schedule, transfers
+the learned per-step reduction across unseen primes, clearing every one of tiers~$1$
+through~$10$ at exact-match $1.00$ on the official open-source scorer (run locally,
+three scorer-operand seeds, within budget; \texttt{overall\_accuracy} $1.00$, highest
+cleared tier~$10$), where monolithic learning of the task reaches only limited success
+\citep{lauter2024modular}. The comparison is not like-for-like: a monolithic learner
+fits the whole operand-to-product map, whereas this cell learns only the per-step
+transition inside a fixed scaffold. This is an application of existing mechanisms, not a
+new architecture.
+\item \textbf{A precise exactness boundary, with a machine-checked algorithm.} Per-step
+receipts (exhaustive over all $40954$ states of every prime below $64$), a
 weight-perturbation provenance check ($64/64 \to 0/64$), a $\mathrm{bf16}$ decision
 check that matches $\mathrm{fp32}$ exactly, and a held-out adversarial battery
-($759/768$) that localizes every failure to power-of-two-adjacent (Fermat)
-operands.
-\item \textbf{A machine-checked algorithm.} A Lean~4 proof that the integer
-double-and-add recurrence equals $(a\,b)\bmod p$ for any bit length with the
-canonical-residue bound (\texttt{sorry}/\texttt{admit}-free; axioms
-\texttt{propext}, \texttt{Quot.sound}). The proof certifies the algorithm; the
-cell-to-step bridge is open, and exactness is never claimed for the network.
+($759/768$) that localizes every failure to the power-of-two-adjacent (Fermat) family,
+refining the symmetric-input brittleness \citet{price2016neural} report for the Neural
+GPU. A separate Lean~4 proof machine-checks that the integer double-and-add recurrence
+equals $(a\,b)\bmod p$ for any bit length with the canonical-residue bound
+(\texttt{sorry}/\texttt{admit}-free; axioms \texttt{propext}, \texttt{Quot.sound}); it
+certifies the scaffold's algorithm, not the cell, and exactness is never claimed for the
+network.
+\item \textbf{Dynamic-$L$ inference and a per-step-compute speed finding.} Sizing the
+per-step state width to each prime's bit-length is exact for the symbolic recurrence and
+empirically output-identical to full-width inference on every evaluated case (dropped
+bits are always zero) and brings a ten-tier run to $163$--$174$\,s, about $125$\,s under
+budget. The workload is depth-bound, so CUDA graphs lost to the eager baseline and the
+speedup came from narrowing the state rather than from kernel fusion.
 \end{enumerate}
+The transfer, boundary, and verification results hold regardless of the organizer's
+ruling on the fixed schedule.
 
 \paragraph{Scope of the claims.}
 This work is not a verified learned multiplier: the proof covers the integer

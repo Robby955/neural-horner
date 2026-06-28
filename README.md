@@ -6,7 +6,7 @@
 
 **Clears tiers 1-10 (official scorer, local, 3 seeds, under budget.)** One small recurrent cell, conditioned on the prime `p` and run in a fixed bit-serial loop, computes `(a · b) mod p` for primes and operands far beyond 64 bits. This repository is the SAIR Modular Arithmetic Challenge entry plus the supporting study: where the construction works, exactly where it breaks, and a machine-checked proof of the integer algorithm it imitates.
 
-> **Status: ongoing research.** The accuracy, timing, determinism, bf16-safety, and weight-perturbation results below are from the official open-source scorer run locally via RunPod on a single H100. What is *not* yet established (organizer-at-scale verification, the compliance ruling, exactness) is stated plainly in [What is not established](#what-is-not-established).
+> **Status: ongoing research.** The accuracy, timing, determinism, bf16-safety, and weight-perturbation results below are from the official open-source scorer run by us on a single H100 rented via RunPod. What is *not* yet established (organizer-at-scale verification, the compliance ruling, exactness) is stated plainly in [What is not established](#what-is-not-established).
 
 **Paper:** [paper/paper_neuralhorner.pdf](paper/paper_neuralhorner.pdf).
 
@@ -56,7 +56,7 @@ The cell is trained from random initialization to predict the per-step transitio
 
 ## Results
 
-Official open-source scorer, full 1100-problem battery, run locally on a single H100. The three seeds are `a1a1a1a1`, `b2b2b2b2`, `c3c3c3c3`. Receipts: `model/receipts/d_*.json`.
+Official open-source scorer, full 1100-problem battery, run on a single H100 rented via RunPod. The three seeds are `a1a1a1a1`, `b2b2b2b2`, `c3c3c3c3`. Receipts: `model/receipts/d_*.json`.
 
 | Property | Result |
 |---|---|

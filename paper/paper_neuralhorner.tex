@@ -26,7 +26,7 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 \maketitle
 
 \begin{center}
-\textit{Draft in progress, last updated 2026-06-28 16:40 UTC}
+\textit{Draft in progress, last updated 2026-06-28 23:17 UTC}
 \end{center}
 
 % ============================================================
@@ -43,8 +43,8 @@ supplies the arithmetic; we claim the learned per-step transition and its
 cross-prime transfer, not that the network discovers the loop. The cell, a shared
 $471$K-parameter bidirectional two-layer GRU, learns the per-step transition
 $s' = (2s + d\,x)\bmod p$ and is re-run in that loop to reduce $a\bmod p$, reduce
-$b\bmod p$, and multiply the residues. On the challenge's official open-source scorer, run
-locally on a single H100, it scores exact-match $1.00$ on every one of tiers~$1$
+$b\bmod p$, and multiply the residues. On the challenge's official open-source scorer, run by us
+on a single H100 rented via RunPod, it scores exact-match $1.00$ on every one of tiers~$1$
 through~$10$, for \texttt{overall\_accuracy} $1.00$ and
 \texttt{highest\_tier\_above\_90} of~$10$, reproduced identically across three
 scorer-operand seeds of the single trained checkpoint (training initialization fixed). Each full run completes in $163$ to $174$ seconds, about
@@ -65,7 +65,7 @@ package machine-checks (axioms \texttt{propext} and \texttt{Quot.sound},
 \texttt{sorry}/\texttt{admit}-free) the integer double-and-add-mod-$p$ algorithm
 the loop imitates; it does not cover the learned network, and the cell-to-step
 bridge is open. Two items remain open as of this writing: the result is from the official
-open-source scorer (locally, and the competition's automated evaluation on
+open-source scorer (self-run, and the competition's automated evaluation on
 submission), not a final leaderboard ranking; and the organizers have not yet ruled
 on whether a fixed loop schedule around a fully learned step is within the
 challenge's intent.
@@ -170,7 +170,7 @@ no cell. ``Provably exact'' attaches to the algorithm alone.
 \item \textbf{Cross-prime transfer of a learned transition.} One shared
 modulus-conditioned cell, reused across a fixed bit-serial Horner schedule, transfers
 the learned per-step reduction across unseen primes, clearing every one of tiers~$1$
-through~$10$ at exact-match $1.00$ on the official open-source scorer (run locally,
+through~$10$ at exact-match $1.00$ on the official open-source scorer (self-run on a rented RunPod H100,
 three scorer-operand seeds, within budget; \texttt{overall\_accuracy} $1.00$, highest
 cleared tier~$10$), where monolithic learning of the task reaches only limited success
 \citep{lauter2024modular}. The comparison is not like-for-like: a monolithic learner
@@ -201,8 +201,8 @@ ruling on the fixed schedule.
 \paragraph{Scope of the claims.}
 This work is not a verified learned multiplier: the proof covers the integer
 algorithm, and the cell-to-step bridge is open. The model is not exact: the
-power-of-two-adjacent residual is real and confirmed out of distribution. The score is the official scorer run locally; it is not
-organizer-leaderboard-verified at scale, the timing was measured on our H100 and
+power-of-two-adjacent residual is real and confirmed out of distribution. The score is the official scorer run by us; it is not
+organizer-leaderboard-verified at scale, the timing was measured on a rented RunPod H100 and
 the organizers' hardware may differ, and the compliance status of the hand-fixed
 Horner schedule is a question we have posted and that has not yet been ruled on.
 
@@ -448,7 +448,7 @@ learned recurrence and not by a hidden symbolic shortcut.
 The challenge poses a wall and asks where it breaks. This section reports that the
 wall falls across the whole tier ladder, then states precisely where the model is
 still not exact. All numbers are from the challenge's official open-source scorer,
-run locally on a single H100. Scoring follows the official rule:
+run on a single H100 rented via RunPod. Scoring follows the official rule:
 \texttt{overall\_accuracy} is the equal-weight mean of per-tier exact-match over
 tiers~$1$--$10$, and \texttt{highest\_tier\_above\_90} is the largest tier index at
 or above $90\%$.
@@ -495,7 +495,7 @@ distribution-specific brittleness as the power-of-two-adjacent residual.
  \multicolumn{4}{l}{\texttt{highest\_tier\_above\_90}} & $10$ & $0$ \\
  \bottomrule
  \end{tabular}
- \caption{Per-tier exact-match on the official scorer (single H100), for each of
+ \caption{Per-tier exact-match on the official scorer (single rented H100), for each of
  the three seeds and pooled across them, beside the weight-perturbation anti-cheat
  column. Every tier is $64/64$ under the trained weights and $0/64$ under
  randomized weights. Pooling the three seeds gives $192/192$ per tier, a $95\%$
@@ -520,7 +520,7 @@ The result holds across seeds and inside the time budget (Table~\ref{tab:seeds})
 Three runs that reseed only the scorer's random operand draws on the single trained
 checkpoint (\texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3}) each return \texttt{overall\_accuracy} $1.00$ and
 \texttt{highest\_tier\_above\_90} $10$. A full ten-tier run completes in $163$ to
-$174$ seconds on the H100, about $125$ seconds under the $300$-second budget, and
+$174$ seconds on the rented H100, about $125$ seconds under the $300$-second budget, and
 re-running a fixed seed reproduces both the answers and the score exactly.
 
 \begin{table}[t]
@@ -535,7 +535,7 @@ re-running a fixed seed reproduces both the answers and the score exactly.
  \texttt{c3c3c3c3} & $1.00$ & $10$ & $163$--$174$ \\
  \bottomrule
  \end{tabular}
- \caption{Three scorer-operand seeds of the single trained checkpoint on the official scorer (single H100). Each run
+ \caption{Three scorer-operand seeds of the single trained checkpoint on the official scorer (single rented H100). Each run
  clears all ten tiers within the $300$-second budget; wall-clock spans $163$ to
  $174$ seconds across the three. The determinism re-run is identical.}
  \label{tab:seeds}
@@ -759,11 +759,10 @@ double-and-add-mod-$p$ algorithm. It says nothing about the trained cell, and th
 cell-to-step bridge is open.
 
 \paragraph{Scale and hardware are not organizer-verified.}
-The full-battery scores are the official open-source scorer run locally on a single
-H100. On submission, the competition's automated evaluation returned the same
+The full-battery scores are the official open-source scorer, self-run on a single H100 rented via RunPod. On submission, the competition's automated evaluation returned the same
 all-ten-tier result at $260$\,s; this is an automated score, not a human or organizer
 verification, and the final ranked standing is not decided. The $163$--$174$\,s timing was measured on
-our H100, and the organizers' hardware may differ; the roughly $125$\,s margin
+the rented RunPod H100, and the organizers' hardware may differ; the roughly $125$\,s margin
 should cover the difference but this is unconfirmed.
 
 \paragraph{Compliance posture.}
@@ -805,7 +804,7 @@ chain breaks in this one specific place. Two problems remain open: a proof
 connecting the trained cell to the machine-checked step, the cell-to-step bridge,
 and a cell that is exact on the power-of-two-adjacent family as well. The organizer
 ruling on the fixed loop schedule, and a leaderboard run at scale, are the gates
-between this local result and a verified one.
+between this self-run result and a verified one.
 
 \paragraph{Scaffold removal.}
 We propose, but do not yet evaluate, a scaffold-removal program in which this entry is
@@ -874,8 +873,7 @@ schedule, step count, and bit order are fixed by hand and identical across prime
 only the cell weights are learned.
 
 \paragraph{Evaluation.}
-Scoring uses the challenge's official open-source scorer, run locally on a single
-H100. Per-tier exact-match is reported over three independent seeds
+Scoring uses the challenge's official open-source scorer, run on a single H100 rented via RunPod. Per-tier exact-match is reported over three independent seeds
 (\texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3}); every tier is $64/64$ in
 each run, for \texttt{overall\_accuracy} $1.00$ and
 \texttt{highest\_tier\_above\_90} $10$. Pooling the seeds gives $192/192$ per tier,
@@ -910,7 +908,7 @@ the $p\equiv 3\pmod 4$ family fixes such a prime with random operands.
 \paragraph{Reproducibility receipts.}
 Checkpoint \texttt{weights.pt} (md5 \texttt{8fc8ace7d74538b6\allowbreak 6ef5980b4e9cd013},
 $\sim$471K params, entry class \texttt{model.BitSerialReducer}); scorer the official
-\texttt{modchallenge}; environment PyTorch~2.4 on a single NVIDIA H100. Seeds
+\texttt{modchallenge}; environment PyTorch~2.4 on a single NVIDIA H100 rented via RunPod. Seeds
 \texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3} gave per-run wall-clocks
 $170$, $163$, $174$\,s, with an identical determinism re-run. Provenance:
 weight-randomization collapse ($0/64$ every tier), the static forward-path audit

@@ -39,7 +39,7 @@ The loop schedule and bit-packing are fixed by hand; the arithmetic, the per-ste
 **How is this different from the lookup-table or direct-arithmetic submissions?**
 Those declare no training and compute the answer with built-in integer arithmetic or prebuilt tables, so they work for any weights. This entry has ~471K trained parameters and dies when you randomize them. Run the check yourself: `python scripts/verify_no_shortcut.py model --randomize`.
 
-**Was it scored by the competition's evaluation, not just locally?**
+**Was it scored by the competition's evaluation, not just self-run by us?**
 Yes -- on submission, the competition's automated evaluation scored tiers 1-10 = 100% (260s, under budget). That is an automated score, not a human or organizer verification; the final ranked standing is theirs to post.
 
 **What exactly does the Lean proof establish?**

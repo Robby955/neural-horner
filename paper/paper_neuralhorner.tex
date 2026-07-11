@@ -18,7 +18,7 @@
 \title{NeuralHorner: Learning a Modulus-Conditioned Transition for
 Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 
-\author{Robert Sneiderman \\ \texttt{robbysneiderman@gmail.com}}
+\author{Robert Sneiderman \\ Independent \\ \texttt{robbysneiderman@gmail.com}}
 
 \date{}
 
@@ -26,7 +26,7 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 \maketitle
 
 \begin{center}
-\textit{Draft in progress, last updated 2026-06-28 23:17 UTC}
+\textit{Draft in progress, last updated 2026-07-11}
 \end{center}
 
 % ============================================================
@@ -36,7 +36,7 @@ Cross-Prime Modular Arithmetic under a Fixed Algorithmic Scaffold}
 Computing $(a\,b)\bmod p$ across primes has a wall: monolithic learners reach
 only limited success, circular regression and a sequence-to-sequence transformer
 both fall short \citep{lauter2024modular}, and the sharper question is
-cross-prime: whether one model can handle primes it never trained on. NeuralHorner clears that wall across all ten tiers of the challenge's
+cross-prime: whether one model can handle primes it never trained on. NeuralHorner clears that wall across all ten scored tiers of the challenge's
 official scorer. The split of responsibility is stated plainly: a fixed,
 hand-coded bit-serial Horner loop supplies the schedule, and a single learned cell
 supplies the arithmetic; we claim the learned per-step transition and its
@@ -46,7 +46,9 @@ $s' = (2s + d\,x)\bmod p$ and is re-run in that loop to reduce $a\bmod p$, reduc
 $b\bmod p$, and multiply the residues. On the challenge's official open-source scorer, run by us
 on a single H100 rented via RunPod, it scores exact-match $1.00$ on every one of tiers~$1$
 through~$10$, for \texttt{overall\_accuracy} $1.00$ and
-\texttt{highest\_tier\_above\_90} of~$10$, reproduced identically across three
+\texttt{highest\_tier\_above\_90} of~$10$ (the scorer's eleventh tier, tier~$0$, is a
+pure-multiplication diagnostic excluded from the ranking metric, where the cell scores
+$60/100$), reproduced identically across three
 scorer-operand seeds of the single trained checkpoint (training initialization fixed). Each full run completes in $163$ to $174$ seconds, about
 $125$ seconds inside the $300$-second budget, and the determinism re-run is
 identical. The same shared cell handles every tier because inference sizes the
@@ -55,9 +57,10 @@ always zero, so this is exact for the symbolic recurrence and, on every evaluate
 case, output-identical to full-width inference, and it brings the run under budget.
 
 The model is not exact, and we say where. Randomizing the weights collapses every
-tier from $64/64$ to $0/64$, the organizers' named anti-cheat condition, so the
+tier of the weight-perturbation anti-cheat battery from $64/64$ to $0/64$, the
+organizers' named anti-cheat condition, so the
 capability sits in the trained parameters. The per-step transition is exact on all
-$40954$ states of every prime below $64$ (exhaustive). A held-out adversarial
+$40954$ transitions of every prime below $64$ (exhaustive). A held-out adversarial
 battery of disjoint operand families scores $759/768$ ($98.83\%$); the only
 failures are Fermat numbers $2^{2^n}+1$, so the residual is a narrow, characterized
 structural fragility at power-of-two-adjacent operands, not general drift. A Lean~4
@@ -152,7 +155,7 @@ big-integer modular multiply, no lookup table, and no comparison against $p$ in
 Python or in tensor operations; randomizing the cell's weights collapses every
 tier from $64/64$ to $0/64$ exact-match, the organizers' own named anti-cheat
 condition. Per step, the learned transition matches $(2s + d\,x)\bmod p$ on all
-$40954$ state-and-prime combinations for primes below $64$, checked exhaustively.
+$40954$ transitions (every $s,x,d$ triple per prime) for primes below $64$, checked exhaustively.
 The full chain is another matter. A held-out adversarial battery of genuinely
 disjoint operand families scores $759/768$ ($98.83\%$): Fibonacci-valued operands,
 alternating bits, fixed-Hamming-weight operands, products that straddle a multiple
@@ -178,7 +181,7 @@ fits the whole operand-to-product map, whereas this cell learns only the per-ste
 transition inside a fixed scaffold. This is an application of existing mechanisms, not a
 new architecture.
 \item \textbf{A precise exactness boundary, with a machine-checked algorithm.} Per-step
-receipts (exhaustive over all $40954$ states of every prime below $64$), a
+receipts (exhaustive over all $40954$ transitions of every prime below $64$), a
 weight-perturbation provenance check ($64/64 \to 0/64$), a $\mathrm{bf16}$ decision
 check that matches $\mathrm{fp32}$ exactly, and a held-out adversarial battery
 ($759/768$) that localizes every failure to the power-of-two-adjacent (Fermat) family,
@@ -458,15 +461,16 @@ or above $90\%$.
 
 Every scored tier returns exact-match $1.00$ (Table~\ref{tab:tiers},
 Figure~\ref{fig:tier-progression}). The resulting \texttt{overall\_accuracy} over
-tiers~$1$--$10$ is $1.00$ and \texttt{highest\_tier\_above\_90} is $10$. Each tier
-is scored at $64$ cases; under the trained weights every tier is $64/64$, and under
-the weight-perturbation anti-cheat every tier drops to $0/64$. The three monolithic
+tiers~$1$--$10$ is $1.00$ and \texttt{highest\_tier\_above\_90} is $10$. The separate
+weight-perturbation anti-cheat battery scores each tier at $64$ cases: under the
+trained weights every tier is $64/64$, and under randomized weights every tier drops
+to $0/64$. The three monolithic
 reference learners shipped with the challenge clear only the easiest tier, matching
 the limited success of monolithic learners reported by \citet{lauter2024modular}; the
 modulus-conditioned cell transfers to unseen primes across all ten.
 
 Outside the scored tiers, the scorer's Tier-0 diagnostic isolates multiplication from
-modular reduction; the cell scores $40/100$ there, failing on large operands. The learned
+modular reduction; the cell scores $60/100$ there, failing on large operands. The learned
 computation realizes $(a\,b)\bmod p$ inside its reduce-reduce-multiply training regime,
 not as a general large-integer multiplier. We therefore scope the claim to modular
 multiplication on the scored distribution, not pure multiplication, the same
@@ -495,11 +499,14 @@ distribution-specific brittleness as the power-of-two-adjacent residual.
  \multicolumn{4}{l}{\texttt{highest\_tier\_above\_90}} & $10$ & $0$ \\
  \bottomrule
  \end{tabular}
- \caption{Per-tier exact-match on the official scorer (single rented H100), for each of
- the three seeds and pooled across them, beside the weight-perturbation anti-cheat
- column. Every tier is $64/64$ under the trained weights and $0/64$ under
- randomized weights. Pooling the three seeds gives $192/192$ per tier, a $95\%$
- Clopper--Pearson interval of $[0.981, 1.000]$ on the per-tier exact-match rate.}
+ \caption{Per-tier exact-match on the weight-perturbation anti-cheat battery (single
+ rented H100): $64$ cases per tier per seed, for each of the three seeds and pooled
+ across them. Every tier is $64/64$ under the trained weights and $0/64$ under
+ randomized weights, and the corresponding \texttt{overall\_accuracy} /
+ \texttt{highest\_tier\_above\_90} collapse from $1.00/10$ to $0.00/0$. Pooling the
+ three seeds gives $192/192$ per tier, a $95\%$ Clopper--Pearson interval of
+ $[0.981, 1.000]$ on the per-tier exact-match rate. The official scorer ($100$
+ problems per scored tier) is reported in the text, not this table.}
  \label{tab:tiers}
 \end{table}
 
@@ -604,13 +611,19 @@ multiple of $p$ (the reduction boundary), and primes $p \equiv 3 \pmod 4$. The
 single exception is Fermat numbers $2^{2^n}+1$, at $119/128$. All $9$ failures in
 the battery are Fermat cases. Overall the battery is $759/768 = 98.83\%$.
 
-The official scorer evaluates $100$ problems per tier ($1100$ in total), distinct
-from the separate $64$-case-per-tier weight-perturbation battery used for the
-anti-cheat check (Table~\ref{tab:tiers}). On the scorer counts, exact
-(Clopper--Pearson) $95\%$ confidence intervals are: each cleared tier ($100/100$) is
-$[0.964, 1.000]$, the full $1100$-problem battery ($1100/1100$) is $[0.9967,
-1.000]$, the held-out battery ($759/768$) is $[0.978, 0.995]$, and the Fermat family
-($119/128$) is $[0.871, 0.967]$. The failures are not spread across the Fermat
+The official scorer runs $100$ problems per tier across $11$ tiers ($0$--$10$,
+$1100$ problems in total), distinct from the separate $64$-case-per-tier
+weight-perturbation battery used for the anti-cheat check (Table~\ref{tab:tiers}).
+The ranking metrics \texttt{overall\_accuracy} and \texttt{highest\_tier\_above\_90}
+are computed over the ten scored tiers $1$--$10$ ($1000$ problems); tier~$0$ is
+excluded from them. On the scorer counts, exact (Clopper--Pearson) $95\%$ confidence
+intervals are: each scored tier ($100/100$) is $[0.964, 1.000]$, the ten-tier scored
+battery ($1000/1000$, tiers $1$--$10$) is $[0.9963, 1.000]$, the held-out battery
+($759/768$) is $[0.978, 0.995]$, and the Fermat family ($119/128$) is
+$[0.871, 0.967]$. Tier~$0$ scores $60/100$ and does not enter the ranking metric; it
+is the scorer's pure-multiplication diagnostic (Section~\ref{sec:results:tiers}), which
+the cell does not fully clear because it realizes $(a\,b)\bmod p$ within its
+reduce-reduce-multiply regime, not as a general large-integer multiplier. The failures are not spread across the Fermat
 family either: they concentrate at the largest tested power-of-two-plus-one operand,
 $F_{11} = 2^{2048}+1$ (a $2049$-bit operand at the top of the trained width range),
 paired with wide multipliers, while the smaller Fermat numbers $F_0,\dots,F_{10}$
@@ -744,7 +757,7 @@ of the benchmark distribution with cross-prime transfer, not as exact modular
 multiplication. The power-of-two-adjacent residual (held-out $98.83\%$,
 Section~\ref{sec:results:battery}) is real, and the random-operand scorer hides it.
 A reader should not read $1.00$ on the scorer as exactness. The scorer's Tier-0
-pure-multiplication diagnostic ($40/100$, Section~\ref{sec:results:tiers}) is a second,
+pure-multiplication diagnostic ($60/100$, Section~\ref{sec:results:tiers}) is a second,
 sharper symptom of the same scoping: the cell realizes the modular product in its
 training regime, not a general large-integer multiply. Counterexample-driven
 training on the failing family, attempted here off-policy, did not cleanly close it,
@@ -873,15 +886,22 @@ schedule, step count, and bit order are fixed by hand and identical across prime
 only the cell weights are learned.
 
 \paragraph{Evaluation.}
-Scoring uses the challenge's official open-source scorer, run on a single H100 rented via RunPod. Per-tier exact-match is reported over three independent seeds
-(\texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3}); every tier is $64/64$ in
-each run, for \texttt{overall\_accuracy} $1.00$ and
-\texttt{highest\_tier\_above\_90} $10$. Pooling the seeds gives $192/192$ per tier,
-a $95\%$ Clopper--Pearson interval of $[0.981, 1.000]$. A full run completes in
-$163$--$174$ seconds, about $125$ seconds under the $300$-second budget, and the
-determinism re-run is identical. The weight-perturbation provenance check
-(Section~\ref{sec:method:output}) replaces the trained weights with random values
-of matched shape and shows that every tier collapses from $64/64$ to $0/64$.
+{\sloppy
+Scoring uses the challenge's official open-source scorer, run on a single H100 rented via
+RunPod, distinct from the separate weight-perturbation anti-cheat battery below. The
+official scorer's per-tier exact-match is reported over three independent seeds
+(\texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3}).
+Each scored tier is $100/100$ in every run.
+\texttt{overall\_accuracy} is $1.00$ and \texttt{highest\_tier\_above\_90} is $10$,
+in every seed. A full run completes in $163$--$174$ seconds, about $125$ seconds
+under the $300$-second budget, and the determinism re-run is identical.
+\par}
+
+The weight-perturbation anti-cheat battery is a separate, smaller check: $64$ cases per
+tier per seed. Pooling the three seeds gives $192/192$ per tier, a $95\%$
+Clopper--Pearson interval of $[0.981, 1.000]$. The provenance variant of this check
+(Section~\ref{sec:method:output}) replaces the trained weights with random values of
+matched shape and shows that every tier collapses from $64/64$ to $0/64$.
 
 \paragraph{Precision and speed measurements.}
 The $\mathrm{bf16}$ decision check (Section~\ref{sec:results:bf16}) records $0$
@@ -906,19 +926,24 @@ chooses $a,b$ with $a\,b \approx k\,p \pm \varepsilon$ at the reduction boundary
 the $p\equiv 3\pmod 4$ family fixes such a prime with random operands.
 
 \paragraph{Reproducibility receipts.}
+{\sloppy
 Checkpoint \texttt{weights.pt} (md5 \texttt{8fc8ace7d74538b6\allowbreak 6ef5980b4e9cd013},
 $\sim$471K params, entry class \texttt{model.BitSerialReducer}); scorer the official
 \texttt{modchallenge}; environment PyTorch~2.4 on a single NVIDIA H100 rented via RunPod. Seeds
 \texttt{a1a1a1a1}, \texttt{b2b2b2b2}, \texttt{c3c3c3c3} gave per-run wall-clocks
-$170$, $163$, $174$\,s, with an identical determinism re-run. Provenance:
-weight-randomization collapse ($0/64$ every tier), the static forward-path audit
-(no modular reduction, 3-arg \texttt{pow}, big-integer library, lookup table, or
-comparison against $p$), and the bf16-vs-fp32 check ($0$ flips, $\min|\text{logit}|
+$170$, $163$, $174$\,s, with an identical determinism re-run.
+\par}
+
+Provenance: weight-randomization collapse ($0/64$ every tier); the static
+forward-path audit (no modular reduction, 3-arg \texttt{pow}, big-integer library,
+lookup table, or comparison against $p$); and the bf16-vs-fp32 check ($0$ flips,
+$\min|\text{logit}|
 = 3.0$). The Lean development builds under \texttt{leanprover/lean4:v4.31.0}, is
 \texttt{sorry}/\texttt{admit}-free, and reports axioms \texttt{propext},
 \texttt{Quot.sound}. Commands:
 \begin{verbatim}
-modchallenge evaluate <submission> --total 1100 # tiers 1-10, 100/tier
+modchallenge evaluate <submission> --total 1100 # 11 tiers 0-10, 100/tier
+                                                 # ranking metric: tiers 1-10 only
 python scripts/verify_no_shortcut.py <submission> --randomize # -> 0/64 every tier
 python scripts/held_out_battery.py <submission> --n 128
 python scripts/audit_forward_path.py <submission>/model.py

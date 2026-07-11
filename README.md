@@ -116,14 +116,14 @@ Every number above has a committed receipt under `model/receipts/` (official eva
 
 ## Roadmap
 
-NeuralHorner is the most-scaffolded point — **"Level 0"** — of a planned scaffold-removal study, not the end state. The arc hands the fixed schedule back to the network in stages, to measure *how much algorithmic structure must be fixed* before neural modular arithmetic generalizes across primes:
+NeuralHorner is the most-scaffolded point — **"Level 0"** — of a scaffold-removal study, not the end state. The arc hands the fixed schedule back to the network in stages, to measure *how much algorithmic structure must be fixed* before neural modular arithmetic generalizes across primes. Two rungs beyond Level 0 have already been tried, with real negative results, not just planned:
 
-- **Level 0** (this repo): fixed Horner loop + learned per-step transition.
-- **Level 1**: learned controller (the network decides when to reduce / multiply) + learned transition.
-- **Level 2**: learned latent state, no explicit residue-bit representation.
-- **Level 3**: a Neural-GPU-style recurrent bit processor — no Horner phases.
-- **Level 4**: a looped / universal transformer.
-- **Level 5**: a monolithic transformer (the original wall).
+- **Level 0** (this repo): fixed Horner loop + learned per-step transition. **Done** — clears all ten scored tiers.
+- **Level 1**: learned controller (the network decides when to reduce / multiply) + learned transition. **Tried, negative.** An imitation-learned controller reached 100% per-step advance-accuracy at 2x operand length but 0% whole-sequence-exact: about 1.6% per-step error compounds over the ~2000-step rollout. The schedule has to stay fixed for exactness to survive at depth.
+- **Level 2**: learned latent state, no explicit residue-bit representation. Not yet attempted.
+- **Level 3**: a Neural-GPU-style recurrent bit processor — no Horner phases. Not yet attempted.
+- **Level 4**: a looped / universal transformer. Not yet attempted.
+- **Level 5**: a monolithic transformer (the original wall). **Tried, negative.** A real decoder-only transformer (abacus embeddings, Charton-Kempe data, weight decay) memorizes training primes to train-exact 1.000 but held-out cross-prime exact-match sits at ~0.13 and does not move; run 16x longer (100k steps, the canonical grokking setup) it stays flat rather than groks. Multiplication does not grok the way addition does.
 
 Nearer-term:
 - Failure-mode analysis + fix of the power-of-two-adjacent (Fermat) family (custom data distribution / targeted DAgger; the failure concentrates at `F_11`).

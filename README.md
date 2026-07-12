@@ -126,10 +126,25 @@ NeuralHorner is the most-scaffolded point — **"Level 0"** — of a scaffold-re
 - **Level 5**: a monolithic transformer (the original wall). **Tried, negative.** A real decoder-only transformer (abacus embeddings, Charton-Kempe data, weight decay) memorizes training primes to train-exact 1.000 but held-out cross-prime exact-match sits at ~0.13 and does not move; run 16x longer (100k steps, the canonical grokking setup) it stays flat rather than groks. Multiplication does not grok the way addition does.
 
 Nearer-term:
-- Failure-mode analysis + fix of the power-of-two-adjacent (Fermat) family (custom data distribution / targeted DAgger; the failure concentrates at `F_11`).
-- Trace-certification on the deep tiers + Fermat first-divergence localization.
-- Ablations: no modulus-conditioning, no DAgger, fixed-L vs dynamic-L.
-- Training-script release; preprint.
+- **Failure-mode analysis: done. Fix: not closed, and now understood why.** The Fermat residual is
+  localized to one exact transition (`reduce_a`, step 2048, `s=2^2047`, the `(2^2048+1) mod p` wrap --
+  the preceding 2048 doublings are exact). Five repair methods were tried against the full 768-case
+  held-out battery (not just the small gauntlet, which is misleading): off-policy boundary curriculum,
+  on-policy Fermat DAgger, all-family DAgger, boundary-sweep DAgger, PCGrad gradient surgery. Every one
+  either relocates the failure to a different family or regresses the overall battery below v8's
+  759/768. A frozen one-step overfit reaches held-out 1.0 on every family, so capacity is not the
+  limit -- this is a coverage/rollout-drift limit, and it resists targeted fixes specifically because
+  they redistribute rather than remove it.
+- **Trace-certification: done.** Every transition checked against `s' = (2s+dx) mod p` on tier 9
+  (9228/9228 verified) and tier 10 (12294/12294 verified); the Fermat first-divergence is localized
+  exactly (see above).
+- **Ablations: mostly done.** Fixed-L (full 2048-wide) is output-equivalent to dynamic-L (6/6 correct,
+  13080/13080 transitions verified) -- confirms the dynamic-width state sizing is correctness-preserving,
+  not a shortcut. Zeroing the modulus conditioning collapses to 0/6 -- confirms conditioning is
+  load-bearing, not decorative. A no-DAgger ablation is not yet isolated separately.
+- **Training-script release; preprint: not yet done.** Internal training scripts exist
+  (`src/mac/training/`) but nothing has been cleaned up and released publicly, and no preprint has been
+  written or submitted.
 
 ## Citation
 

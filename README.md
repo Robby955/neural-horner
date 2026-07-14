@@ -8,13 +8,15 @@
 
 > **Status: ongoing research.** The accuracy, timing, determinism, bf16-safety, and weight-perturbation results below are from the official open-source scorer run by us on a single H100 rented via RunPod. What is *not* yet established (organizer-at-scale verification, the compliance ruling, exactness) is stated plainly in [What is not established](#what-is-not-established).
 
+> **Prior art and correction.** XllentAI's [`modular_arithmetic` initial model card](https://huggingface.co/XllentAI/modular_arithmetic/blob/3d2c226c2382140b890026bdfdd59485daa192ba/README.md) is directly related prior work. NeuralHorner does not claim priority for the learned bit-sequential Horner transition, hard binary state, modulus conditioning, or reported held-out-prime transfer described there. Any contrary wording elsewhere in this repository is superseded by this note.
+
 **Paper:** [paper/paper_neuralhorner.pdf](paper/paper_neuralhorner.pdf).
 
 ## Architecture
 
 NeuralHorner is one shared, modulus-conditioned bidirectional 2-layer GRU cell (~471K parameters) applied in a fixed bit-serial Horner loop. The cell learns the per-step transition `s' = (2s + d·x) mod p`; the same weights reduce `a`, reduce `b`, and multiply the two residues. State is carried as bits between steps; the modulus is fed as 32-bit limbs. Inference sizes the per-step state width to each prime's bit-length (dynamic-L), which is correctness-preserving because the padded high bits are always zero. Preprocessing is per-argument. The scorer entry class is `model.BitSerialReducer`.
 
-The same learned cell runs at every step of a fixed bit-serial schedule; the loop sequences bits and does no arithmetic itself — the arithmetic is the learned cell's.
+The same learned cell runs at every step of a fixed bit-serial schedule; the loop sequences bits and does no arithmetic itself; the arithmetic is the learned cell's.
 
 ![NeuralHorner overview](assets/overview.png)
 
@@ -73,7 +75,7 @@ _Exact Clopper–Pearson 95% CIs: each cleared tier (100/100) [0.964, 1.000]; fu
 
 - **Cross-prime transfer.** Trained on one width regime, the cell reduces and multiplies modulo primes it never saw during training. A monolithic learner on this setting reports ~0% (Lauter 2024).
 - **Learned, not a circuit.** Randomizing the weights collapses every tier to 0.00 (the organizers' named weight-perturbation anti-cheat). The forward path contains no symbolic-math library, no big-integer modular multiply, no lookup table, and no compare-against-`p` on the operands.
-- **Not exact.** The held-out adversarial battery scores 759/768 = 98.83%; the only failing family is Fermat numbers (`2^(2^n) + 1`), i.e. power-of-two-adjacent operands — and within that family the failures concentrate at the largest tested operand, `F_11 = 2^2048 + 1` (the top of the trained width range). The fragility is narrow and characterized, but real.
+- **Not exact.** The held-out adversarial battery scores 759/768 = 98.83%; the only failing family is Fermat numbers (`2^(2^n) + 1`), i.e. power-of-two-adjacent operands, and within that family the failures concentrate at the largest tested operand, `F_11 = 2^2048 + 1` (the top of the trained width range). The fragility is narrow and characterized, but real.
 
 ## Speed: dynamic state-width sizing
 
@@ -116,7 +118,7 @@ Every number above has a committed receipt under `model/receipts/` (official eva
 
 ## Roadmap
 
-NeuralHorner is the most-scaffolded point — **"Level 0"** — of a scaffold-removal study, not the end state. The arc hands the fixed schedule back to the network in stages, to measure *how much algorithmic structure must be fixed* before neural modular arithmetic generalizes across primes. Three rungs beyond Level 0 have already been tried, with real negative results, not just planned:
+NeuralHorner is the most-scaffolded point (**"Level 0"**) of a scaffold-removal study, not the end state. The arc hands the fixed schedule back to the network in stages, to measure *how much algorithmic structure must be fixed* before neural modular arithmetic generalizes across primes. Three rungs beyond Level 0 have already been tried, with real negative results, not just planned:
 
 - **Level 0** (this repo): fixed Horner loop + learned per-step transition. **Done** — clears all ten scored tiers.
 - **Level 1**: learned controller (the network decides when to reduce / multiply) + learned transition. **Tried, negative.** An imitation-learned controller reached 100% per-step advance-accuracy at 2x operand length but 0% whole-sequence-exact: about 1.6% per-step error compounds over the ~2000-step rollout. The schedule has to stay fixed for exactness to survive at depth.

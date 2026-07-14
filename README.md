@@ -8,7 +8,7 @@
 
 > **Status: ongoing research.** The accuracy, timing, determinism, bf16-safety, and weight-perturbation results below are from the official open-source scorer run by us on a single H100 rented via RunPod. What is *not* yet established (organizer-at-scale verification, the compliance ruling, exactness) is stated plainly in [What is not established](#what-is-not-established).
 
-> **Prior art and correction.** XllentAI's [`modular_arithmetic` initial model card](https://huggingface.co/XllentAI/modular_arithmetic/blob/3d2c226c2382140b890026bdfdd59485daa192ba/README.md) is directly related prior work. NeuralHorner does not claim priority for the learned bit-sequential Horner transition, hard binary state, modulus conditioning, or reported held-out-prime transfer described there. Any contrary wording elsewhere in this repository is superseded by this note.
+> **Related work.** The XllentAI [`modular_arithmetic`](https://huggingface.co/XllentAI/modular_arithmetic/blob/3d2c226c2382140b890026bdfdd59485daa192ba/README.md) repository on Hugging Face predates NeuralHorner's GitHub release. It also uses a learned, modulus-conditioned Horner update with binary recurrent state and reports transfer to held-out primes. NeuralHorner differs by using one BiGRU checkpoint to learn both operand reductions and multiplication, without Python-side `% p` reduction. We do not claim the shared Horner formulation as novel.
 
 **Paper:** [paper/paper_neuralhorner.pdf](paper/paper_neuralhorner.pdf).
 

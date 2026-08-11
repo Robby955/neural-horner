@@ -133,10 +133,11 @@ cd lean && lake build
 ```
 
 The scorer override must be the exact clean Git worktree root. The verifier
-checks its commit, all committed `src/modchallenge` bytes, declared contract
-hashes, and exact import origins; untracked or cached files in that package are
-rejected. A run with current research scripts creates a new evidence boundary,
-not a replay of the historical F11 union.
+checks its commit, every committed byte in the inserted `src/` import tree,
+declared contract hashes, and exact scorer-module import origins; untracked,
+cached, or symlinked files anywhere in that tree are rejected. A run with
+current research scripts creates a new evidence boundary, not a replay of the
+historical F11 union.
 
 Per-step exhaustive check (all states, primes < 64):
 

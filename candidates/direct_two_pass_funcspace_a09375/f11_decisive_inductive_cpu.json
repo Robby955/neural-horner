@@ -1,0 +1,266 @@
+{
+  "status": "completed_exact",
+  "all_exact": true,
+  "submission": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_funcspace_a09375",
+  "entry_class": "model.DirectBitSerialReducer",
+  "loaded_entry_type": "submission_77b690fd1042f866_model.DirectBitSerialReducer",
+  "schedule": "direct_two_pass",
+  "execution_mode": "vectorized_exact_prefix_induction",
+  "transition_batch_size": 128,
+  "artifact_sha256": {
+    "manifest.json": "cf5dbc834da0068e885b3f07cd4c8406b7075bf8fd5056eea3f4890497277b07",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "2fbc717be66b3abbf4815dce657f1a9ee862b17d9dc26efd962b9063dbdb8a16",
+    "provenance.json": "55c9fc269495385b42badeff4af8919b9df60f7da9e469121d700f15f807c702"
+  },
+  "artifact_set_sha256": "7a9df27478a06e00750b541fc3a1748cbe2a4066ee2745f5976ca77d03520e0a",
+  "runner_sha256": "03f7fa95fe98152e7e1047cc9d50e126daaa8ec894cb074724911bf0ee9acbde",
+  "full_case_set_sha256": "54f9d2342fcdbfa6fc21a5d6a6560d13364059be3c48174a6c66a407834a86ee",
+  "selected_case_set_sha256": "e09826d0670a32d05ab023b762e134a6e818ee1c1f13b7a2d49979aaa427ba6a",
+  "battery_seed": 20260627,
+  "companion_seed": 20260801,
+  "selected_groups": [
+    "decisive"
+  ],
+  "selected_cases": [
+    {
+      "label": "decisive-f11-x-1",
+      "group": "decisive",
+      "source": "explicit_regression",
+      "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+      "a_bits": 2049,
+      "b_bits": 1,
+      "p_bits": 2048
+    }
+  ],
+  "orientation_request": "both",
+  "expected_orientations": 2,
+  "expected_cases_per_orientation": 1,
+  "expected_results": 2,
+  "expected_transitions": 4100,
+  "environment": {
+    "python": "3.13.13 (v3.13.13:01104ce1beb, Apr  7 2026, 14:43:30) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+    "torch": "2.12.1",
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "processor": "arm",
+    "os_cpu_count": 18,
+    "device": "cpu",
+    "cuda_available": false,
+    "cuda_version": null,
+    "cudnn_version": null,
+    "mps_available": true,
+    "torch_num_threads": 6,
+    "torch_num_interop_threads": 18,
+    "deterministic_algorithms_enabled": false,
+    "default_dtype": "torch.float32"
+  },
+  "environment_sha256": "bf08fbb1723715dc1ae7fa92f3a5fd17348a47f3c283234da048c3b9509c5537",
+  "margin_status": "available_from_exact_candidate_logits_hook",
+  "prefix_policy": "candidate_owned_exact_teacher_prefixes_evaluated_in_order",
+  "results": [
+    {
+      "label": "decisive-f11-x-1",
+      "group": "decisive",
+      "source": "explicit_regression",
+      "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+      "a_bits": 2049,
+      "b_bits": 1,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "38ac9da2545cdf4aa413ed1559f7dc3f543f62a84dbdb3b38710d29c3ac5a9e0",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 1,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 128,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 2049,
+        "scan_operand": 1
+      },
+      "phase_counts": {
+        "reduce_operand": 2049,
+        "scan_operand": 1
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 2050,
+      "observed_transitions": 2050,
+      "teacher_transitions_evaluated": 2050,
+      "transition_count_exact": true,
+      "verified_transitions": 2050,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 2050,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 2048,
+        "input_bit": 1,
+        "minimum_signed_target_logit_margin": 4.919923305511475,
+        "minimum_margin_bit_index": 1933
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "trajectory_sha256": "67260b918bd7ad18883b64fd817a39b3d5c85a0127ad40edf1c92e75379cddd4",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+        "exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+      "decoded_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+      "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "decisive-f11-x-1",
+      "group": "decisive",
+      "source": "explicit_regression",
+      "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+      "a_bits": 2049,
+      "b_bits": 1,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "a6bcd53df733bbaf7e5d64f19e55904f2ab13f2d2cd9f61b3a54150bb372b6d2",
+      "oriented_a_bits": 1,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 128,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 2049,
+        "scan_operand": 1
+      },
+      "phase_counts": {
+        "reduce_operand": 2049,
+        "scan_operand": 1
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 2050,
+      "observed_transitions": 2050,
+      "teacher_transitions_evaluated": 2050,
+      "transition_count_exact": true,
+      "verified_transitions": 2050,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 2050,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 2048,
+        "input_bit": 1,
+        "minimum_signed_target_logit_margin": 4.919923305511475,
+        "minimum_margin_bit_index": 1933
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "trajectory_sha256": "67260b918bd7ad18883b64fd817a39b3d5c85a0127ad40edf1c92e75379cddd4",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+        "exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+      "decoded_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+      "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    }
+  ],
+  "completed_results": 2,
+  "completed_transitions": 4100,
+  "artifact_sha256_after": {
+    "manifest.json": "cf5dbc834da0068e885b3f07cd4c8406b7075bf8fd5056eea3f4890497277b07",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "2fbc717be66b3abbf4815dce657f1a9ee862b17d9dc26efd962b9063dbdb8a16",
+    "provenance.json": "55c9fc269495385b42badeff4af8919b9df60f7da9e469121d700f15f807c702"
+  },
+  "artifact_unchanged_during_run": true,
+  "result_count_exact": true,
+  "transition_cardinality_exact": true,
+  "orientation_counts": {
+    "original": 1,
+    "swapped": 1
+  },
+  "orientation_cardinality_exact": true
+}

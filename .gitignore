@@ -2,6 +2,12 @@
 build/
 __pycache__/
 *.pyc
+.DS_Store
+.pytest_cache/
+.ruff_cache/
 *.aux
+*.fdb_latexmk
+*.fls
 *.log
 *.out
+*.synctex.gz

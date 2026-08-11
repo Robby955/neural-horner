@@ -1,0 +1,8 @@
+state=exited
+finished_at_utc=2026-08-02T09:16:25Z
+pid=40827
+exit_code=1
+session=neural-horner-battery-v3
+run_root=/private/tmp/neural-horner-battery-v3.wUWpm3
+prelaunch_manifest_sha256=10d949568a683fa3f5ab17c9095bc512e08fe17b6955e9d5b20815ed9be346e3
+runner_sha256=3f63dfb0a58a0ea736d6091ae8023135a46167f78aba1625986dc91b73a47f99

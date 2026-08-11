@@ -1,0 +1,406 @@
+{
+  "status": "failed",
+  "all_exact": false,
+  "submission": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/model",
+  "entry_class": "model.BitSerialReducer",
+  "loaded_entry_type": "submission_c0925586075ea1dd_model.BitSerialReducer",
+  "schedule": "original_three_pass",
+  "execution_mode": "vectorized_exact_prefix_induction",
+  "transition_batch_size": 256,
+  "artifact_sha256": {
+    "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "artifact_sha256_before_load": {
+    "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "artifact_sha256_after_load": {
+    "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "artifact_unchanged_during_load": true,
+  "artifact_set_sha256": "00f25834a7d58705249543b687807be429b861238a6203c82edf5d933003feed",
+  "runner_sha256": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+  "qualification_source_identity": {
+    "local_source_sha256": {
+      "scripts/trace_f11_trajectories.py": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+      "scripts/held_out_battery.py": "e1f05686fe565e9200e24f7498998f577a08b50f24944e5c025f046b6a7eb132",
+      "scripts/submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+    },
+    "local_source_set_sha256": "9ed5d2d86b1d3fb0b4df71a26069c7c1e7f239565cb30417c50ce717a96f5b26",
+    "scorer": {
+      "status": "verified",
+      "contract_path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/scorer_runtime_contract_82510.json",
+      "contract_sha256": "6e200c1e42938cc0b9467922bdff5e9c63033a3afd74d08e10787273de87f1bc",
+      "declared_repository": "/private/tmp/neural-horner-scorer-82510-20260801",
+      "declared_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "declared_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "declared_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "observed_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "tracked_files_clean": true,
+      "commit_matches_contract": true,
+      "observed_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "observed_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "sources_match_contract": true
+    }
+  },
+  "qualification_source_set_sha256": "0ca78bb1fdfc797ff559aaca0f623351022f92fb0a6208d892050e8832dc6837",
+  "qualification_source_identity_after_load": {
+    "local_source_sha256": {
+      "scripts/trace_f11_trajectories.py": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+      "scripts/held_out_battery.py": "e1f05686fe565e9200e24f7498998f577a08b50f24944e5c025f046b6a7eb132",
+      "scripts/submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+    },
+    "local_source_set_sha256": "9ed5d2d86b1d3fb0b4df71a26069c7c1e7f239565cb30417c50ce717a96f5b26",
+    "scorer": {
+      "status": "verified",
+      "contract_path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/scorer_runtime_contract_82510.json",
+      "contract_sha256": "6e200c1e42938cc0b9467922bdff5e9c63033a3afd74d08e10787273de87f1bc",
+      "declared_repository": "/private/tmp/neural-horner-scorer-82510-20260801",
+      "declared_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "declared_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "declared_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "observed_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "tracked_files_clean": true,
+      "commit_matches_contract": true,
+      "observed_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "observed_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "sources_match_contract": true
+    }
+  },
+  "qualification_source_set_sha256_after_load": "0ca78bb1fdfc797ff559aaca0f623351022f92fb0a6208d892050e8832dc6837",
+  "qualification_sources_unchanged_during_load": true,
+  "full_case_set_sha256": "54f9d2342fcdbfa6fc21a5d6a6560d13364059be3c48174a6c66a407834a86ee",
+  "selected_case_set_sha256": "e09826d0670a32d05ab023b762e134a6e818ee1c1f13b7a2d49979aaa427ba6a",
+  "battery_seed": 20260627,
+  "companion_seed": 20260801,
+  "selected_groups": [
+    "decisive"
+  ],
+  "selected_cases": [
+    {
+      "label": "decisive-f11-x-1",
+      "group": "decisive",
+      "source": "explicit_regression",
+      "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+      "a_bits": 2049,
+      "b_bits": 1,
+      "p_bits": 2048
+    }
+  ],
+  "orientation_request": "original",
+  "expected_orientations": 1,
+  "expected_cases_per_orientation": 1,
+  "expected_results": 1,
+  "expected_transitions": 4098,
+  "environment": {
+    "python": "3.13.13 (v3.13.13:01104ce1beb, Apr  7 2026, 14:43:30) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+    "torch": "2.12.1",
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "processor": "arm",
+    "os_cpu_count": 18,
+    "device": "mps",
+    "cuda_available": false,
+    "cuda_version": null,
+    "cudnn_version": null,
+    "mps_available": true,
+    "torch_num_threads": 6,
+    "torch_num_interop_threads": 18,
+    "deterministic_algorithms_enabled": false,
+    "default_dtype": "torch.float32"
+  },
+  "environment_sha256": "1c9099f918a1e50bb8c879654e79243025c50d54ddd045eddfad850a0bd1cb5f",
+  "model_tensor_dtype_identity": {
+    "parameters": {
+      "tensor_count": 21,
+      "element_count": 470849,
+      "dtype_counts": {
+        "torch.float32": 21
+      },
+      "device_counts": {
+        "mps:0": 21
+      }
+    },
+    "buffers": {
+      "tensor_count": 0,
+      "element_count": 0,
+      "dtype_counts": {},
+      "device_counts": {}
+    }
+  },
+  "model_tensor_dtype_identity_sha256": "f15280792d55f68e1335b61f9ef1aa0ac5cfcd3a29bf2d27b08c3ef2f07f2514",
+  "margin_status": "available_from_exact_candidate_logits_hook",
+  "prefix_policy": "candidate_owned_exact_teacher_prefixes_evaluated_in_order",
+  "results": [
+    {
+      "label": "decisive-f11-x-1",
+      "group": "decisive",
+      "source": "explicit_regression",
+      "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+      "a_bits": 2049,
+      "b_bits": 1,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "38ac9da2545cdf4aa413ed1559f7dc3f543f62a84dbdb3b38710d29c3ac5a9e0",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 1,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_a",
+        "reduce_b",
+        "multiply"
+      ],
+      "phase_order": [
+        "reduce_a",
+        "reduce_b",
+        "multiply"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_a": 2049,
+        "reduce_b": 1,
+        "multiply": 2048
+      },
+      "phase_counts": {
+        "reduce_a": 2049,
+        "reduce_b": 1,
+        "multiply": 2048
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 4098,
+      "observed_transitions": 4098,
+      "teacher_transitions_evaluated": 4098,
+      "transition_count_exact": true,
+      "verified_transitions": 4097,
+      "failed_transitions": 1,
+      "transitions_exact": false,
+      "free_running_prefix_transitions_certified": 2048,
+      "post_divergence_teacher_transitions_evaluated": 2049,
+      "first_divergence": {
+        "phase": "reduce_a",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 2048,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "state": "16158503035655503650357438344334975980222051334857742016065172713762327569433945446598600705761456731844358980460949009747059779575245460547544076193224141560315438683650498045875098875194826053398028819192033784138396109321309878080919047169238085235290822926018152521443787945770532904303776199561965192760957166694834171210342487393282284747428088017663161029038902829665513096354230157075129296432088558362971801859230928678799175576150822952201848806616643615613562842355410104862578550863465661734839271290328348967522998634176499319107762583194718667771801067716614802322659239302476074096777926805529798115328",
+        "x": "1",
+        "p": "22320305020948793991417885925692382130198531919809751277449631515353322678363633329095408128413928421307078845202054612906309817910859106269414862598715427295534139346699766826422029667811124602500792531340691246494690682588703637880397869391808538767758365875038140831780481667470448220635998930159613470290855487230927493433110126570089636881866642276121089135806165151657882616910090244788572952574173172394886168263137369848391813929561496086130828748144967469109432378379237501881136429469198251049886227825562361755104470735714246752505999077987232891403631692602734689999311949513794493173078938066524860021499",
+        "predicted_value": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265264367400486873301543758833062850608493118034401620447007310724231676700999622597359024139688109736054875290261608885234736258161334202963582762896028187201077424367474616042737964037380333144256040820584501634157456186796045532687274351901049416603475409112861031062527566075389931265473631802198610625431460936100016104600864835202674298394828783762568539127258433286474631804804778863827523166673684714277118618121244849892545971414368257",
+        "expected_value": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "wrong_output_bit_count": 642,
+        "first_wrong_output_bit_index": 586,
+        "last_wrong_output_bit_index": 2047,
+        "wrong_output_mask_sha256": "a5338dfe4ac7c45fa53aaf91b1375a144eb91ceb67bb2ea2d8bc48d364c872dd",
+        "minimum_signed_target_logit_margin": -20.83690643310547,
+        "minimum_margin_bit_index": 1939,
+        "margin_source": "pre_threshold_logits_used_by_candidate_step",
+        "free_running_divergence_valid_by_exact_prefix_induction": true,
+        "pre_mod_value": "32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230657",
+        "modulus_subtract_count": "1",
+        "modulus_subtract_required": true,
+        "distance_to_lower_modulus_multiple": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "distance_to_upper_modulus_multiple": "12323603970586580682120895162714812299952961169904018522768917603181990217859375764993614845304943378925439729482211206318500076671227291443741572810982571470437401326098537561093861585232597098205527424297314924712589146534787519598957644445140907064935085898039976620673387443399830632664445461195296555059796641072186644445535278353614704268877108516915856213534524643984739041111720175426887312284169228063828732807812882339185276706821346267857959883056647706991739072047654794037115757211465178630093913070468025575162944203075494866796472989585028447263661249772239775353305420422636838152602022521990123812341",
+        "boundary_distance_to_nearest_modulus_multiple": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "state_less_than_modulus": true,
+        "x_less_than_modulus": true,
+        "double_carry_out": true,
+        "add_after_truncated_double_carry_out": false,
+        "full_pre_mod_word_overflow_count": "1"
+      },
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_a",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 2048,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": -20.83690643310547,
+        "minimum_margin_bit_index": 1939
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "captured_logit_dtypes": [
+        "torch.float32"
+      ],
+      "strictly_positive_margin": false,
+      "margin_gate_passed": false,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "bf3e8563f1c1258e1ff9352ba5b864f7bfdbc442bbf784d7c5aa387f3903199a",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+        "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 4098,
+          "observed_transition_count": 4098,
+          "transition_count_exact": true,
+          "expected_route_sha256": "4b91e31527e7a3135c1e898f530cbe9a9e4446f6e11a2c7ff113e2a075d8c0df",
+          "observed_route_sha256": "4b91e31527e7a3135c1e898f530cbe9a9e4446f6e11a2c7ff113e2a075d8c0df",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 4098,
+        "observed_transition_count": 4098,
+        "transition_count_exact": true,
+        "expected_route_sha256": "4b91e31527e7a3135c1e898f530cbe9a9e4446f6e11a2c7ff113e2a075d8c0df",
+        "observed_route_sha256": "4b91e31527e7a3135c1e898f530cbe9a9e4446f6e11a2c7ff113e2a075d8c0df",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "840209a78d2d7b89d9568643c47b3ab1a5234859bea6044dc0cb4723123e7aee",
+      "decoded_output": null,
+      "expected_output": "9996701050362213309296990762977569830245570749905732754680713912171332460504257564101793283108985042381639115719843406587809741239631814825673289787732855825096738020601229265328168082578527504295265107043376321782101536053916118281440224946667631702823279976998164211107094224070617587971553468964316915231058846158740848987574848216474932612989533759205232922271640507673143575798370069361685640290003944331057435455324487509206537222740149818272868865088319762117693306331582707844020672257733072419792314755094336179941526532638751885709526088402204444139970442830494914646006529091157655020476915544534736209158",
+      "final_exact": false,
+      "candidate_full_rollout_certified": false,
+      "all_exact": false,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    }
+  ],
+  "completed_results": 1,
+  "completed_transitions": 4098,
+  "stopped_early_on_nonpassing_result": true,
+  "first_nonpassing_result": {
+    "label": "decisive-f11-x-1",
+    "orientation": "original",
+    "oriented_case_sha256": "38ac9da2545cdf4aa413ed1559f7dc3f543f62a84dbdb3b38710d29c3ac5a9e0",
+    "completed_result_index": 0
+  },
+  "artifact_sha256_after": {
+    "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "artifact_sha256_after_run": {
+    "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "artifact_unchanged_during_run": true,
+  "artifact_unchanged_across_load_and_run": true,
+  "qualification_source_identity_after_run": {
+    "local_source_sha256": {
+      "scripts/trace_f11_trajectories.py": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+      "scripts/held_out_battery.py": "e1f05686fe565e9200e24f7498998f577a08b50f24944e5c025f046b6a7eb132",
+      "scripts/submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+    },
+    "local_source_set_sha256": "9ed5d2d86b1d3fb0b4df71a26069c7c1e7f239565cb30417c50ce717a96f5b26",
+    "scorer": {
+      "status": "verified",
+      "contract_path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/scorer_runtime_contract_82510.json",
+      "contract_sha256": "6e200c1e42938cc0b9467922bdff5e9c63033a3afd74d08e10787273de87f1bc",
+      "declared_repository": "/private/tmp/neural-horner-scorer-82510-20260801",
+      "declared_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "declared_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "declared_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "observed_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "tracked_files_clean": true,
+      "commit_matches_contract": true,
+      "observed_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "observed_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "sources_match_contract": true
+    }
+  },
+  "qualification_source_set_sha256_after_run": "0ca78bb1fdfc797ff559aaca0f623351022f92fb0a6208d892050e8832dc6837",
+  "qualification_sources_unchanged_during_run": true,
+  "captured_logit_dtypes": [
+    "torch.float32"
+  ],
+  "result_count_exact": true,
+  "transition_cardinality_exact": true,
+  "orientation_counts": {
+    "original": 1
+  },
+  "orientation_cardinality_exact": true
+}

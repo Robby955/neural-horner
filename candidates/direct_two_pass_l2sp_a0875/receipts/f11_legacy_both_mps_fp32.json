@@ -1,0 +1,2584 @@
+{
+  "status": "completed_exact",
+  "all_exact": true,
+  "submission": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875",
+  "entry_class": "model.DirectBitSerialReducer",
+  "loaded_entry_type": "submission_f8915d786f51ea91_model.DirectBitSerialReducer",
+  "schedule": "direct_two_pass",
+  "execution_mode": "vectorized_exact_prefix_induction",
+  "transition_batch_size": 256,
+  "artifact_sha256": {
+    "manifest.json": "470aa6427967af96fe18d7ed76b0544a82eb5d84ed7960799ecdb6caecce5ed0",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+    "provenance.json": "9d0dec371ef8c896320fe997e23cd3e71910062736fae1b78d5ceb91f5cb51fe"
+  },
+  "artifact_set_sha256": "9b0ba4f1c6ff5ed8ccf7b64b5b173baf10b8881c407ce430ec3338adcc0e06fc",
+  "runner_sha256": "8f0d726cf65589154fc05acfcd612740b9e7055ad805f70c6b9cdc6dd2ab0773",
+  "full_case_set_sha256": "54f9d2342fcdbfa6fc21a5d6a6560d13364059be3c48174a6c66a407834a86ee",
+  "selected_case_set_sha256": "97900a420401679c5703bc1ae8c33b581c8d1c52883d03a7478c5824b29c4019",
+  "battery_seed": 20260627,
+  "companion_seed": 20260801,
+  "selected_groups": [
+    "legacy"
+  ],
+  "selected_cases": [
+    {
+      "label": "legacy-fermat-source-062",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "1198abb1718213883d297528d205a326d4d551d84b1413571f49c9c8cf26e4ae",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-087",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "991431f8084f2189d8b36c71367861ca5d7983561534156fbbc05d98f11b35d8",
+      "a_bits": 2049,
+      "b_bits": 4095,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-089",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "c8050252a55e14786d36c54dba1635a848a28904665491af50f6ca2fe03a3ea2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-094",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "0f6f71696ff5ec6996e715dd6e449afb806e1523616b4899125e011f7118511f",
+      "a_bits": 2049,
+      "b_bits": 4094,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-099",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "b3af3e3c2211bde48ff72a4c7785dc704911fbdb7851e977761affada4873cae",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-108",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a4e5fc004e826a448fdf1ce33084611830d7dd331c6c5b5dcb2ab637fb782aa2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-109",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "95ba636ac4613b63cf7db55b1cc86fed1e04043d4cd8a049657e0b5ef8eecc57",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-117",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "eab46b8656db2fdf98ef8dbf842d46b695c73c9a7d60bd6fe6bd4e844a7e7222",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048
+    },
+    {
+      "label": "legacy-fermat-source-120",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a328ac8363cd69949ffefe827028052e89e7c6ba098ccf6e233dc1bb0ad4a744",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048
+    }
+  ],
+  "orientation_request": "both",
+  "expected_orientations": 2,
+  "expected_cases_per_orientation": 9,
+  "expected_results": 18,
+  "expected_transitions": 110588,
+  "environment": {
+    "python": "3.13.13 (v3.13.13:01104ce1beb, Apr  7 2026, 14:43:30) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+    "torch": "2.12.1",
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "processor": "arm",
+    "os_cpu_count": 18,
+    "device": "mps",
+    "cuda_available": false,
+    "cuda_version": null,
+    "cudnn_version": null,
+    "mps_available": true,
+    "torch_num_threads": 6,
+    "torch_num_interop_threads": 18,
+    "deterministic_algorithms_enabled": false,
+    "default_dtype": "torch.float32"
+  },
+  "environment_sha256": "1c9099f918a1e50bb8c879654e79243025c50d54ddd045eddfad850a0bd1cb5f",
+  "margin_status": "available_from_exact_candidate_logits_hook",
+  "prefix_policy": "candidate_owned_exact_teacher_prefixes_evaluated_in_order",
+  "results": [
+    {
+      "label": "legacy-fermat-source-062",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "1198abb1718213883d297528d205a326d4d551d84b1413571f49c9c8cf26e4ae",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "6427f4dd2100e61077c2815f595722abba7c26a91cafd507c743c4d383a2da99",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4092,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6141,
+      "observed_transitions": 6141,
+      "teacher_transitions_evaluated": 6141,
+      "transition_count_exact": true,
+      "verified_transitions": 6141,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6141,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2256,
+        "input_bit_index": 2256,
+        "global_step": 2256,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.572192192077637,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "20bbe8852bdc9c7896c41e8bdc6867ad17d3134ba1a93497c04fadaa05ea21c7",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+        "expected_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+        "output_sha256": "4e28e63049e498d78ad6aa2a05c4dc70654bdc06d85251b42da41f363ea3c949",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6141,
+          "observed_transition_count": 6141,
+          "transition_count_exact": true,
+          "expected_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+          "observed_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6141,
+        "observed_transition_count": 6141,
+        "transition_count_exact": true,
+        "expected_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+        "observed_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "4e28e63049e498d78ad6aa2a05c4dc70654bdc06d85251b42da41f363ea3c949",
+      "decoded_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+      "expected_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-062",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "1198abb1718213883d297528d205a326d4d551d84b1413571f49c9c8cf26e4ae",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "a9bc9ad1f47d51b07e899f1b61979f65e3188339892c1637a850bfe3b0ebc379",
+      "oriented_a_bits": 4092,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6141,
+      "observed_transitions": 6141,
+      "teacher_transitions_evaluated": 6141,
+      "transition_count_exact": true,
+      "verified_transitions": 6141,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6141,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2256,
+        "input_bit_index": 2256,
+        "global_step": 2256,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.572192192077637,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "20bbe8852bdc9c7896c41e8bdc6867ad17d3134ba1a93497c04fadaa05ea21c7",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+        "expected_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+        "output_sha256": "4e28e63049e498d78ad6aa2a05c4dc70654bdc06d85251b42da41f363ea3c949",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6141,
+          "observed_transition_count": 6141,
+          "transition_count_exact": true,
+          "expected_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+          "observed_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6141,
+        "observed_transition_count": 6141,
+        "transition_count_exact": true,
+        "expected_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+        "observed_route_sha256": "f302f693d5867ae62d8c66f1e65b5c58b1902dbd2aecbed6f6933ba274c6df85",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "4e28e63049e498d78ad6aa2a05c4dc70654bdc06d85251b42da41f363ea3c949",
+      "decoded_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+      "expected_output": "12720674874362254107910473067098377273387398980748912958826065297691197546014932840759181519333201632869282920926228721510796877125136370821531542164634484179736922298892969977291383904516215428617693583447159446432476026886127338403682144735539321987579624939864023571948507293014563609686571801087043069334410431805790264936679022002350269967594532453074885493639987945747961538200561486156630538978643939351517509104848219604138327665231670783985036331680329130989769882561324516755168890261897525856575941762875798930872662456278049369347235731014982870808960075418073257285295431836668946581286877282726197641519",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-087",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "991431f8084f2189d8b36c71367861ca5d7983561534156fbbc05d98f11b35d8",
+      "a_bits": 2049,
+      "b_bits": 4095,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "7bb50cda45cd5185d8ad995e62dc01bd1e2bd430c603abd175d32358f55e73ed",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4095,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4095,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4095,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6144,
+      "observed_transitions": 6144,
+      "teacher_transitions_evaluated": 6144,
+      "transition_count_exact": true,
+      "verified_transitions": 6144,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6144,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2163,
+        "input_bit_index": 2163,
+        "global_step": 2163,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.593479633331299,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "21faafaca75e9b7dd2042fc48cab0d2a802953832c6aa106e54cf886a143042f",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+        "expected_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+        "output_sha256": "204c7421861c79516b9e71c199e132b15f7d6700bc4dc7080cfaa8420f020dfa",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6144,
+          "observed_transition_count": 6144,
+          "transition_count_exact": true,
+          "expected_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+          "observed_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6144,
+        "observed_transition_count": 6144,
+        "transition_count_exact": true,
+        "expected_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+        "observed_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "204c7421861c79516b9e71c199e132b15f7d6700bc4dc7080cfaa8420f020dfa",
+      "decoded_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+      "expected_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-087",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "991431f8084f2189d8b36c71367861ca5d7983561534156fbbc05d98f11b35d8",
+      "a_bits": 2049,
+      "b_bits": 4095,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "22574370d23b6f45d4161db4e32acb6aeafb9a23717f71509ffdbd496e759e4e",
+      "oriented_a_bits": 4095,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4095,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4095,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6144,
+      "observed_transitions": 6144,
+      "teacher_transitions_evaluated": 6144,
+      "transition_count_exact": true,
+      "verified_transitions": 6144,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6144,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2163,
+        "input_bit_index": 2163,
+        "global_step": 2163,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.593479633331299,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "21faafaca75e9b7dd2042fc48cab0d2a802953832c6aa106e54cf886a143042f",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+        "expected_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+        "output_sha256": "204c7421861c79516b9e71c199e132b15f7d6700bc4dc7080cfaa8420f020dfa",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6144,
+          "observed_transition_count": 6144,
+          "transition_count_exact": true,
+          "expected_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+          "observed_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6144,
+        "observed_transition_count": 6144,
+        "transition_count_exact": true,
+        "expected_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+        "observed_route_sha256": "e2ee80f934d62fd139a068a24f4b4f70c6868098851117c8fbf3013d6a5f4caf",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "204c7421861c79516b9e71c199e132b15f7d6700bc4dc7080cfaa8420f020dfa",
+      "decoded_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+      "expected_output": "7294969646956972915868730753314056525062260733956108143548172272048502398408154217934786560078600488714127591429788358668829476596557822200818460424575603158342858349254659098784092476655021703677729939947673649509587553830628261124051512570530946368873509132031053184946302199944821623273428377608700143631887113950067241465078593519453511155290896115356776076272490439794471928259088665828987719182744129624290011693824196162776387799952979524554594301157276896632337194368638582596600803804763113124950210698942763228253283540118646309215482880193872468310692081726060914165581943344833407307718900080323134378386",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-089",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "c8050252a55e14786d36c54dba1635a848a28904665491af50f6ca2fe03a3ea2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "acf38d158ced7f20c464873eea75913e66f5773628b062220ff44e6b50f3b96c",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4096,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 6144,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.192229270935059,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "20899c56cc2d8aac41081f788be2e723ac40314ca3d72d0c7ec276efb9002802",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+        "expected_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+        "output_sha256": "3eec0e1ceec4033f03606f1fe758a7a55f66531bcf4c3c43aa2f3d56959e53d5",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+          "observed_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+        "observed_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "3eec0e1ceec4033f03606f1fe758a7a55f66531bcf4c3c43aa2f3d56959e53d5",
+      "decoded_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+      "expected_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-089",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "c8050252a55e14786d36c54dba1635a848a28904665491af50f6ca2fe03a3ea2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "b7a378856557bc18ddf54b11cd36f0c133ffb0188e82cff0db557c669200f350",
+      "oriented_a_bits": 4096,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 6144,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.192229270935059,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "20899c56cc2d8aac41081f788be2e723ac40314ca3d72d0c7ec276efb9002802",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+        "expected_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+        "output_sha256": "3eec0e1ceec4033f03606f1fe758a7a55f66531bcf4c3c43aa2f3d56959e53d5",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+          "observed_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+        "observed_route_sha256": "91962529f97940f75b4e92019e3c3a55539fec47c480dbe3775f1aec505c9d1c",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "3eec0e1ceec4033f03606f1fe758a7a55f66531bcf4c3c43aa2f3d56959e53d5",
+      "decoded_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+      "expected_output": "9525412830900240533897290362340800987454509034594842159992433932767873131677027752884575243442820209315825540782672682126481099679331692159424642074524098615869994425501811587063025090531588216160881782389829095351316593758057569837589916308118641980650233695152052099853971014092534519513325852341850757442185491156451359887798855747549826417276852800194122802459529132321431817631533932874119320549430661535970683580800700550524604944978952593312284069995703430467531820987877612054340954101754058995973958359098834901487792658564376722629965888110114565675553813938246731306333492663698349838167260165498355626348",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-094",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "0f6f71696ff5ec6996e715dd6e449afb806e1523616b4899125e011f7118511f",
+      "a_bits": 2049,
+      "b_bits": 4094,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "b0d85b1d144d9f37262f9fa68bb975c9eb66b3a52a8729ab5d2aa99fc27ce121",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4094,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4094,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4094,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6143,
+      "observed_transitions": 6143,
+      "teacher_transitions_evaluated": 6143,
+      "transition_count_exact": true,
+      "verified_transitions": 6143,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6143,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 0,
+        "input_bit_index": 0,
+        "global_step": 4094,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.2410807609558105,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "53e1613eb09a951f090f16e777513488cd7eb1e092d78fb7205f97c3217f1989",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+        "expected_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+        "output_sha256": "e483f9f69c1a22bbee3e4b66f42e62605a8f03b3d0ed938564a5b32f465a9187",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6143,
+          "observed_transition_count": 6143,
+          "transition_count_exact": true,
+          "expected_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+          "observed_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6143,
+        "observed_transition_count": 6143,
+        "transition_count_exact": true,
+        "expected_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+        "observed_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "e483f9f69c1a22bbee3e4b66f42e62605a8f03b3d0ed938564a5b32f465a9187",
+      "decoded_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+      "expected_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-094",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "0f6f71696ff5ec6996e715dd6e449afb806e1523616b4899125e011f7118511f",
+      "a_bits": 2049,
+      "b_bits": 4094,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "2fe8bd56b32db91395052562473bb7817ba7feb9a86575f702731c19e1a1249a",
+      "oriented_a_bits": 4094,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4094,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4094,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6143,
+      "observed_transitions": 6143,
+      "teacher_transitions_evaluated": 6143,
+      "transition_count_exact": true,
+      "verified_transitions": 6143,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6143,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 0,
+        "input_bit_index": 0,
+        "global_step": 4094,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.2410807609558105,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "53e1613eb09a951f090f16e777513488cd7eb1e092d78fb7205f97c3217f1989",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+        "expected_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+        "output_sha256": "e483f9f69c1a22bbee3e4b66f42e62605a8f03b3d0ed938564a5b32f465a9187",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6143,
+          "observed_transition_count": 6143,
+          "transition_count_exact": true,
+          "expected_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+          "observed_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6143,
+        "observed_transition_count": 6143,
+        "transition_count_exact": true,
+        "expected_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+        "observed_route_sha256": "de163a3e3670920204e926e846eb12abc695e775fec076624823070b5d062af0",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "e483f9f69c1a22bbee3e4b66f42e62605a8f03b3d0ed938564a5b32f465a9187",
+      "decoded_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+      "expected_output": "20419067631099094165252675734301827726397654950643760611683717908705967960442866715708733667795369180132479951271989528300981691442692778931468117051756031190704635121751722636385466804688550814413291055116366811642025346506940766967183091840203820398566810161826714218591440054623237658396864440645298263670946572290613152291633130926594781453938082331912785054285979711867817120735759093940114707486702833144081182253710790233765651244014373828365291113897803454320211934081377628074880826979142517437735033442818616235801400162536512110721892448149265585055765140046948759573650619247470158831731413020711906612746",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-099",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "b3af3e3c2211bde48ff72a4c7785dc704911fbdb7851e977761affada4873cae",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "a3ddcde50d5183d8212340687b22ab830f6e68f5a3d359dbe4bda2c760f4ce97",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4096,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 4089,
+        "input_bit_index": 4089,
+        "global_step": 4089,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.589664936065674,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "7a65707f62bd7515b2222122c1732e5e67bddca7988fae44f3d81ef0d08251c4",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+        "expected_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+        "output_sha256": "442a15c26e28aee6a654de3f912fa5ed57141298824bd2a17ce5fe23a2a34889",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+          "observed_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+        "observed_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "442a15c26e28aee6a654de3f912fa5ed57141298824bd2a17ce5fe23a2a34889",
+      "decoded_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+      "expected_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-099",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "b3af3e3c2211bde48ff72a4c7785dc704911fbdb7851e977761affada4873cae",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "3cf4061537a41f6778bef12cb79c64f9e13f8367b59b11886ca753790e03531d",
+      "oriented_a_bits": 4096,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 4089,
+        "input_bit_index": 4089,
+        "global_step": 4089,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.589664936065674,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "7a65707f62bd7515b2222122c1732e5e67bddca7988fae44f3d81ef0d08251c4",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+        "expected_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+        "output_sha256": "442a15c26e28aee6a654de3f912fa5ed57141298824bd2a17ce5fe23a2a34889",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+          "observed_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+        "observed_route_sha256": "879a0e9a5b32c1722622ee3444b33850a365ed6ba42f3b0b6091e68fe5b73f4f",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "442a15c26e28aee6a654de3f912fa5ed57141298824bd2a17ce5fe23a2a34889",
+      "decoded_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+      "expected_output": "15798551198413754473557312296604013390018851764072531803107429702093436408016580168143133001790929895053658494681967785491348152833254347683865540521091007950413541594742976185909312708622900990024847976174463431524379504050900729284131057832066601191257034567992154384107592993055827156492607678854286629450484582782160617368274213724065565772749409461735961871328012891079763641477752121807598403170110068882037132026323859803091735585949460160777707453081136533612788625032413428075486141445130109792917287736305897845618224447241627746893326595309992995623468209461090160843582458853456631037041789031255380358209",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-108",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a4e5fc004e826a448fdf1ce33084611830d7dd331c6c5b5dcb2ab637fb782aa2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "05fc0a7f6521825f86484f4e3a99589899761809a8f0577ac8f05aa4c724ee38",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4096,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 3814,
+        "input_bit_index": 3814,
+        "global_step": 3814,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.661896228790283,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "fbe93dd4ef703a900e54ae2224f423fe3d827120a692e7e9a7d40dee27d28527",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+        "expected_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+        "output_sha256": "e12caad32346c4be1063de425dc257b4544e683cedf0dbcb229f409150e3823c",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+          "observed_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+        "observed_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "e12caad32346c4be1063de425dc257b4544e683cedf0dbcb229f409150e3823c",
+      "decoded_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+      "expected_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-108",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a4e5fc004e826a448fdf1ce33084611830d7dd331c6c5b5dcb2ab637fb782aa2",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "554e217885674e733d831a7da1fa3fe4c8477d91e3d6d8f7fbc7a299ceb2b986",
+      "oriented_a_bits": 4096,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 3814,
+        "input_bit_index": 3814,
+        "global_step": 3814,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.661896228790283,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "fbe93dd4ef703a900e54ae2224f423fe3d827120a692e7e9a7d40dee27d28527",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+        "expected_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+        "output_sha256": "e12caad32346c4be1063de425dc257b4544e683cedf0dbcb229f409150e3823c",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+          "observed_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+        "observed_route_sha256": "679d762ce27d49025248c00a3f32de9ce99b376a22eae4313e4f686abe969371",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "e12caad32346c4be1063de425dc257b4544e683cedf0dbcb229f409150e3823c",
+      "decoded_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+      "expected_output": "1105120726556808997220844255839741334397670900085405739403347687763040947044961221922670939241381923480462538464704145792055019962874408953492827379880276953245385785834653508407426293392699380683161310065534757378341570986522655135812239845834366089869154449650059021536046849829231893949150169708002258814932002818708656646059618063765984136471766229030290265762384964497273486167153892590909251564308364031948977355148942066495232231466818434526893939577516990892321061964780203792580646051974405529166647382420991240675517373700087531020991463756965324939507261181446396574650621397543561359755783985665248131226",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-109",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "95ba636ac4613b63cf7db55b1cc86fed1e04043d4cd8a049657e0b5ef8eecc57",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "f7bdd803f3094e732433d48a6a185499681fd7bd60c41165d9334ee7a0075ce1",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4096,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 6144,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.54826021194458,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "abf2d10a147bd833f285fedea786f708d7745fcc443698696b0938399972fa6a",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+        "expected_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+        "output_sha256": "8f303652236136256ca0a784b1f109d778da4c13004d9b159eaa19fc0e3cf5d3",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+          "observed_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+        "observed_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "8f303652236136256ca0a784b1f109d778da4c13004d9b159eaa19fc0e3cf5d3",
+      "decoded_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+      "expected_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-109",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "95ba636ac4613b63cf7db55b1cc86fed1e04043d4cd8a049657e0b5ef8eecc57",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "85ff528af1a6e16354eec91084c72ab6a39d1903111fd59e4b270e9317392f82",
+      "oriented_a_bits": 4096,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "scan_operand",
+        "phase_step": 2048,
+        "input_bit_index": 2048,
+        "global_step": 6144,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.54826021194458,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "abf2d10a147bd833f285fedea786f708d7745fcc443698696b0938399972fa6a",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+        "expected_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+        "output_sha256": "8f303652236136256ca0a784b1f109d778da4c13004d9b159eaa19fc0e3cf5d3",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+          "observed_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+        "observed_route_sha256": "2b074e50297e597490315b3636ae02b07a8ebf7684e58bb06e1dabff2bb3b62c",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "8f303652236136256ca0a784b1f109d778da4c13004d9b159eaa19fc0e3cf5d3",
+      "decoded_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+      "expected_output": "8525550838307193154025329033100627219172797468306406647183237297929702718441712754241818698199011894967890776543022465848368628178412626696133991475203756017570941602145564052228815421158164163435891284477819266382785247130936893874503819610259501865150636908734400986766870055660160033357004790560840712884930412546845277617662278551888562941115497728097884651189030250111227640474950266167430578490655710892116124515390754905860522637206816699405609792395023228992458749975647985871127820271486290283725004538076845642916109394075256131545540968352303484348444504567521315438603238938348186651014251163885267152400",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-117",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "eab46b8656db2fdf98ef8dbf842d46b695c73c9a7d60bd6fe6bd4e844a7e7222",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "5af96bb2d9e401fc30a7c5c1cb276409df9f216130b6283ab00c8a2ac933d227",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4092,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6141,
+      "observed_transitions": 6141,
+      "teacher_transitions_evaluated": 6141,
+      "transition_count_exact": true,
+      "verified_transitions": 6141,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6141,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2550,
+        "input_bit_index": 2550,
+        "global_step": 2550,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.574589729309082,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "77c3d829786c848555a30f7f8aa88f382599701eda9147b0350629f70b197b41",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+        "expected_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+        "output_sha256": "9fab1c7e8b8210dbbbfcda44b54fb02cd441c0c336d15359050ddbe13d9e9617",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6141,
+          "observed_transition_count": 6141,
+          "transition_count_exact": true,
+          "expected_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+          "observed_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6141,
+        "observed_transition_count": 6141,
+        "transition_count_exact": true,
+        "expected_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+        "observed_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "9fab1c7e8b8210dbbbfcda44b54fb02cd441c0c336d15359050ddbe13d9e9617",
+      "decoded_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+      "expected_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-117",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "eab46b8656db2fdf98ef8dbf842d46b695c73c9a7d60bd6fe6bd4e844a7e7222",
+      "a_bits": 2049,
+      "b_bits": 4092,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "3fe208adade0f2c8fcf43ae39a686f9b9867c220788a99b586c8568cd5b05ded",
+      "oriented_a_bits": 4092,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4092,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6141,
+      "observed_transitions": 6141,
+      "teacher_transitions_evaluated": 6141,
+      "transition_count_exact": true,
+      "verified_transitions": 6141,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6141,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 2550,
+        "input_bit_index": 2550,
+        "global_step": 2550,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.574589729309082,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "77c3d829786c848555a30f7f8aa88f382599701eda9147b0350629f70b197b41",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+        "expected_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+        "output_sha256": "9fab1c7e8b8210dbbbfcda44b54fb02cd441c0c336d15359050ddbe13d9e9617",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6141,
+          "observed_transition_count": 6141,
+          "transition_count_exact": true,
+          "expected_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+          "observed_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6141,
+        "observed_transition_count": 6141,
+        "transition_count_exact": true,
+        "expected_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+        "observed_route_sha256": "ab7f4c1027bbeec2e15f84d19fdb4d50ae6d7ffdf9c5606ea02db7ff4786ec9f",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "9fab1c7e8b8210dbbbfcda44b54fb02cd441c0c336d15359050ddbe13d9e9617",
+      "decoded_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+      "expected_output": "19974487719807263087327412562309644125772587102646286792293813168223915966424242798052976808740317191113684180224392733025871622316220470066849981726008483855472971382333676410456449067226720778304963501898801085090044073137658684344958759932773410707493358977806628768301591846476411007974508832003140170232154257120935602790551871766787400093878468996575212139968369583485628109863650150832801226970129997220356728221445156893880200930499328721718788529041025217191834274750865818495439993899093742037583516942208745706358030310112438820861286681656576998207717839363051312263601830014359893188786610955355421745995",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-120",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a328ac8363cd69949ffefe827028052e89e7c6ba098ccf6e233dc1bb0ad4a744",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "original",
+      "oriented_case_sha256": "d8906774d6077d80da74dd8a8dd4ad9aeec61c9c7883928f0f688be5508a096e",
+      "oriented_a_bits": 2049,
+      "oriented_b_bits": 4096,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 3376,
+        "input_bit_index": 3376,
+        "global_step": 3376,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.592269420623779,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "2534f4c57f28da8605e9c73a2b0e63e4a4be94d970fef95cceff59402164e3fc",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+        "expected_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+        "output_sha256": "fb853aba5f63b9f529b8249712e2d81ae9629e2ee139f93bbb17cbb2e94c6b46",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+          "observed_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+        "observed_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "fb853aba5f63b9f529b8249712e2d81ae9629e2ee139f93bbb17cbb2e94c6b46",
+      "decoded_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+      "expected_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    },
+    {
+      "label": "legacy-fermat-source-120",
+      "group": "legacy",
+      "source": "frozen_structured_battery_seed_20260627_n_128",
+      "case_sha256": "a328ac8363cd69949ffefe827028052e89e7c6ba098ccf6e233dc1bb0ad4a744",
+      "a_bits": 2049,
+      "b_bits": 4096,
+      "p_bits": 2048,
+      "orientation": "swapped",
+      "oriented_case_sha256": "0844f1b7fb1a950a8fbd4e5f72ec9591b38db9d17e43d0d7b935027e197b0e51",
+      "oriented_a_bits": 4096,
+      "oriented_b_bits": 2049,
+      "execution_mode": "vectorized_exact_prefix_induction",
+      "certification_basis": "all candidate logits are evaluated on exact teacher states; the first failure is free-running-valid because every prior transition was verified; a zero-failure result certifies the full rollout by induction",
+      "transition_batch_size": 256,
+      "expected_phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order": [
+        "reduce_operand",
+        "scan_operand"
+      ],
+      "phase_order_exact": true,
+      "expected_phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts": {
+        "reduce_operand": 4096,
+        "scan_operand": 2049
+      },
+      "phase_counts_exact": true,
+      "expected_transitions": 6145,
+      "observed_transitions": 6145,
+      "teacher_transitions_evaluated": 6145,
+      "transition_count_exact": true,
+      "verified_transitions": 6145,
+      "failed_transitions": 0,
+      "transitions_exact": true,
+      "free_running_prefix_transitions_certified": 6145,
+      "post_divergence_teacher_transitions_evaluated": 0,
+      "first_divergence": null,
+      "worst_signed_target_logit_margin": {
+        "phase": "reduce_operand",
+        "phase_step": 3376,
+        "input_bit_index": 3376,
+        "global_step": 3376,
+        "input_bit": 1,
+        "state_width_bits": 2048,
+        "minimum_signed_target_logit_margin": 7.592269420623779,
+        "minimum_margin_bit_index": 0
+      },
+      "margin_status": "available_from_exact_candidate_logits_hook",
+      "strictly_positive_margin": true,
+      "margin_gate_passed": true,
+      "candidate_prediction_path": "entry_instance_actual__step_with_cell_forward_hook",
+      "trajectory_sha256": "2534f4c57f28da8605e9c73a2b0e63e4a4be94d970fef95cceff59402164e3fc",
+      "trajectory_hash_semantics": "ordered exact-teacher inputs, candidate predictions, and targets",
+      "program_output_validation": {
+        "mode": "manifest_program_replay_with_exact_recurrence_step",
+        "output_count": {
+          "expected": 1,
+          "observed": 1
+        },
+        "output_count_exact": true,
+        "output_digit_count": {
+          "expected": 2048,
+          "observed": 2048
+        },
+        "output_digit_count_exact": true,
+        "output_alphabet_exact": true,
+        "decoded_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+        "expected_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+        "output_sha256": "fb853aba5f63b9f529b8249712e2d81ae9629e2ee139f93bbb17cbb2e94c6b46",
+        "route_validation": {
+          "comparison_fields": [
+            "phase",
+            "phase_step",
+            "global_step",
+            "state",
+            "x",
+            "p",
+            "d",
+            "width"
+          ],
+          "expected_transition_count": 6145,
+          "observed_transition_count": 6145,
+          "transition_count_exact": true,
+          "expected_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+          "observed_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+          "first_route_mismatch": null,
+          "route_exact": true
+        },
+        "exact": true
+      },
+      "manifest_route_validation": {
+        "comparison_fields": [
+          "phase",
+          "phase_step",
+          "global_step",
+          "state",
+          "x",
+          "p",
+          "d",
+          "width"
+        ],
+        "expected_transition_count": 6145,
+        "observed_transition_count": 6145,
+        "transition_count_exact": true,
+        "expected_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+        "observed_route_sha256": "83c821bf04caed1de8eba122990ca3d6d7938b0a0af834c8996e044db82e6fc4",
+        "first_route_mismatch": null,
+        "route_exact": true
+      },
+      "output_count": {
+        "expected": 1,
+        "observed": 1
+      },
+      "output_count_exact": true,
+      "output_digit_count": {
+        "expected": 2048,
+        "observed": 2048
+      },
+      "output_digit_count_exact": true,
+      "output_alphabet_exact": true,
+      "output_sha256": "fb853aba5f63b9f529b8249712e2d81ae9629e2ee139f93bbb17cbb2e94c6b46",
+      "decoded_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+      "expected_output": "16447674332542351410467045271396953227248305676177180046448079501159448402805850744764773070369259253520458706105373252033390510060268107131890799669280616078824128062050225509628133071848951910739736259469645627152273551243280538386507861398153983908401725692128090270666997802097505079466607446349146192248826483714420454856524379378573218108285820223997569999786612040755771884901601328741833345023311790805117284848207188434996681669720379100810820699237372119911794705858565531464283860360376664624253313993152475941534614856411531095496526559436101767985555357776049125410346295191804383350726970337619636589214",
+      "final_exact": true,
+      "candidate_full_rollout_certified": true,
+      "all_exact": true,
+      "candidate_prefix_executed": true,
+      "incoming_state_source": "candidate_owned_exact_prefix_induction"
+    }
+  ],
+  "completed_results": 18,
+  "completed_transitions": 110588,
+  "stopped_early_on_nonpassing_result": false,
+  "first_nonpassing_result": null,
+  "artifact_sha256_after": {
+    "manifest.json": "470aa6427967af96fe18d7ed76b0544a82eb5d84ed7960799ecdb6caecce5ed0",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+    "provenance.json": "9d0dec371ef8c896320fe997e23cd3e71910062736fae1b78d5ceb91f5cb51fe"
+  },
+  "artifact_unchanged_during_run": true,
+  "result_count_exact": true,
+  "transition_cardinality_exact": true,
+  "orientation_counts": {
+    "original": 9,
+    "swapped": 9
+  },
+  "orientation_cardinality_exact": true
+}

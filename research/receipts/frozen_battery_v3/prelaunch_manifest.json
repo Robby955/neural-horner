@@ -1,0 +1,62 @@
+{
+  "schema": "neural-horner-frozen-battery-prelaunch-v1",
+  "run_id": "neural-horner-battery-v3-20260802T050824Z",
+  "created_at_utc": "2026-08-02T05:08:24Z",
+  "purpose": "Cache-free detached frozen-development battery in both operand orientations",
+  "expected": {
+    "families_per_orientation": 6,
+    "cases_per_family": 128,
+    "orientations": [
+      "original",
+      "swapped"
+    ],
+    "grand_total": 1536,
+    "require_exact": true,
+    "model_L": 2048
+  },
+  "artifact_sha256": {
+    "manifest.json": "470aa6427967af96fe18d7ed76b0544a82eb5d84ed7960799ecdb6caecce5ed0",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "provenance.json": "9d0dec371ef8c896320fe997e23cd3e71910062736fae1b78d5ceb91f5cb51fe",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01"
+  },
+  "source_sha256": {
+    "held_out_battery.py": "3f63dfb0a58a0ea736d6091ae8023135a46167f78aba1625986dc91b73a47f99",
+    "submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+  },
+  "scorer": {
+    "commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+    "python_tree_sha256": "c9039003eeb32a1bee99cb8c0e2a9b22dde60f9d913558bc70576754fbbd1478",
+    "decoder_sha256": "b6b83926ca8d9a0e20058b3389be0c519a09f0c83a2e4330c4f65825fc1ac99f"
+  },
+  "observation": {
+    "paths": {
+      "submission": "/private/tmp/neural-horner-battery-v3.wUWpm3/submission",
+      "runner_root": "/private/tmp/neural-horner-battery-v3.wUWpm3/source",
+      "scorer_repo": "/private/tmp/neural-horner-battery-v3.wUWpm3/scorer",
+      "external_pycache_prefix": "/private/tmp/neural-horner-battery-v3.wUWpm3/fresh-pycache"
+    },
+    "python": {
+      "executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+      "executable_sha256": "bdc6b50ebbf1fa5d1fc4ed8f3ab7decb640e60b55088ae0be4bf63bb914a89d5"
+    },
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPYCACHEPREFIX": "/private/tmp/neural-horner-battery-v3.wUWpm3/fresh-pycache",
+      "sys_dont_write_bytecode": true,
+      "sys_pycache_prefix": "/private/tmp/neural-horner-battery-v3.wUWpm3/fresh-pycache"
+    },
+    "cache_inventory": {
+      "submission": [],
+      "runner": [],
+      "scorer": [],
+      "external_pycache_prefix": []
+    }
+  },
+  "scope_nonclaims": [
+    "not_a_sealed_generalization_result",
+    "not_the_official_scorer_pipeline",
+    "not_official_runtime_evidence",
+    "not_an_official_sair_submission_update"
+  ]
+}

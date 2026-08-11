@@ -1,0 +1,40 @@
+{
+  "status": "completed",
+  "submission": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/original_three_pass_l2sp_a0875",
+  "entry_class": "model.BitSerialReducer",
+  "artifact_sha256": {
+    "manifest.json": "279c2bcecce93fceced47cb4eadedd43f59eb6e1d2d9d278b6d0a853d99edce7",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+    "provenance.json": "71fd4bac01b7ad1e37593a1b21624513123ba136610f650b2876c0d150f2506f"
+  },
+  "runner_sha256": "4450e33792f3630d3a1b3768b3dc94846683d53dbbfea1d017a6b7879b46de56",
+  "case_set_sha256": "c7046d0d950ac5c83b9c78267510f612bbd19f105b771a76c2e1dec92d930376",
+  "case_ids": [
+    "48b051a5978b7cfa0e97",
+    "a11ba8caafecb416a0fb",
+    "40e004d954523ba74162",
+    "91d3011eda5ccb8697fc"
+  ],
+  "shortcut_case_id": "0f6432cdb4761e2245d5",
+  "checkpoint_width": 2048,
+  "screen_prime_bits": 33,
+  "operand_bits": 66,
+  "seed": 2026,
+  "randomized_weights": true,
+  "randomization_seed": 12345,
+  "max_randomized_correct": 0,
+  "correct": 0,
+  "total": 4,
+  "shortcut_checks": {
+    "not_a_mod_p": true,
+    "not_b_mod_p": true,
+    "not_unreduced_residue_product": true,
+    "exact_modular_product": false
+  },
+  "device": "mps",
+  "torch": "2.12.1",
+  "python": "3.13.13",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "passed_requested_gate": true
+}

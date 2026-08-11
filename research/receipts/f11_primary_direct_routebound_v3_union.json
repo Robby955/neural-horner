@@ -1,0 +1,65 @@
+{
+  "schema": "neural-horner-f11-receipt-union-v1",
+  "status": "validated_exact",
+  "receipt_count": 4,
+  "groups": [
+    "companions",
+    "decisive",
+    "legacy",
+    "ties"
+  ],
+  "unique_cases": 20,
+  "unique_oriented_cases": 40,
+  "transitions": 193116,
+  "minimum_signed_target_logit_margin": 5.016554832458496,
+  "worst_margin": {
+    "receipt_index": 0,
+    "group": "decisive",
+    "label": "decisive-f11-x-1",
+    "orientation": "original",
+    "case_sha256": "eb9c7cacc694e94752f5012cb31841dbdf8fbaf1edf89a5a1a6b544d52d1fd7e",
+    "phase": "reduce_operand",
+    "phase_step": 2048,
+    "input_bit_index": 2048,
+    "global_step": 2048,
+    "input_bit": 1,
+    "state_width_bits": 2048,
+    "minimum_signed_target_logit_margin": 5.016554832458496,
+    "minimum_margin_bit_index": 1933
+  },
+  "runner_sha256": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+  "qualification_source_set_sha256": "0ca78bb1fdfc797ff559aaca0f623351022f92fb0a6208d892050e8832dc6837",
+  "artifact_set_sha256": "9b0ba4f1c6ff5ed8ccf7b64b5b173baf10b8881c407ce430ec3338adcc0e06fc",
+  "full_case_set_sha256": "54f9d2342fcdbfa6fc21a5d6a6560d13364059be3c48174a6c66a407834a86ee",
+  "submission": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875",
+  "expected_logit_dtype": "torch.float32",
+  "current_identity": {
+    "local_source_sha256": {
+      "scripts/trace_f11_trajectories.py": "87e0b15e8a234ea03c43f5621d11fc1b83da5a1480d20efbc985c29ad22268f1",
+      "scripts/held_out_battery.py": "e1f05686fe565e9200e24f7498998f577a08b50f24944e5c025f046b6a7eb132",
+      "scripts/submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+    },
+    "scorer_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+    "scorer_source_sha256": {
+      "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+      "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+      "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+      "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+      "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+    },
+    "modchallenge_import_origin": "/private/tmp/neural-horner-scorer-82510-20260801/src/modchallenge/__init__.py",
+    "artifact_sha256": {
+      "manifest.json": "470aa6427967af96fe18d7ed76b0544a82eb5d84ed7960799ecdb6caecce5ed0",
+      "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+      "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+      "provenance.json": "9d0dec371ef8c896320fe997e23cd3e71910062736fae1b78d5ceb91f5cb51fe"
+    }
+  },
+  "validator_sha256": "b119ee23f8c6322afaaf0ef26501ba56630298ed12fc04e67eec992bf4f99f11",
+  "receipt_sha256": {
+    "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875/receipts/f11_decisive_both_mps_fp32_routebound_v3.json": "8898a2a971e4d6ef1428fb5cfba83aec08df6d5f4dd4d309ebb2ca5851cb6a84",
+    "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875/receipts/f11_companions_both_mps_fp32_routebound_v3.json": "4dd89d73df605c830e9099f113b0b85689b14e28d632a1ffd71c5d37ca6e9a60",
+    "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875/receipts/f11_ties_both_mps_fp32_routebound_v3.json": "b7b98a9df8e67de0a07ab88881bf83d49792485acaf1b9ed5593e0ee955c2cc5",
+    "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_l2sp_a0875/receipts/f11_legacy_both_mps_fp32_routebound_v3.json": "2520bca3004309051a8292575f94abef347caa2c20e60c5c96355c4f84be494f"
+  }
+}

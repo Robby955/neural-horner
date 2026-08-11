@@ -1,0 +1,35 @@
+{
+  "schema": "neural-horner-official-rules-refresh-v1",
+  "retrieved_at_utc": "2026-08-11T21:51:41Z",
+  "repository": "https://github.com/SAIRcompetition/modular-arithmetic-challenge.git",
+  "live_main_commit": "99cac6ef5c2f82e53105ec0ddcbb9b8d37bf6fca",
+  "receipt_scorer_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+  "commits_after_receipt_pin": [
+    "45eb406",
+    "99cac6e"
+  ],
+  "source_sha256": {
+    "rules/overview.md": "d692905e714aea6c2213acd18a3a6490341932a4ffeef7d5183a0083c21d9eff",
+    "rules/evaluation.md": "fde43086cad17e15367029af1ad512a69f85782d22c1b852197382f7559cc8ea",
+    "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+    "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+    "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def"
+  },
+  "verified_live_statements": {
+    "submission_deadline": "2026-08-12 23:59 AoE",
+    "evaluation_geometry": "1100 problems",
+    "inference_budget": "5 minutes",
+    "feedback_free_token_loop_allowed": true,
+    "deterministic_full_width_operand_prereduction_prohibited": true
+  },
+  "diff_from_receipt_pin": {
+    "rules_changed": true,
+    "runtime_contract_files_changed": false,
+    "summary": "The live rules add an explicit ban on deterministic full-width operand pre-reduction and update reference examples. Docker and evaluation-pipeline files used by the runtime audit are byte-identical to the receipt pin."
+  },
+  "neural_horner_scope": {
+    "operand_reduction": "learned recurrent transitions over raw operand bits",
+    "claim": "The new pre-reduction rule does not describe NeuralHorner's learned reductions.",
+    "nonclaim": "This source refresh is not an organizer compliance ruling and does not relabel receipts from scorer commit 82510bba00a1126649bd76dd1a451f14d0b3eb60 as current-runner evidence."
+  }
+}

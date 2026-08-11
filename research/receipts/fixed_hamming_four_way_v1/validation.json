@@ -1,0 +1,331 @@
+{
+  "schema": "neural-horner-fixed-hamming-four-way-validation-v1",
+  "status": "validated_causal_ablation",
+  "fixture_identity": {
+    "status": "verified",
+    "path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/fixtures/fixed_hamming_v3_failures.json",
+    "sha256": "4fa3322471e1d4185d53cbd301858d416ba44b8a6ee0d110e1d2a3b8d5c7113a",
+    "schema": "neural-horner-trajectory-case-fixture-v1",
+    "run_id": "fixed-hamming-v3-failures-20260802",
+    "expected_case_count": 3,
+    "case_sha256": [
+      "6bc9bace6e558e0e84892735042f151dfc50574fba22e8f631ffebb2e057b93b",
+      "fdd32cf376c6ed32bc7c02d7d6eb8e474a60af5205e4f48f593681133063761b",
+      "b129e42a66ffaff73365f109998d31b5be61f632cb24093ed2c958e8e87a1400"
+    ],
+    "case_set_sha256": "ee6589a6b26a50ea5fc55e1cabb324e22eecb34b24a020a611335ed872661734"
+  },
+  "configuration_order": [
+    "v8_original",
+    "v8_direct",
+    "repaired_original",
+    "repaired_direct"
+  ],
+  "receipt_identity": {
+    "v8_original": {
+      "path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/fixed_hamming_four_way_v1/v8_original.json",
+      "sha256": "ffb78bc792e532e297a18435b2ecd75dd4fa3ac425e7a36fdb0e39826833bd06"
+    },
+    "v8_direct": {
+      "path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/fixed_hamming_four_way_v1/v8_direct.json",
+      "sha256": "cd0f236c28f95edaba7ad14323f2e527d218c2470ff11f013311f395558eee20"
+    },
+    "repaired_original": {
+      "path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/fixed_hamming_four_way_v1/repaired_original.json",
+      "sha256": "3f17ba2bfbacbda60fb53cd42d08d5db610a0134698a702f5223a8cab71c05cd"
+    },
+    "repaired_direct": {
+      "path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/fixed_hamming_four_way_v1/repaired_direct.json",
+      "sha256": "a30a9af9f53d87c73ecdbcf5fface4cde75bede9ac97a6f80d6cb18cf19c5f51"
+    }
+  },
+  "artifact_identity": {
+    "v8_original": {
+      "manifest.json": "79a620ae0f0d65bb6b99f44be787491dce09e44d21d8410bb187fa51f2428bfd",
+      "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+      "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+    },
+    "v8_direct": {
+      "manifest.json": "84ac7c4dc5a0625169fd39a656322d24cd6836c9acb0cfd6ddda2641e606a969",
+      "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+      "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+    },
+    "repaired_original": {
+      "manifest.json": "279c2bcecce93fceced47cb4eadedd43f59eb6e1d2d9d278b6d0a853d99edce7",
+      "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+      "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+      "provenance.json": "71fd4bac01b7ad1e37593a1b21624513123ba136610f650b2876c0d150f2506f"
+    },
+    "repaired_direct": {
+      "manifest.json": "470aa6427967af96fe18d7ed76b0544a82eb5d84ed7960799ecdb6caecce5ed0",
+      "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+      "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+      "provenance.json": "9d0dec371ef8c896320fe997e23cd3e71910062736fae1b78d5ceb91f5cb51fe"
+    }
+  },
+  "qualification_source_identity": {
+    "local_source_sha256": {
+      "scripts/trace_f11_trajectories.py": "45287dbab1c1feae79984438b498b86ce4132ff512f74e7cc68b1ba1870a44e1",
+      "scripts/held_out_battery.py": "3f63dfb0a58a0ea736d6091ae8023135a46167f78aba1625986dc91b73a47f99",
+      "scripts/submission_utils.py": "493e3ad43a62dd8111eb4e54086e135e4481c9e0948678c5e9d92f2925c11046"
+    },
+    "local_source_set_sha256": "be240cd04a7a8d86f79cb44174f737dd3c002fb00edfc5151a64217361794256",
+    "scorer": {
+      "status": "verified",
+      "contract_path": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/research/receipts/scorer_runtime_contract_82510.json",
+      "contract_sha256": "6e200c1e42938cc0b9467922bdff5e9c63033a3afd74d08e10787273de87f1bc",
+      "declared_repository": "/private/tmp/neural-horner-scorer-82510-20260801",
+      "declared_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "declared_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "declared_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "observed_commit": "82510bba00a1126649bd76dd1a451f14d0b3eb60",
+      "tracked_files_clean": true,
+      "commit_matches_contract": true,
+      "observed_source_sha256": {
+        "docker/Dockerfile": "350ec451a535ef63d1228a937f43efefd7f958cb790f3ff8ca53b41364650883",
+        "docker/README.md": "127abf8affe05623c4b4a50690ae5ec2d32be3101ed8f0367b1c420a39b0c811",
+        "src/modchallenge/evaluation/pipeline.py": "2c5c1cb6a21c754690eaf8b0021ae4c63d0f1f2c0292738b12e57a01b5626def",
+        "rules/overview.md": "efc1273f7b4aa6849d53b0a08e933656b4a771a97ea43b017ebe369d1de78497",
+        "rules/evaluation.md": "24c18b1bbc7aae9c0bbaab973d1d1a85cce29ec16dadaa01911186ced14c15aa"
+      },
+      "observed_source_set_sha256": "05620843ab3523e3c337cd1223b179ca3f6542b70e4d795af3b16d6af0d2ce38",
+      "sources_match_contract": true
+    }
+  },
+  "case_results": {
+    "fixed-hamming-source-003": {
+      "truth_table": {
+        "v8_original": true,
+        "v8_direct": true,
+        "repaired_original": true,
+        "repaired_direct": false
+      },
+      "classification": "weight_schedule_interaction_required",
+      "configurations": {
+        "v8_original": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 10240,
+          "observed_transitions": 10240,
+          "worst_signed_target_logit_margin": 6.123288154602051,
+          "first_divergence": null
+        },
+        "v8_direct": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 8192,
+          "observed_transitions": 8192,
+          "worst_signed_target_logit_margin": 4.060157299041748,
+          "first_divergence": null
+        },
+        "repaired_original": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 10240,
+          "observed_transitions": 10240,
+          "worst_signed_target_logit_margin": 6.221508026123047,
+          "first_divergence": null
+        },
+        "repaired_direct": {
+          "all_exact": false,
+          "final_exact": false,
+          "failed_transitions": 1,
+          "verified_transitions": 8191,
+          "observed_transitions": 8192,
+          "worst_signed_target_logit_margin": -1.0249347686767578,
+          "first_divergence": {
+            "phase": "scan_operand",
+            "phase_step": 1417,
+            "global_step": 5513,
+            "wrong_output_bit_count": 1,
+            "minimum_signed_target_logit_margin": -1.0249347686767578,
+            "minimum_margin_bit_index": 1997,
+            "modulus_subtract_count": "1",
+            "boundary_distance_bit_length": 2046,
+            "boundary_distance_sha256": "f918577775fe6c9cc9ec6319b081ab508069ed7e12aba239c759dd4d3d3dfb06",
+            "double_carry_out": false,
+            "add_after_truncated_double_carry_out": true,
+            "full_pre_mod_word_overflow_count": "1",
+            "teacher_transition_sha256": "2b3767b7e8045eb259765efa970335df10a8482823381f68b11940586c6bbf54"
+          }
+        }
+      }
+    },
+    "fixed-hamming-source-035": {
+      "truth_table": {
+        "v8_original": true,
+        "v8_direct": false,
+        "repaired_original": true,
+        "repaired_direct": false
+      },
+      "classification": "direct_schedule_sufficient",
+      "configurations": {
+        "v8_original": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 10238,
+          "observed_transitions": 10238,
+          "worst_signed_target_logit_margin": 5.107337951660156,
+          "first_divergence": null
+        },
+        "v8_direct": {
+          "all_exact": false,
+          "final_exact": false,
+          "failed_transitions": 1,
+          "verified_transitions": 8189,
+          "observed_transitions": 8190,
+          "worst_signed_target_logit_margin": -2.174118757247925,
+          "first_divergence": {
+            "phase": "scan_operand",
+            "phase_step": 149,
+            "global_step": 4245,
+            "wrong_output_bit_count": 1,
+            "minimum_signed_target_logit_margin": -2.174118757247925,
+            "minimum_margin_bit_index": 2007,
+            "modulus_subtract_count": "2",
+            "boundary_distance_bit_length": 2046,
+            "boundary_distance_sha256": "7581c99ddb628076fcd4c30c2efc7c1f85902f1e8fc40cb88174cb9d2cef8812",
+            "double_carry_out": false,
+            "add_after_truncated_double_carry_out": true,
+            "full_pre_mod_word_overflow_count": "1",
+            "teacher_transition_sha256": "ed64ce467773c8861dd6848c33678707b896d2e19bd02d62aa4a1efd62619301"
+          }
+        },
+        "repaired_original": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 10238,
+          "observed_transitions": 10238,
+          "worst_signed_target_logit_margin": 4.688876152038574,
+          "first_divergence": null
+        },
+        "repaired_direct": {
+          "all_exact": false,
+          "final_exact": false,
+          "failed_transitions": 1,
+          "verified_transitions": 8189,
+          "observed_transitions": 8190,
+          "worst_signed_target_logit_margin": -13.285685539245605,
+          "first_divergence": {
+            "phase": "scan_operand",
+            "phase_step": 149,
+            "global_step": 4245,
+            "wrong_output_bit_count": 7,
+            "minimum_signed_target_logit_margin": -13.285685539245605,
+            "minimum_margin_bit_index": 2002,
+            "modulus_subtract_count": "2",
+            "boundary_distance_bit_length": 2046,
+            "boundary_distance_sha256": "7581c99ddb628076fcd4c30c2efc7c1f85902f1e8fc40cb88174cb9d2cef8812",
+            "double_carry_out": false,
+            "add_after_truncated_double_carry_out": true,
+            "full_pre_mod_word_overflow_count": "1",
+            "teacher_transition_sha256": "ed64ce467773c8861dd6848c33678707b896d2e19bd02d62aa4a1efd62619301"
+          }
+        }
+      }
+    },
+    "fixed-hamming-source-110": {
+      "truth_table": {
+        "v8_original": true,
+        "v8_direct": true,
+        "repaired_original": false,
+        "repaired_direct": false
+      },
+      "classification": "repaired_weights_sufficient",
+      "configurations": {
+        "v8_original": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 10240,
+          "observed_transitions": 10240,
+          "worst_signed_target_logit_margin": 3.53896164894104,
+          "first_divergence": null
+        },
+        "v8_direct": {
+          "all_exact": true,
+          "final_exact": true,
+          "failed_transitions": 0,
+          "verified_transitions": 8192,
+          "observed_transitions": 8192,
+          "worst_signed_target_logit_margin": 2.693274974822998,
+          "first_divergence": null
+        },
+        "repaired_original": {
+          "all_exact": false,
+          "final_exact": false,
+          "failed_transitions": 1,
+          "verified_transitions": 10239,
+          "observed_transitions": 10240,
+          "worst_signed_target_logit_margin": -0.5739598870277405,
+          "first_divergence": {
+            "phase": "multiply",
+            "phase_step": 553,
+            "global_step": 8745,
+            "wrong_output_bit_count": 1,
+            "minimum_signed_target_logit_margin": -0.5739598870277405,
+            "minimum_margin_bit_index": 1775,
+            "modulus_subtract_count": "1",
+            "boundary_distance_bit_length": 2046,
+            "boundary_distance_sha256": "854449f50331eab14ffa5b2436e9e7a19f5b6cf3803142bcd8044f40577d7b9f",
+            "double_carry_out": false,
+            "add_after_truncated_double_carry_out": true,
+            "full_pre_mod_word_overflow_count": "1",
+            "teacher_transition_sha256": "45885e09a75f3e171a20d5e34d07229a7bebb314190943c6a7a47f955b6cb669"
+          }
+        },
+        "repaired_direct": {
+          "all_exact": false,
+          "final_exact": false,
+          "failed_transitions": 1,
+          "verified_transitions": 8191,
+          "observed_transitions": 8192,
+          "worst_signed_target_logit_margin": -1.1388005018234253,
+          "first_divergence": {
+            "phase": "scan_operand",
+            "phase_step": 2459,
+            "global_step": 6555,
+            "wrong_output_bit_count": 1,
+            "minimum_signed_target_logit_margin": -1.1388005018234253,
+            "minimum_margin_bit_index": 1993,
+            "modulus_subtract_count": "1",
+            "boundary_distance_bit_length": 2046,
+            "boundary_distance_sha256": "983a07456fcfd3fc94fc6ca45f589176c1a0ad21e8cd0e1c5c92e41abc073942",
+            "double_carry_out": false,
+            "add_after_truncated_double_carry_out": true,
+            "full_pre_mod_word_overflow_count": "1",
+            "teacher_transition_sha256": "c30ed30e223c3859c35fbe6e3ad795aef959e0a9a2a549c1f12786280d6b6eb0"
+          }
+        }
+      }
+    }
+  },
+  "case_35_shared_direct_teacher_transition": {
+    "validated": true,
+    "teacher_transition_sha256": "ed64ce467773c8861dd6848c33678707b896d2e19bd02d62aa4a1efd62619301",
+    "configuration_signatures": {
+      "v8_direct": "ed64ce467773c8861dd6848c33678707b896d2e19bd02d62aa4a1efd62619301",
+      "repaired_direct": "ed64ce467773c8861dd6848c33678707b896d2e19bd02d62aa4a1efd62619301"
+    }
+  },
+  "scope_nonclaims": [
+    "three_frozen_development_counterexamples_only",
+    "vectorized_exact_prefix_induction_not_literal_post_divergence_replay",
+    "not_a_sealed_generalization_result",
+    "not_a_promotion_result",
+    "no_training_performed"
+  ],
+  "validator": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/scripts/validate_fixed_hamming_four_way.py",
+  "validator_sha256": "10f495369242944cb2b20808dba1781de3952b5bdc58cdc63193925e6d31f298"
+}

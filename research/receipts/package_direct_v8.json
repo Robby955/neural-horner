@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "candidate": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass",
+  "candidate_files": {
+    "manifest.json": "84ac7c4dc5a0625169fd39a656322d24cd6836c9acb0cfd6ddda2641e606a969",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "package": "/private/tmp/neural-horner-package-direct-v8-20260801",
+  "builder_sha256": "b58b9818efa8378a6f1f0c140d1c6167c477ff09dd7e5a8f45573c98a36d989b",
+  "files": {
+    "manifest.json": "84ac7c4dc5a0625169fd39a656322d24cd6836c9acb0cfd6ddda2641e606a969",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609"
+  },
+  "file_count": 3,
+  "total_bytes": 1897600,
+  "unexpected_files": []
+}

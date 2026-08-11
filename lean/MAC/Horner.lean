@@ -113,6 +113,83 @@ theorem modmul_eq {p a b : Nat} (hp : 0 < p) :
       simp [Nat.mul_mod]
     _ = (a * b) % p := by rw [Nat.mul_comm]
 
+/--
+The direct two-pass schedule reduces `b`, then scans the original bits of `a`.
+It computes the same modular product without a separate residue-multiplication pass.
+-/
+theorem directModmul_eq {p a b : Nat} (hp : 0 < p) :
+    horner p (b % p) (toBits a) = (a * b) % p := by
+  rw [horner_eq (p := p) (x := b % p) (bits := toBits a) hp,
+    bitsToNat_toBits]
+  simp [Nat.mul_mod]
+
+/-- The operand-swapped direct schedule computes the identical product. -/
+theorem directModmul_swap_eq {p a b : Nat} (hp : 0 < p) :
+    horner p (a % p) (toBits b) = (a * b) % p := by
+  rw [directModmul_eq (p := p) (a := b) (b := a) hp, Nat.mul_comm]
+
+/-- A transition implementation has the same interface as the exact step. -/
+abbrev TransitionCell := Nat → Nat → Nat → Bool → Nat
+
+/-- Run an arbitrary transition cell in the same bit-serial Horner loop. -/
+def cellHorner (cell : TransitionCell) (p x : Nat) (bits : List Bool) : Nat :=
+  bits.foldl (cell p x) 0
+
+/--
+`agreesFrom cell p x s bits` records agreement only along the exact trajectory
+starting at `s`. It does not require the cell to be correct on unreachable
+states.
+-/
+def agreesFrom (cell : TransitionCell) (p x : Nat) : Nat → List Bool → Prop
+  | _, [] => True
+  | s, d :: bits =>
+      cell p x s d = step p x s d ∧
+        agreesFrom cell p x (step p x s d) bits
+
+lemma foldl_cell_eq_foldl_step_of_agreesFrom
+    (cell : TransitionCell) (p x s : Nat) (bits : List Bool)
+    (hagree : agreesFrom cell p x s bits) :
+    bits.foldl (cell p x) s = bits.foldl (step p x) s := by
+  induction bits generalizing s with
+  | nil => rfl
+  | cons d bits ih =>
+      rw [List.foldl_cons, List.foldl_cons]
+      rw [hagree.1]
+      exact ih (step p x s d) hagree.2
+
+/--
+Exact-prefix transition agreement certifies the complete deterministic scan.
+This is the formal induction principle used by the trajectory runner.
+-/
+theorem cellHorner_eq_horner_of_agreesFrom
+    (cell : TransitionCell) (p x : Nat) (bits : List Bool)
+    (hagree : agreesFrom cell p x 0 bits) :
+    cellHorner cell p x bits = horner p x bits := by
+  exact foldl_cell_eq_foldl_step_of_agreesFrom cell p x 0 bits hagree
+
+/-- Reduce `b` with the cell, then scan the original bits of `a`. -/
+def cellDirectModmul (cell : TransitionCell) (p a b : Nat) : Nat :=
+  let reducedB := cellHorner cell p 1 (toBits b)
+  cellHorner cell p reducedB (toBits a)
+
+/--
+If the learned cell agrees with the exact step along the exact-prefix states of
+both direct passes, its deterministic two-pass rollout computes modular
+multiplication. The hypotheses are trajectory certificates, not a proof that a
+particular neural checkpoint satisfies them universally.
+-/
+theorem cellDirectModmul_eq_of_agreesFrom
+    (cell : TransitionCell) {p a b : Nat} (hp : 0 < p)
+    (hreduce : agreesFrom cell p 1 0 (toBits b))
+    (hscan : agreesFrom cell p (b % p) 0 (toBits a)) :
+    cellDirectModmul cell p a b = (a * b) % p := by
+  have hb : cellHorner cell p 1 (toBits b) = b % p := by
+    rw [cellHorner_eq_horner_of_agreesFrom cell p 1 (toBits b) hreduce]
+    exact reduce_eq hp
+  rw [cellDirectModmul, hb]
+  rw [cellHorner_eq_horner_of_agreesFrom cell p (b % p) (toBits a) hscan]
+  exact directModmul_eq hp
+
 theorem horner_lt {p x : Nat} {bits : List Bool} (hp : 0 < p) :
     horner p x bits < p := by
   rw [horner_eq (p := p) (x := x) (bits := bits) hp]

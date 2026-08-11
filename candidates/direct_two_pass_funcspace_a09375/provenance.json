@@ -1,0 +1,39 @@
+{
+  "method": "linear_checkpoint_interpolation",
+  "alpha": 0.9375,
+  "base": "TrickyRex/bitserial-modmul-v8@301938693892043d66a8bf6ec60a9c5ab85549d4",
+  "base_sha256": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609",
+  "endpoint": "function-space-step1500-mu3-l2sp1e-4",
+  "endpoint_sha256": "2cfe7bb6b7e42a2f2e8863dd6e9122ca51c8c3435180db388e8b338a02c4497f",
+  "base_checkpoint_metadata": {
+    "config": {
+      "dmodel": 96,
+      "hidden": 128
+    },
+    "L": 2048,
+    "step": 3000,
+    "scores": {
+      "9": 1.0,
+      "10": 1.0
+    }
+  },
+  "endpoint_checkpoint_metadata": {
+    "config": {
+      "dmodel": 96,
+      "hidden": 128
+    },
+    "L": 2048,
+    "step": 1500,
+    "mu": 3.0,
+    "modbound_frac": 0.3
+  },
+  "template": "direct_two_pass",
+  "output_weights_sha256": "2fbc717be66b3abbf4815dce657f1a9ee862b17d9dc26efd962b9063dbdb8a16",
+  "L": 2048,
+  "config": {
+    "dmodel": 96,
+    "hidden": 128
+  },
+  "parameter_tensors": 21,
+  "parameters": 470849
+}

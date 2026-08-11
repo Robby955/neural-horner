@@ -1,0 +1,7 @@
+{
+  "entry_class": "model.DirectBitSerialReducer",
+  "output_base": 2,
+  "framework": "pytorch",
+  "model_description": "NeuralHorner direct two-pass research candidate. One shared, modulus-conditioned recurrent transition cell (470,849-parameter bidirectional 2-layer GRU with control-bit embedding and per-bit head) is applied to the learned transition s' = (2*s + d*x) mod p. The checkpoint has maximum state width L=2048. Rows are grouped by their own 32-bit-aligned prime width and artificial leading-padding steps are masked. The fixed schedule canonically orders the operands, reduces the longer operand (lexicographically larger on equal lengths), then scans the raw MSB-first bits of the shorter operand with the learned residue as x, removing the original fixed-width third pass and making operand swaps follow the identical trajectory. The next token comes only from preprocessed a or b bits and never from model feedback. State is re-quantized after every transition; the scorer decodes emitted base-2 digits. Inputs outside p < 2^2048 or 4096-bit operands return [0].",
+  "training_description": "Weight-space interpolation with alpha=0.9375 between TrickyRex/bitserial-modmul-v8@301938693892043d66a8bf6ec60a9c5ab85549d4 (sha256:294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609) and function-space-step1500-mu3-l2sp1e-4 (sha256:2cfe7bb6b7e42a2f2e8863dd6e9122ca51c8c3435180db388e8b338a02c4497f). The inference program is the fixed direct two-pass bit-serial Horner schedule. This artifact requires its own candidate-specific evaluation receipts."
+}

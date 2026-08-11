@@ -29,7 +29,7 @@ BANNED = [
 # Methods considered the forward/inference path. Lines outside these are reported as
 # context only (e.g. an import or a training helper), not a hard fail.
 FORWARD_HINTS = ("def forward", "def _step", "def _reduce", "def _mul", "def predict",
-                 "def infer", "def __call__", "def step")
+                 "def _scan", "def infer", "def __call__", "def step")
 
 
 def _strip(line):

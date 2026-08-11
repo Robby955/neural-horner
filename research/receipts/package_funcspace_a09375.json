@@ -1,0 +1,21 @@
+{
+  "status": "completed",
+  "candidate": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/direct_two_pass_funcspace_a09375",
+  "candidate_files": {
+    "manifest.json": "cf5dbc834da0068e885b3f07cd4c8406b7075bf8fd5056eea3f4890497277b07",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "2fbc717be66b3abbf4815dce657f1a9ee862b17d9dc26efd962b9063dbdb8a16",
+    "provenance.json": "55c9fc269495385b42badeff4af8919b9df60f7da9e469121d700f15f807c702"
+  },
+  "package": "/private/tmp/neural-horner-package-func-a09375-20260801",
+  "builder_sha256": "b58b9818efa8378a6f1f0c140d1c6167c477ff09dd7e5a8f45573c98a36d989b",
+  "files": {
+    "manifest.json": "cf5dbc834da0068e885b3f07cd4c8406b7075bf8fd5056eea3f4890497277b07",
+    "model.py": "5edb53dae33d6284dbc6c8ccbd64f57c70999c4470b0f3139967de008ab527ff",
+    "weights.pt": "2fbc717be66b3abbf4815dce657f1a9ee862b17d9dc26efd962b9063dbdb8a16",
+    "provenance.json": "55c9fc269495385b42badeff4af8919b9df60f7da9e469121d700f15f807c702"
+  },
+  "file_count": 4,
+  "total_bytes": 1900272,
+  "unexpected_files": []
+}

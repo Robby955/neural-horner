@@ -1,0 +1,21 @@
+{
+  "status": "completed",
+  "candidate": "/Users/robsneiderman/Projects/neural-horner-direct-horner-20260801/candidates/original_three_pass_l2sp_a0875",
+  "candidate_files": {
+    "manifest.json": "279c2bcecce93fceced47cb4eadedd43f59eb6e1d2d9d278b6d0a853d99edce7",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+    "provenance.json": "71fd4bac01b7ad1e37593a1b21624513123ba136610f650b2876c0d150f2506f"
+  },
+  "package": "/private/tmp/neural-horner-package-original-l2sp-a0875-20260801",
+  "builder_sha256": "b58b9818efa8378a6f1f0c140d1c6167c477ff09dd7e5a8f45573c98a36d989b",
+  "files": {
+    "manifest.json": "279c2bcecce93fceced47cb4eadedd43f59eb6e1d2d9d278b6d0a853d99edce7",
+    "model.py": "d7683f7d3a079452ba04296c5eeac16a8665ef1eff921f82eb0fff4c03e7700e",
+    "weights.pt": "6d1c8a09e555778fb7961778678a1473e681707ada0d20f1465712313b3e8f01",
+    "provenance.json": "71fd4bac01b7ad1e37593a1b21624513123ba136610f650b2876c0d150f2506f"
+  },
+  "file_count": 4,
+  "total_bytes": 1897951,
+  "unexpected_files": []
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "neuralhorner-v02-scale-config-v2",
+  "name": "nh02-scale-l1024-b127",
+  "role": "single_seed_cross_width_scale_bridge",
+  "width": 1024,
+  "tiers": [6, 7, 8, 9],
+  "steps": 60000,
+  "batch_size": 96,
+  "eval_every": 3000,
+  "checkpoint_eval_n": 64,
+  "final_eval_n": 256,
+  "eval_batch_size": 32,
+  "evaluation_width_modes": ["fixed", "dynamic"],
+  "master_seed": 23,
+  "peak_lr": 0.0015,
+  "weight_decay": 0.01,
+  "warmup_fraction": 0.025,
+  "minimum_lr_fraction": 0.03,
+  "gradient_clip": 1.0,
+  "small_prime_limit": 64,
+  "require_final_gate": true,
+  "allow_warm_start": true,
+  "deterministic_algorithms": true,
+  "runtime_policy": {
+    "device": "cuda",
+    "cublas_workspace_config": ":4096:8",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "source_policy": {
+    "require_clean_git": true
+  },
+  "selection": {
+    "mode": "first_confirmed_pass",
+    "evaluate_step_zero": true,
+    "screen_n": 64,
+    "screen_minimum_correct_by_tier": {
+      "6": 64,
+      "7": 64,
+      "8": 64,
+      "9": 64
+    },
+    "confirmation_n": 256,
+    "confirmation_minimum_correct_by_tier": {
+      "6": 256,
+      "7": 256,
+      "8": 256,
+      "9": 255
+    },
+    "require_small_prime_exhaustive": true
+  },
+  "initialization": {
+    "mode": "warm_start_only",
+    "parent": {
+      "experiment": "nh02-scale-l512-b127",
+      "arm": "B127",
+      "width": 512,
+      "checkpoint_step": 48000,
+      "parameters": 126603,
+      "master_seed": 23,
+      "architecture": {
+        "dmodel": 96,
+        "hidden": 61,
+        "num_layers": 2,
+        "bidirectional": true
+      },
+      "receipt_sha256": "abc5700038342725c443e200ef9bb9efd912ab4350f390272feaaaa2d392705a",
+      "checkpoint_sha256": "970165b1af9e1518b83529ee8280521d9e3baece67d79efeee020e61c31f8ec7",
+      "state_dict_signature_sha256": "ee8b058770fbdef625a8e09e210f9f13ca5fc17ee5aa4d7bcf6bcebaf51e17fe",
+      "source_identity": {
+        "git_head": "7afdbaaca7495ab683ab1aac2bc9c002900dc88f",
+        "trainer_sha256": "767e0c96194266b82c6c65c64a18e656b8046b25c07bd46e69511c8a1dce5682",
+        "config_sha256": "23f25349bb98a2c0863d31d472a05311f737fba589817f29ff0961695002f6b7",
+        "source_provenance_sha256": "2d84692b49a3ebdc7550ff61606cb999dd27c2fbd7bcaa06f0e1da812be1b4f0"
+      },
+      "required_gate": {
+        "tiers": [6, 7, 8],
+        "width_modes": ["fixed", "dynamic"],
+        "rollout_n": 256,
+        "minimum_correct_by_tier": {
+          "6": 256,
+          "7": 255,
+          "8": 255
+        },
+        "small_prime_limit": 64
+      }
+    }
+  },
+  "arms": {
+    "B127": {
+      "architecture": {
+        "dmodel": 96,
+        "hidden": 61,
+        "num_layers": 2,
+        "bidirectional": true
+      },
+      "expected_parameters": 126603,
+      "predecessor": null
+    }
+  }
+}

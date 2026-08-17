@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "evidence_id": "mini-neuralhorner-v02-l2048-b127-b310c5e-terminal",
+  "classification": "LOCAL-H100/HASH-BOUND",
+  "experiment": "nh02-scale-l2048-b127",
+  "artifact": {
+    "arm": "B127",
+    "parameters": 126603,
+    "width": 2048,
+    "parent_width": 1024,
+    "parent_checkpoint_sha256": "d296b711bb6a7faaa1dd81e05478cfa75f11071c42a8c36fbf60e758ee7eb407",
+    "state_dict_signature_sha256": "ee8b058770fbdef625a8e09e210f9f13ca5fc17ee5aa4d7bcf6bcebaf51e17fe"
+  },
+  "source": {
+    "git_head": "b310c5e9e7e0e096f613e5cf6bbfa7b2b247281b",
+    "git_status": [],
+    "trainer_sha256": "83463e0882b26bd056fd3a542f4824d28778b4f76088ca2d230c2d70d2cf957c",
+    "config_sha256": "3108ecfa005e8bf96bdda61f2a0379ffd5fe045ac4cf3a9f88e469d3fe0aebfd",
+    "source_provenance_sha256": "2d84692b49a3ebdc7550ff61606cb999dd27c2fbd7bcaa06f0e1da812be1b4f0"
+  },
+  "run": {
+    "started_at": "2026-08-17T01:37:12.629462+00:00",
+    "finished_at": "2026-08-17T04:41:48.096051+00:00",
+    "elapsed_seconds": 11075.466,
+    "steps_completed": 60000,
+    "master_seed": 23,
+    "evaluation_seed": 5100268371224831233,
+    "status": "completed_failed_gate",
+    "selected_checkpoint": null,
+    "stopped_at_first_confirmed_pass": false
+  },
+  "gate": {
+    "tiers": [6, 7, 8, 9, 10],
+    "width_modes": ["fixed", "dynamic"],
+    "screen_cases_per_tier_mode": 64,
+    "screen_requirement": "64/64 in every tier and mode",
+    "confirmation_cases_per_tier_mode": 256,
+    "confirmation_status": "not_run",
+    "confirmation_reason": "No checkpoint passed the exact screen.",
+    "small_prime_status": "not_run",
+    "small_prime_reason": "The p<64 check runs only after a passing screen.",
+    "final_gate": {
+      "parameters_finite": true,
+      "passed": false,
+      "reason": "no checkpoint passed the confirmation gate",
+      "rollout_exact": false,
+      "rollout_threshold_passed": false,
+      "small_prime_exact": false
+    }
+  },
+  "evaluation_manifests": {
+    "6": {
+      "case_manifest_sha256": "4a4701183a2f76f53d8584dad9a0340b541ea0c8289b0b605caeddb6eab614eb",
+      "prime_sha256": "f14a164e2690cd7fc6cfaefacde7ffa0154b4fac8877c2e2e650393e46b2fbea"
+    },
+    "7": {
+      "case_manifest_sha256": "a8f493aab1fe6388fa08bfa33cfebf5806778c2a8f7879b542e79cee836b7f8a",
+      "prime_sha256": "fd43e71e0a1d3b2c138d79e9421c5280c8b11b572c1ebac20902408f61016a98"
+    },
+    "8": {
+      "case_manifest_sha256": "6e555ef1258fd6118365ffdcd22a6c4c62a3240034c5501fd2d8d1fd900f1d7e",
+      "prime_sha256": "13c41d65aa1b5eabbcc1a3897d4a43a2de89e302b67460f5503b597f65f1fdab"
+    },
+    "9": {
+      "case_manifest_sha256": "7e9bdf74bb3fbb952fa38396c1c0003130371c76d6e570292fd9e41185e634b0",
+      "prime_sha256": "b79646c83ebea2146e9a77da904e77d94d54f2275dd8856b0f35d8b0cf1eee33"
+    },
+    "10": {
+      "case_manifest_sha256": "c454d222232265d9d4e173a9352bd86508e7a2c7acc57913400c6ea1292ba2d7",
+      "prime_sha256": "19e13ea6ca1d136837226cbf7ccffe75627d0b986f51fbb687ab74a7baefba9d"
+    }
+  },
+  "key_checkpoint_sha256": {
+    "step_0": "7b5a479e89efa818404fd7297035a5e50c48d2314ea98bb58956c1ab8a3a878a",
+    "step_3000": "a97bc9e50aa0cbb2d615246abd21265551aa5334ad31f00843a171e495ae9137",
+    "step_60000": "61c7077a82cbc53bf545e96ad131712ce1a53c24943579b34a2599a9572e5051"
+  },
+  "archive": {
+    "receipt_sha256": "77ce649080558c7c4154599461da33d3d482516bbd1c2ecc838161ea29592705",
+    "console_log_sha256": "370fb9641e9b933b61a846048ff71883864de2c2b6ef6e48e44cc8cab0b91528",
+    "failed_gate_marker_sha256": "57c1d2976daa3c3279b6ec1133023c504cd3d8e2d583588402fd680e05cc6366",
+    "full_run_directory_tracked_in_git": false,
+    "note": "The full receipt, console log, and checkpoint chain are retained locally. This tracked file is a compact extraction bound to those artifacts by SHA-256."
+  },
+  "screen_history_order": {
+    "tiers": [6, 7, 8, 9, 10],
+    "cases_per_tier_mode": 64
+  },
+  "screen_history": [
+    {"step": 0, "loss": null, "learning_rate": 1e-06, "fixed": [64, 64, 64, 64, 63], "dynamic": [64, 64, 64, 64, 63], "screen_passed": false},
+    {"step": 3000, "loss": 1.399413362968005e-09, "learning_rate": 0.0014976409416676377, "fixed": [64, 64, 64, 64, 64], "dynamic": [64, 61, 63, 64, 64], "screen_passed": false},
+    {"step": 6000, "loss": 9.350256732432172e-06, "learning_rate": 0.0014788601721774529, "fixed": [64, 64, 64, 64, 37], "dynamic": [19, 34, 26, 35, 37], "screen_passed": false},
+    {"step": 9000, "loss": 1.92849142877094e-06, "learning_rate": 0.0014417850452617946, "fixed": [64, 64, 64, 64, 44], "dynamic": [19, 34, 33, 39, 44], "screen_passed": false},
+    {"step": 12000, "loss": 2.837840384017909e-06, "learning_rate": 0.0013873757872331109, "fixed": [64, 64, 64, 64, 53], "dynamic": [32, 42, 35, 44, 53], "screen_passed": false},
+    {"step": 15000, "loss": 1.4209415155619354e-07, "learning_rate": 0.001317041569294476, "fixed": [64, 64, 64, 64, 51], "dynamic": [32, 40, 42, 47, 51], "screen_passed": false},
+    {"step": 18000, "loss": 1.5137798982323147e-05, "learning_rate": 0.001232604010745637, "fixed": [64, 64, 63, 62, 18], "dynamic": [14, 29, 14, 24, 18], "screen_passed": false},
+    {"step": 21000, "loss": 2.6339419036958134e-06, "learning_rate": 0.00113625, "fixed": [64, 64, 62, 64, 45], "dynamic": [19, 34, 29, 37, 45], "screen_passed": false},
+    {"step": 24000, "loss": 1.215547285937646e-06, "learning_rate": 0.0010304750553234445, "fixed": [64, 64, 64, 64, 48], "dynamic": [23, 35, 33, 41, 48], "screen_passed": false},
+    {"step": 27000, "loss": 5.177491857466521e-07, "learning_rate": 0.0009180186922220724, "fixed": [64, 64, 64, 64, 50], "dynamic": [33, 38, 38, 42, 50], "screen_passed": false},
+    {"step": 30000, "loss": 1.393557198525741e-07, "learning_rate": 0.0008017934714295995, "fixed": [64, 64, 64, 63, 50], "dynamic": [35, 38, 38, 45, 50], "screen_passed": false},
+    {"step": 33000, "loss": 4.433037247508764e-06, "learning_rate": 0.0006848095651142525, "fixed": [64, 64, 64, 64, 28], "dynamic": [21, 33, 26, 37, 28], "screen_passed": false},
+    {"step": 36000, "loss": 2.2785484361520503e-06, "learning_rate": 0.0005700967950007807, "fixed": [64, 64, 64, 63, 46], "dynamic": [32, 42, 37, 44, 46], "screen_passed": false},
+    {"step": 39000, "loss": 9.279325468014576e-07, "learning_rate": 0.000460626161579278, "fixed": [64, 64, 64, 64, 55], "dynamic": [34, 54, 46, 52, 55], "screen_passed": false},
+    {"step": 42000, "loss": 6.669208687526407e-07, "learning_rate": 0.00035923289675308424, "fixed": [64, 64, 64, 64, 61], "dynamic": [35, 51, 48, 52, 61], "screen_passed": false},
+    {"step": 45000, "loss": 9.368147857458098e-08, "learning_rate": 0.00026854303282176646, "fixed": [64, 64, 64, 63, 63], "dynamic": [42, 53, 49, 55, 63], "screen_passed": false},
+    {"step": 48000, "loss": 8.466377465765618e-08, "learning_rate": 0.00019090538962395306, "fixed": [64, 64, 64, 64, 61], "dynamic": [27, 53, 44, 47, 61], "screen_passed": false},
+    {"step": 51000, "loss": 3.503387091541299e-08, "learning_rate": 0.00012833074133728985, "fixed": [64, 64, 64, 64, 63], "dynamic": [34, 52, 45, 51, 63], "screen_passed": false},
+    {"step": 54000, "loss": 1.2866393284127753e-08, "learning_rate": 8.243973848345166e-05, "fixed": [64, 64, 64, 64, 63], "dynamic": [38, 53, 47, 54, 63], "screen_passed": false},
+    {"step": 57000, "loss": 1.7419926834350008e-08, "learning_rate": 5.4420933930918404e-05, "fixed": [64, 64, 64, 64, 63], "dynamic": [36, 54, 47, 55, 63], "screen_passed": false},
+    {"step": 60000, "loss": 9.084654806201797e-09, "learning_rate": 4.4999999999999996e-05, "fixed": [64, 64, 64, 64, 63], "dynamic": [43, 55, 49, 54, 63], "screen_passed": false}
+  ]
+}

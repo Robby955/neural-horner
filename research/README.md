@@ -3,29 +3,28 @@
 This directory preserves the evidence and decision trail for the direct-Horner
 study. Start with [`FRONTIER_STATE.md`](FRONTIER_STATE.md) for the full ledger
 and [`DIRECT_HORNER_RESEARCH.md`](DIRECT_HORNER_RESEARCH.md) for the experimental
-design. Claims below are scoped to immutable artifacts and receipts; a passing
-probe is never promoted into a broader claim.
+design. Claims below are scoped to immutable artifacts and receipts. A passing
+probe supports only the claim it directly tests.
 
 ## Current decision
 
-- The only qualified and submitted artifact is
+- The original full-width artifact is
   `TrickyRex/bitserial-modmul-v8@301938693892043d66a8bf6ec60a9c5ab85549d4`.
 - The direct two-pass L2-SP candidate is **stopped**. It repaired the known F11
   path but failed frozen-battery v3 at 509/512 attempted rows.
-- The direct candidate was never substituted for v8 and was not submitted to
-  SAIR. Its separate testing upload is research provenance, not a submission.
-- No organizer compliance question was sent, and no ruling was requested or
-  issued. The local question draft is archival only.
-- No training has run after the stopped-candidate decision. The function-space
-  screen and K-state miner remain unrun, conditional research ideas.
+- The direct candidate was not used in the full-width result. Its separate
+  testing upload is retained as research provenance.
+- The direct-repair lane ended after the retention failure. The
+  function-space screen and K-state miner remain unrun, conditional research
+  ideas. The separate compression study is under [`v02/`](v02/).
 
 ## Result in one table
 
 | Object | Evidence | Decision |
 |---|---|---|
-| submitted v8 | official open-source scorer tiers 1--10 = 1.00 across three seeds; structured battery 759/768 on first contact | preserve as the only qualified/submitted incumbent |
+| v8 | official open-source scorer tiers 1--10 = 1.00 across three seeds; structured battery 759/768 on first contact | retained as the full-width baseline |
 | unchanged-weight direct schedule | fails `F11 * 1` at the same learned transition as original-schedule v8 | stopped architecture ablation |
-| direct L2-SP `alpha=0.875` | F11 union 193,116/193,116 vectorized exact-prefix transitions; `ROB-CONFIRMED/UNARCHIVED` playground 100/100 on scored tiers; frozen battery v3 FAILED at 509/512 attempted | stopped; not submitted or qualified |
+| direct L2-SP `alpha=0.875` | F11 union 193,116/193,116 vectorized exact-prefix transitions; owner-reported, unarchived Playground 100/100 on scored tiers; frozen battery v3 failed at 509/512 attempted | stopped after the retention failure |
 | direct function-space `alpha=0.9375` | earlier decisive-path result only; no v3 retention screen | unrun at the current fail-fast gate |
 | K-state counterexample miner | design proposal only | no-training dry run not performed |
 
@@ -51,9 +50,8 @@ source refresh on 2026-08-11 found `origin/main` at
 add an explicit ban on deterministic operand pre-reduction and update examples;
 the audited Docker and evaluation-pipeline files are byte-identical to the
 receipt pin. NeuralHorner reduces operands through learned-cell passes rather
-than deterministic pre-reduction. This source comparison is not an organizer
-compliance ruling, and an old receipt must not be relabeled as evidence from the
-new runner. Receipt:
+than deterministic pre-reduction. The older receipt remains evidence for its
+pinned runner and is not relabeled as evidence from the newer source. Receipt:
 [`receipts/rules_refresh_20260811.json`](receipts/rules_refresh_20260811.json),
 SHA-256 `2ae8e5294adf410d2e857b61c2c63050286f9278a03740f839c3cba1af9364b4`.
 
@@ -102,20 +100,20 @@ at margin -2.1741 to seven wrong bits at margin -13.2857. The validated union is
 [`receipts/fixed_hamming_four_way_v1/validation.json`](receipts/fixed_hamming_four_way_v1/validation.json),
 SHA-256 `e47583c1e68d2985ffc0814b75473a8cc6c4350ecfb86591b5f9783a98a0d020`.
 
-This separates three mechanisms and closes the promotion claim: fixing the F11
-transition redistributed error, and removing a pass introduced an independent
-vulnerable trajectory. The candidate is not a global repair.
+This separates three mechanisms: fixing the F11 transition redistributed error,
+and removing a pass introduced an independent vulnerable trajectory. The
+candidate is not a global repair.
 
 ## Playground evidence boundary
 
 The immutable testing upload is
 `TrickyRex/neural-horner-direct-l2sp-a0875@b5cee6f1592b1eeb9822e4773e5e294caf013f60`.
-Rob confirms that it displayed `100/100` on each scored SAIR playground tier and
-`40/100` on unscored Tier 0; he also confirms `40/100` for live-playground v8.
-Label this `ROB-CONFIRMED/UNARCHIVED`: the screenshot/log, runtime, and evaluator
-identity are not preserved here. Older local v8 receipts showing `60/100` on
-Tier 0 belong to a different historical evaluation surface. None of these
-playground facts makes the direct candidate submitted or qualified.
+The repository owner recorded `100/100` on each scored SAIR Playground tier and
+`40/100` on unscored Tier 0, plus `40/100` for live-Playground v8. The
+screenshot, log, runtime, and evaluator identity are not preserved, so these
+values remain an unarchived report. Older local v8 receipts showing `60/100` on
+Tier 0 belong to a different historical evaluation surface. The broader
+retention failure remains the controlling result for the direct candidate.
 
 ## Evidence map
 
@@ -127,11 +125,6 @@ playground facts makes the direct candidate submitted or qualified.
 3. [`LITERATURE_LEDGER.md`](LITERATURE_LEDGER.md) -- mechanism-fit analysis and
    the XllentAI prior-art guard. The shared modulus-conditioned Horner recurrence,
    hard binary state, and held-out-prime transfer are not claimed as novel.
-4. [`FRONTIER_RESEARCH_AGENT_PROMPT.md`](FRONTIER_RESEARCH_AGENT_PROMPT.md) --
-   historical handoff prompt; the dated ledger and receipts override stale
-   instructions in any prompt.
-5. [`ORGANIZER_RUNTIME_QUESTION.md`](ORGANIZER_RUNTIME_QUESTION.md) -- historical
-   unsent draft. No question was sent and no ruling was requested or issued.
 
 Use the evidence terms literally: **verified**, **partial**, **conditional**,
 **failed**, **unverified**, and **stopped**. In particular, do not rewrite

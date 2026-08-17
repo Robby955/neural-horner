@@ -1,0 +1,64 @@
+{
+  "schema": "neuralhorner-v02-source-provenance-public-v2",
+  "recorded_at": "2026-08-16",
+  "public_base_commit": "307954213b23bc9540eb522adc73e792cd4bbdff",
+  "public_redaction": {
+    "published_at": "2026-08-17",
+    "archived_source_provenance_sha256": "2d84692b49a3ebdc7550ff61606cb999dd27c2fbd7bcaa06f0e1da812be1b4f0",
+    "scope": "Machine-local repository and transcript locators were removed. Frozen run receipts continue to bind the archived record by SHA-256."
+  },
+  "recovered_private_repository": {
+    "visibility": "private local archive",
+    "head": "56a5b7b24d1835425b3d7de3d426b1e897bdeb58",
+    "tracked_tree_clean": true,
+    "untracked_exclusion": "experiments/scale-gpu-2026-06-27/norelocation.log"
+  },
+  "production_driver": {
+    "path": "experiments/scale-gpu-2026-06-27/scale.py",
+    "working_tree_sha256": "42586721dfcfc64eff8db70c2c04ff51cd7ae905c617f86a1e372c3288a720ee",
+    "git_blob": "08edb8b93d396d560829a51964b64bdf7a6bf828",
+    "first_committed_at": "3ffdf17ad03a5301e84c41a049852e11a42e4264"
+  },
+  "historical_v8": {
+    "checkpoint_sha256": "294fbf809ad42bb0ac66dd51303d21ac5dddeca9a081b5790f1af39d36b21609",
+    "warm_start": "submission/bit-serial-v7/weights.pt",
+    "warm_start_sha256": "241f1d558f0d152d3a8a905d22098d242edc00332d7eb0521fd5f9361aac848b",
+    "launch": "L=2048 TIER_SET=9,10 STEPS=40000 BATCH=128 EVAL_N=48 RESUME=/workspace/resume.pt OUT=/workspace/out_t10b python -u scale.py",
+    "default_seed": 23,
+    "default_peak_lr": 0.0015,
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.025,
+    "environment": {
+      "gpu": "NVIDIA H100 SXM",
+      "container": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+      "torch": "2.4.1+cu124"
+    },
+    "selected_step": 3000,
+    "selected_scores": {"9": 1.0, "10": 1.0},
+    "transcript": {
+      "availability": "private contemporaneous training record",
+      "sha256": "c951501d0d2930083d8f7aed9dce8014bf20344d098579e729124cb3be84ac57",
+      "launch_records": "4403-4416",
+      "first_success_records": "4579-4585"
+    },
+    "checkpoint_git_blob": "69f992f49652cdab6fdc041f624537cccd4ab184",
+    "artifact_commit": "c9d9416c21a0d24ff5644bbcf00a60e32451a986",
+    "receipt_commit": "b70f41abf6e09477af946ca157b98573a4118b15"
+  },
+  "historical_dagger2": {
+    "source_commit": "6bbf8010aa1f2c4e4c4a188147544e4da5d29e65",
+    "source_blob": "744d882e1f708b5565bc36b1540b7c056edb6ae4",
+    "seed": 37,
+    "peak_lr": 0.0008,
+    "warmup_fraction": 0.05,
+    "base_to_on_policy_ratio": "1:1",
+    "on_policy_buffer_rows": 14000,
+    "note": "The current scale_dagger.py changed after v8; recover historical DAgger2 from this commit."
+  },
+  "nonclaims": [
+    "The historical run is not guaranteed to reproduce byte for byte.",
+    "The checkpoint omits optimizer, scheduler, Python RNG, Torch RNG, and CUDA RNG state.",
+    "Deterministic CUDA execution was not enforced.",
+    "The v0.2 pilot is a new experiment rather than a replay of v8 training."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "neuralhorner-v02-scale-config-v1",
+  "name": "nh02-smoke-l32",
+  "role": "engineering_smoke_only",
+  "width": 32,
+  "tiers": [1, 2, 3, 4],
+  "steps": 4,
+  "batch_size": 16,
+  "eval_every": 4,
+  "checkpoint_eval_n": 8,
+  "final_eval_n": 16,
+  "eval_batch_size": 16,
+  "evaluation_width_modes": ["fixed", "dynamic"],
+  "master_seed": 23,
+  "peak_lr": 0.0015,
+  "weight_decay": 0.01,
+  "warmup_fraction": 0.025,
+  "minimum_lr_fraction": 0.03,
+  "gradient_clip": 1.0,
+  "small_prime_limit": 16,
+  "require_final_gate": false,
+  "allow_warm_start": false,
+  "deterministic_algorithms": true,
+  "arms": {
+    "B471": {
+      "architecture": {"dmodel": 96, "hidden": 128, "num_layers": 2, "bidirectional": true},
+      "expected_parameters": 470849,
+      "predecessor": null
+    },
+    "B249": {
+      "architecture": {"dmodel": 96, "hidden": 90, "num_layers": 2, "bidirectional": true},
+      "expected_parameters": 249157,
+      "predecessor": null
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "evidence_id": "sair-playground-mini-neuralhorner-v02-d9d611833d",
+  "source": {
+    "classification": "UI_TRANSCRIPTION",
+    "transcribed_by": "repository owner",
+    "display_time_verbatim": "8/16/2026, 8:44:20 PM",
+    "public_run_url_archived": false,
+    "screenshot_archived": false,
+    "independently_replayed": false
+  },
+  "artifact": {
+    "hugging_face_repo": "TrickyRex/mini-neuralhorner-v02",
+    "revision": "d9d611833d340c72d90a97d995a94031b798cf7c",
+    "revision_binding": "This evidence applies only to the exact tested revision. The current Hugging Face head may differ after documentation-only corrections."
+  },
+  "status": "completed",
+  "summary": {
+    "frontier": {
+      "highest_tier_meeting_threshold": 9,
+      "threshold_percent": 90
+    },
+    "displayed_overall_accuracy_percent": 99,
+    "scored_tiers_1_through_10": {
+      "passed": 985,
+      "cases": 1000,
+      "accuracy_percent": 98.5
+    },
+    "reported_total_including_t0_diagnostic": {
+      "passed": 1025,
+      "cases": 1100
+    },
+    "display_rounding_note": "The UI rounded the 98.5% scored-tier accuracy to 99%. T0 is diagnostic and is excluded from scored accuracy.",
+    "runtime_seconds": 156.602,
+    "displayed_artifact_size": {
+      "value": 520,
+      "unit": "KB"
+    }
+  },
+  "tier_results": [
+    {"tier": 0, "role": "diagnostic", "passed": 40, "cases": 100},
+    {"tier": 1, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 2, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 3, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 4, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 5, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 6, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 7, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 8, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 9, "role": "scored", "passed": 100, "cases": 100},
+    {"tier": 10, "role": "scored", "passed": 85, "cases": 100}
+  ]
+}

@@ -1034,7 +1034,7 @@ def test_l512_screen_gate_is_exact_and_threshold_maps_fail_closed() -> None:
 
 
 def test_resume_is_explicitly_rejected_before_run_setup(tmp_path: Path) -> None:
-    with pytest.raises(ValueError, match="resume is not implemented"):
+    with pytest.raises(ValueError, match="resume artifacts require"):
         TRAINER.run(
             SimpleNamespace(
                 config=ROOT / "research/v02/configs/bridge_l256_b127.json",

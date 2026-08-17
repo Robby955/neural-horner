@@ -1,0 +1,117 @@
+{
+  "schema": "neuralhorner-v03-scale-config-v1",
+  "name": "nh03-horizon-l2048-b127-60k-120k",
+  "role": "single_seed_delayed_generalization_horizon_extension",
+  "width": 2048,
+  "tiers": [6, 7, 8, 9, 10],
+  "steps": 120000,
+  "batch_size": 48,
+  "eval_every": 3000,
+  "checkpoint_eval_n": 64,
+  "final_eval_n": 256,
+  "eval_batch_size": 64,
+  "evaluation_width_modes": ["fixed", "dynamic"],
+  "master_seed": 23,
+  "peak_lr": 0.0015,
+  "weight_decay": 0.01,
+  "warmup_fraction": 0.025,
+  "minimum_lr_fraction": 0.03,
+  "gradient_clip": 1.0,
+  "small_prime_limit": 64,
+  "require_final_gate": true,
+  "allow_warm_start": false,
+  "allow_resume": true,
+  "verify_resume_boundary_screen": true,
+  "deterministic_algorithms": true,
+  "runtime_policy": {
+    "device": "cuda",
+    "cublas_workspace_config": ":4096:8",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "source_policy": {
+    "require_clean_git": true
+  },
+  "selection": {
+    "mode": "first_confirmed_pass",
+    "evaluate_step_zero": false,
+    "screen_n": 64,
+    "screen_minimum_correct_by_tier": {
+      "6": 64,
+      "7": 64,
+      "8": 64,
+      "9": 64,
+      "10": 64
+    },
+    "confirmation_n": 256,
+    "confirmation_minimum_correct_by_tier": {
+      "6": 256,
+      "7": 256,
+      "8": 256,
+      "9": 256,
+      "10": 255
+    },
+    "require_small_prime_exhaustive": true
+  },
+  "initialization": {
+    "mode": "exact_state_resume_only",
+    "parent": {
+      "experiment": "nh02-scale-l2048-b127",
+      "role": "single_seed_full_width_scale_repair_bridge",
+      "arm": "B127",
+      "width": 2048,
+      "checkpoint_step": 60000,
+      "parameters": 126603,
+      "master_seed": 23,
+      "architecture": {
+        "dmodel": 96,
+        "hidden": 61,
+        "num_layers": 2,
+        "bidirectional": true
+      },
+      "receipt_schema": "neuralhorner-v02-scale-receipt-v2",
+      "checkpoint_schema": "neuralhorner-v02-training-checkpoint-v1",
+      "status": "completed_failed_gate",
+      "receipt_sha256": "77ce649080558c7c4154599461da33d3d482516bbd1c2ecc838161ea29592705",
+      "checkpoint_sha256": "61c7077a82cbc53bf545e96ad131712ce1a53c24943579b34a2599a9572e5051",
+      "state_dict_signature_sha256": "ee8b058770fbdef625a8e09e210f9f13ca5fc17ee5aa4d7bcf6bcebaf51e17fe",
+      "environment_sha256": "bf27df9525c455210c6ce1703e5f3adb9b268f58f51bc6b3476174f3e2a288be",
+      "source_identity": {
+        "git_head": "b310c5e9e7e0e096f613e5cf6bbfa7b2b247281b",
+        "trainer_sha256": "83463e0882b26bd056fd3a542f4824d28778b4f76088ca2d230c2d70d2cf957c",
+        "config_sha256": "3108ecfa005e8bf96bdda61f2a0379ffd5fe045ac4cf3a9f88e469d3fe0aebfd",
+        "source_provenance_sha256": "2d84692b49a3ebdc7550ff61606cb999dd27c2fbd7bcaa06f0e1da812be1b4f0"
+      },
+      "training_state": {
+        "optimizer_state_slots": 21,
+        "optimizer_step": 60000,
+        "scheduler_last_epoch": 60000,
+        "scheduler_step_count": 60001,
+        "learning_rate": 0.000045,
+        "cuda_rng_state_count": 1,
+        "next_batch_manifest_sha256": "8d3b61109440590da635a1c0596b8179d3232d9e1937f6d4c133d6f43ba1832d"
+      }
+    }
+  },
+  "schedule_extension": {
+    "mode": "clamp_parent_cosine_at_floor",
+    "parent_end_step": 60000,
+    "floor_fraction": 0.03,
+    "floor_learning_rate": 0.000045
+  },
+  "arms": {
+    "B127": {
+      "architecture": {
+        "dmodel": 96,
+        "hidden": 61,
+        "num_layers": 2,
+        "bidirectional": true
+      },
+      "expected_parameters": 126603,
+      "predecessor": null
+    }
+  }
+}

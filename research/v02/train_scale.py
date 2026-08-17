@@ -29,9 +29,15 @@ from torch import nn
 
 LEGACY_CONFIG_SCHEMA = "neuralhorner-v02-scale-config-v1"
 CONFIG_SCHEMA = "neuralhorner-v02-scale-config-v2"
-SUPPORTED_CONFIG_SCHEMAS = {LEGACY_CONFIG_SCHEMA, CONFIG_SCHEMA}
+HORIZON_CONFIG_SCHEMA = "neuralhorner-v03-scale-config-v1"
+SUPPORTED_CONFIG_SCHEMAS = {
+    LEGACY_CONFIG_SCHEMA,
+    CONFIG_SCHEMA,
+    HORIZON_CONFIG_SCHEMA,
+}
 LEGACY_RECEIPT_SCHEMA = "neuralhorner-v02-scale-receipt-v1"
 RECEIPT_SCHEMA = "neuralhorner-v02-scale-receipt-v2"
+HORIZON_RECEIPT_SCHEMA = "neuralhorner-v03-horizon-receipt-v1"
 SUPPORTED_PARENT_RECEIPT_SCHEMAS = {LEGACY_RECEIPT_SCHEMA, RECEIPT_SCHEMA}
 CHECKPOINT_SCHEMA = "neuralhorner-v02-training-checkpoint-v1"
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -632,6 +638,9 @@ def validate_config(config: dict[str, Any], arm_name: str) -> dict[str, Any]:
         raise ValueError("require_final_gate must be boolean")
     if not isinstance(config.get("allow_warm_start"), bool):
         raise ValueError("allow_warm_start must be boolean")
+    allow_resume = config.get("allow_resume", False)
+    if not isinstance(allow_resume, bool):
+        raise ValueError("allow_resume must be boolean")
     if not isinstance(config.get("deterministic_algorithms"), bool):
         raise ValueError("deterministic_algorithms must be boolean")
     if config["small_prime_limit"] > 1 << config["width"]:
@@ -639,16 +648,24 @@ def validate_config(config: dict[str, Any], arm_name: str) -> dict[str, Any]:
 
     initialization = initialization_spec(config)
     initialization_mode = initialization.get("mode")
-    if initialization_mode not in {"scratch", "warm_start_only"}:
+    if initialization_mode not in {
+        "scratch",
+        "warm_start_only",
+        "exact_state_resume_only",
+    }:
         raise ValueError(f"unsupported initialization mode: {initialization_mode!r}")
     if initialization_mode == "scratch":
         if config["allow_warm_start"]:
             raise ValueError("scratch initialization must forbid warm starts")
+        if allow_resume:
+            raise ValueError("scratch initialization must forbid resumes")
         if "parent" in initialization:
             raise ValueError("scratch initialization cannot declare a parent")
-    else:
+    elif initialization_mode == "warm_start_only":
         if not config["allow_warm_start"]:
             raise ValueError("warm_start_only initialization must allow warm starts")
+        if allow_resume:
+            raise ValueError("warm_start_only initialization must forbid resumes")
         if predecessor is not None:
             raise ValueError(
                 "warm_start_only initialization cannot also use an arm predecessor"
@@ -741,6 +758,125 @@ def validate_config(config: dict[str, Any], arm_name: str) -> dict[str, Any]:
         )
         if gate["small_prime_limit"] > 1 << parent["width"]:
             raise ValueError("parent gate small-prime limit exceeds parent width")
+    else:
+        if config.get("schema") != HORIZON_CONFIG_SCHEMA:
+            raise ValueError("exact_state_resume_only requires a v3 config")
+        if config["allow_warm_start"]:
+            raise ValueError("exact_state_resume_only must forbid warm starts")
+        if not allow_resume:
+            raise ValueError("exact_state_resume_only must allow resumes")
+        if predecessor is not None:
+            raise ValueError(
+                "exact_state_resume_only cannot also use an arm predecessor"
+            )
+        parent = initialization.get("parent")
+        if not isinstance(parent, dict):
+            raise ValueError("exact_state_resume_only requires a parent")
+        for key in (
+            "experiment",
+            "role",
+            "arm",
+            "status",
+            "receipt_sha256",
+            "checkpoint_sha256",
+            "receipt_schema",
+            "checkpoint_schema",
+            "state_dict_signature_sha256",
+            "environment_sha256",
+        ):
+            if not isinstance(parent.get(key), str) or not parent[key]:
+                raise ValueError(f"resume parent field {key} must be a nonempty string")
+        for key in (
+            "receipt_sha256",
+            "checkpoint_sha256",
+            "state_dict_signature_sha256",
+            "environment_sha256",
+        ):
+            if not is_sha256(parent[key]):
+                raise ValueError(
+                    f"resume parent field {key} must be a lowercase SHA-256"
+                )
+        for key in ("width", "parameters", "master_seed", "checkpoint_step"):
+            if type(parent.get(key)) is not int or parent[key] <= 0:
+                raise ValueError(f"resume parent field {key} must be positive")
+        if parent["width"] != config["width"]:
+            raise ValueError("resume parent and child widths must match")
+        if parent["checkpoint_step"] >= config["steps"]:
+            raise ValueError("resume parent step must be below the terminal step")
+        if parent["arm"] != arm_name:
+            raise ValueError("resume parent and child arm names must match")
+        if parent["parameters"] != arm["expected_parameters"]:
+            raise ValueError("resume parent parameter count must match child arm")
+        if parent.get("architecture") != architecture:
+            raise ValueError("resume parent architecture must match child arm")
+        if parent["master_seed"] != config["master_seed"]:
+            raise ValueError("resume parent and child master seeds must match")
+        if parent["status"] != "completed_failed_gate":
+            raise ValueError("horizon extension requires a failed-gate parent")
+        source = parent.get("source_identity")
+        if not isinstance(source, dict):
+            raise ValueError("resume parent requires source_identity")
+        if not is_git_sha(source.get("git_head")):
+            raise ValueError("resume parent source git_head must be a full Git SHA")
+        for key in (
+            "trainer_sha256",
+            "config_sha256",
+            "source_provenance_sha256",
+        ):
+            if not is_sha256(source.get(key)):
+                raise ValueError(
+                    f"resume parent source field {key} must be a lowercase SHA-256"
+                )
+        extension = config.get("schedule_extension")
+        if not isinstance(extension, dict):
+            raise ValueError("v3 horizon config requires schedule_extension")
+        expected_floor = config["peak_lr"] * config["minimum_lr_fraction"]
+        if extension.get("mode") != "clamp_parent_cosine_at_floor":
+            raise ValueError("unsupported horizon schedule extension")
+        if extension.get("parent_end_step") != parent["checkpoint_step"]:
+            raise ValueError("schedule parent_end_step must equal the resume step")
+        if extension.get("floor_fraction") != config["minimum_lr_fraction"]:
+            raise ValueError("schedule floor_fraction must match the config")
+        if not math.isclose(
+            extension.get("floor_learning_rate", math.nan),
+            expected_floor,
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        ):
+            raise ValueError("schedule floor_learning_rate does not match the config")
+        if config.get("verify_resume_boundary_screen") is not True:
+            raise ValueError("v3 horizon config must verify the resume boundary screen")
+        training_state = parent.get("training_state")
+        if not isinstance(training_state, dict):
+            raise ValueError("resume parent requires training_state")
+        expected_slots = len(list(Cell(**architecture).parameters()))
+        expected_training_state = {
+            "optimizer_state_slots": expected_slots,
+            "optimizer_step": parent["checkpoint_step"],
+            "scheduler_last_epoch": parent["checkpoint_step"],
+            "scheduler_step_count": parent["checkpoint_step"] + 1,
+            "learning_rate": expected_floor,
+        }
+        for key, expected in expected_training_state.items():
+            actual = training_state.get(key)
+            if isinstance(expected, float):
+                matches = math.isclose(
+                    actual if isinstance(actual, (int, float)) else math.nan,
+                    expected,
+                    rel_tol=0.0,
+                    abs_tol=1e-15,
+                )
+            else:
+                matches = actual == expected
+            if not matches:
+                raise ValueError(f"resume parent training_state field {key} is invalid")
+        if (
+            type(training_state.get("cuda_rng_state_count")) is not int
+            or training_state["cuda_rng_state_count"] < 0
+        ):
+            raise ValueError("resume parent cuda_rng_state_count must be nonnegative")
+        if not is_sha256(training_state.get("next_batch_manifest_sha256")):
+            raise ValueError("resume parent next-batch manifest must be a SHA-256")
 
     selection = selection_spec(config)
     selection_mode = selection.get("mode")
@@ -756,8 +892,8 @@ def validate_config(config: dict[str, Any], arm_name: str) -> dict[str, Any]:
     selection_minimum_correct_by_tier(config, "screen")
     selection_minimum_correct_by_tier(config, "confirmation")
     if selection_mode == "first_confirmed_pass":
-        if config.get("schema") != CONFIG_SCHEMA:
-            raise ValueError("first_confirmed_pass requires a v2 config")
+        if config.get("schema") not in {CONFIG_SCHEMA, HORIZON_CONFIG_SCHEMA}:
+            raise ValueError("first_confirmed_pass requires a v2 or v3 config")
         if selection.get("require_small_prime_exhaustive") is not True:
             raise ValueError(
                 "first_confirmed_pass must require the small-prime exhaustive gate"
@@ -772,6 +908,8 @@ def validate_config(config: dict[str, Any], arm_name: str) -> dict[str, Any]:
         raise ValueError(
             "selection evaluate_step_zero requires a warm-start first-confirmed-pass run"
         )
+    if initialization_mode == "exact_state_resume_only" and evaluate_step_zero:
+        raise ValueError("exact-state resume uses its absolute parent step, not step zero")
 
     runtime_policy = runtime_policy_spec(config)
     if runtime_policy is not None:
@@ -1486,6 +1624,436 @@ def validate_warm_start_parent(
     return identity, state_dict
 
 
+def environment_sha256(environment: dict[str, Any]) -> str:
+    return sha256_bytes(canonical_json(environment).encode())
+
+
+def _scalar_step(value: Any) -> int | None:
+    if isinstance(value, torch.Tensor) and value.numel() == 1:
+        scalar = value.item()
+        if isinstance(scalar, (int, float)) and float(scalar).is_integer():
+            return int(scalar)
+    if type(value) is int:
+        return value
+    return None
+
+
+def next_batch_manifest_sha256(checkpoint: dict[str, Any]) -> str:
+    saved_rng = checkpoint["rng_state"]
+    parent_config = checkpoint["experiment_config"]
+    probe_rng = random.Random()
+    probe_rng.setstate(saved_rng["python_data"])
+    values = sample_transition_values(
+        parent_config["batch_size"],
+        probe_rng,
+        parent_config["width"],
+    )
+    return sha256_bytes(canonical_json(values).encode())
+
+
+def _parent_cosine_lambda(parent_config: dict[str, Any]):
+    parent_steps = parent_config["steps"]
+    warmup = max(1, int(parent_config["warmup_fraction"] * parent_steps))
+    minimum = parent_config["minimum_lr_fraction"]
+
+    def lr_lambda(step: int) -> float:
+        if step < warmup:
+            return (step + 1) / warmup
+        progress = min(1.0, (step - warmup) / max(1, parent_steps - warmup))
+        cosine = 0.5 * (1 + math.cos(math.pi * progress))
+        return minimum + (1 - minimum) * cosine
+
+    return lr_lambda
+
+
+def validate_exact_resume_parent(
+    receipt_path: pathlib.Path | None,
+    checkpoint_path: pathlib.Path | None,
+    arm_name: str,
+    arm: dict[str, Any],
+    config: dict[str, Any],
+    environment: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    initialization = initialization_spec(config)
+    if initialization.get("mode") != "exact_state_resume_only":
+        raise ValueError("exact resume artifacts require exact_state_resume_only")
+    if receipt_path is None or checkpoint_path is None:
+        raise ValueError(
+            "exact_state_resume_only requires --resume-receipt and --resume"
+        )
+
+    parent = initialization["parent"]
+    resolved_receipt = receipt_path.resolve()
+    resolved_checkpoint = checkpoint_path.resolve()
+    receipt_sha = sha256_file(resolved_receipt)
+    checkpoint_sha = sha256_file(resolved_checkpoint)
+    if receipt_sha != parent["receipt_sha256"]:
+        raise ValueError("resume receipt SHA-256 does not match the frozen config")
+    if checkpoint_sha != parent["checkpoint_sha256"]:
+        raise ValueError("resume checkpoint SHA-256 does not match the frozen config")
+
+    receipt = json.loads(resolved_receipt.read_text())
+    receipt_source = receipt.get("source_identity", {})
+    receipt_environment = receipt.get("environment")
+    receipt_config = receipt.get("config")
+    history = receipt.get("history")
+    checkpoints = receipt.get("checkpoints")
+    if not isinstance(history, list) or not history:
+        raise ValueError("resume parent receipt has no history")
+    if not isinstance(checkpoints, list) or not checkpoints:
+        raise ValueError("resume parent receipt has no checkpoints")
+    last_row = history[-1]
+    last_checkpoint = checkpoints[-1]
+    expected_source = parent["source_identity"]
+    receipt_checks = {
+        "schema": receipt.get("schema")
+        == parent["receipt_schema"]
+        == RECEIPT_SCHEMA,
+        "status": receipt.get("status") == parent["status"],
+        "experiment": receipt.get("experiment") == parent["experiment"],
+        "role": receipt.get("role") == parent["role"],
+        "arm": receipt.get("arm") == parent["arm"] == arm_name,
+        "architecture": receipt.get("architecture")
+        == parent["architecture"]
+        == arm["architecture"],
+        "parameters": receipt.get("parameters")
+        == parent["parameters"]
+        == arm["expected_parameters"],
+        "width": isinstance(receipt_config, dict)
+        and receipt_config.get("width") == parent["width"] == config["width"],
+        "master_seed": isinstance(receipt_config, dict)
+        and receipt_config.get("master_seed")
+        == parent["master_seed"]
+        == config["master_seed"],
+        "source": isinstance(receipt_source, dict)
+        and _parent_source_matches(receipt_source, expected_source),
+        "environment": isinstance(receipt_environment, dict),
+        "environment_digest": isinstance(receipt_environment, dict)
+        and environment_sha256(receipt_environment) == parent["environment_sha256"],
+        "environment_continuity": receipt_environment == environment,
+        "steps_completed": type(receipt.get("steps_completed")) is int
+        and receipt["steps_completed"] == parent["checkpoint_step"],
+        "selected_checkpoint": receipt.get("selected_checkpoint") is None,
+        "not_stopped_at_pass": receipt.get("stopped_at_first_confirmed_pass")
+        is False,
+        "final_gate_failed": receipt.get("final_gate", {}).get("passed") is False,
+        "history_order": all(
+            isinstance(row, dict) and type(row.get("step")) is int
+            for row in history
+        )
+        and [row["step"] for row in history]
+        == sorted(row["step"] for row in history),
+        "checkpoint_order": all(
+            isinstance(row, dict) and type(row.get("step")) is int
+            for row in checkpoints
+        )
+        and [row["step"] for row in checkpoints]
+        == sorted(row["step"] for row in checkpoints),
+        "last_history_step": isinstance(last_row, dict)
+        and last_row.get("step") == parent["checkpoint_step"],
+        "last_checkpoint_step": isinstance(last_checkpoint, dict)
+        and last_checkpoint.get("step") == parent["checkpoint_step"],
+        "last_checkpoint_sha": isinstance(last_checkpoint, dict)
+        and last_checkpoint.get("sha256") == parent["checkpoint_sha256"],
+        "last_checkpoint_path": isinstance(last_checkpoint, dict)
+        and last_checkpoint.get("path") == resolved_checkpoint.name,
+        "boundary_tiers": isinstance(last_row, dict)
+        and isinstance(last_row.get("tiers"), dict),
+        "parent_step_contract": isinstance(receipt_config, dict)
+        and receipt_config.get("steps") == parent["checkpoint_step"],
+    }
+    expected_parent_seeds = {
+        "master": parent["master_seed"],
+        "initialization": derived_seed(parent["master_seed"], "initialization"),
+        "training_data": derived_seed(parent["master_seed"], "training_data"),
+        "evaluation": derived_seed(parent["master_seed"], "evaluation"),
+    }
+    receipt_checks["seeds"] = receipt.get("seeds") == expected_parent_seeds
+    continuity_fields = (
+        "width",
+        "tiers",
+        "batch_size",
+        "eval_every",
+        "checkpoint_eval_n",
+        "final_eval_n",
+        "eval_batch_size",
+        "evaluation_width_modes",
+        "master_seed",
+        "peak_lr",
+        "weight_decay",
+        "warmup_fraction",
+        "minimum_lr_fraction",
+        "gradient_clip",
+        "small_prime_limit",
+        "require_final_gate",
+        "deterministic_algorithms",
+        "runtime_policy",
+        "source_policy",
+        "arms",
+    )
+    for field in continuity_fields:
+        receipt_checks[f"continuity_{field}"] = (
+            isinstance(receipt_config, dict)
+            and receipt_config.get(field) == config.get(field)
+        )
+    parent_selection = (
+        receipt_config.get("selection") if isinstance(receipt_config, dict) else None
+    )
+    child_selection = config.get("selection")
+    if isinstance(parent_selection, dict) and isinstance(child_selection, dict):
+        parent_selection = {
+            key: value
+            for key, value in parent_selection.items()
+            if key != "evaluate_step_zero"
+        }
+        child_selection = {
+            key: value
+            for key, value in child_selection.items()
+            if key != "evaluate_step_zero"
+        }
+    receipt_checks["continuity_selection_gate"] = (
+        parent_selection == child_selection
+    )
+    failed_receipt = [name for name, passed in receipt_checks.items() if not passed]
+    if failed_receipt:
+        raise ValueError(
+            "invalid exact-resume parent receipt: " + ", ".join(failed_receipt)
+        )
+
+    payload = torch.load(resolved_checkpoint, map_location="cpu", weights_only=False)
+    state_dict = payload.get("state_dict")
+    expected_model = Cell(**arm["architecture"])
+    expected_signature = state_dict_signature(expected_model.state_dict())
+    actual_signature = (
+        state_dict_signature(state_dict)
+        if isinstance(state_dict, dict)
+        and all(isinstance(value, torch.Tensor) for value in state_dict.values())
+        else None
+    )
+    actual_signature_sha = (
+        sha256_bytes(canonical_json(actual_signature).encode())
+        if actual_signature is not None
+        else None
+    )
+    optimizer_state = payload.get("optimizer_state_dict")
+    scheduler_state = payload.get("scheduler_state_dict")
+    saved_rng = payload.get("rng_state")
+    checkpoint_checks = {
+        "schema": payload.get("schema") == parent["checkpoint_schema"] == CHECKPOINT_SCHEMA,
+        "arm": payload.get("arm") == parent["arm"] == arm_name,
+        "width": payload.get("L") == parent["width"] == config["width"],
+        "step": type(payload.get("step")) is int
+        and payload["step"] == parent["checkpoint_step"],
+        "architecture": payload.get("config") == parent["architecture"],
+        "experiment_config": payload.get("experiment_config") == receipt_config,
+        "source_identity": payload.get("source_identity") == receipt_source,
+        "state_signature": actual_signature_sha
+        == parent["state_dict_signature_sha256"],
+        "state_keys_shapes_dtypes": actual_signature == expected_signature,
+        "state_finite": isinstance(state_dict, dict)
+        and all(torch.isfinite(value).all().item() for value in state_dict.values()),
+        "optimizer_state": isinstance(optimizer_state, dict),
+        "scheduler_state": isinstance(scheduler_state, dict),
+        "rng_state": isinstance(saved_rng, dict),
+    }
+    failed_checkpoint = [
+        name for name, passed in checkpoint_checks.items() if not passed
+    ]
+    if failed_checkpoint:
+        raise ValueError(
+            "invalid exact-resume parent checkpoint: "
+            + ", ".join(failed_checkpoint)
+        )
+
+    assert isinstance(state_dict, dict)
+    assert isinstance(optimizer_state, dict)
+    assert isinstance(scheduler_state, dict)
+    assert isinstance(saved_rng, dict)
+    parent_parameters = list(expected_model.parameters())
+    param_groups = optimizer_state.get("param_groups")
+    optimizer_slots = optimizer_state.get("state")
+    if not isinstance(param_groups, list) or len(param_groups) != 1:
+        raise ValueError("invalid exact-resume optimizer: param_groups")
+    if not isinstance(optimizer_slots, dict):
+        raise ValueError("invalid exact-resume optimizer: state")
+    group = param_groups[0]
+    expected_parameter_ids = list(range(len(parent_parameters)))
+    optimizer_checks = {
+        "parameter_ids": group.get("params") == expected_parameter_ids,
+        "slot_ids": set(optimizer_slots) == set(expected_parameter_ids),
+        "learning_rate": math.isclose(
+            group.get("lr", math.nan),
+            config["schedule_extension"]["floor_learning_rate"],
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        ),
+        "initial_learning_rate": group.get("initial_lr") == config["peak_lr"],
+        "weight_decay": group.get("weight_decay") == config["weight_decay"],
+        "betas": tuple(group.get("betas", ())) == (0.9, 0.999),
+        "eps": group.get("eps") == 1e-8,
+        "amsgrad": group.get("amsgrad") is False,
+        "maximize": group.get("maximize") is False,
+    }
+    for parameter_id, parameter in enumerate(parent_parameters):
+        slot = optimizer_slots.get(parameter_id)
+        valid_slot = isinstance(slot, dict)
+        if valid_slot:
+            valid_slot = set(slot) == {"step", "exp_avg", "exp_avg_sq"}
+        if valid_slot:
+            valid_slot = _scalar_step(slot["step"]) == parent["checkpoint_step"]
+        for moment_name in ("exp_avg", "exp_avg_sq"):
+            moment = slot.get(moment_name) if isinstance(slot, dict) else None
+            valid_slot = bool(
+                valid_slot
+                and isinstance(moment, torch.Tensor)
+                and moment.shape == parameter.shape
+                and moment.dtype == parameter.dtype
+                and torch.isfinite(moment).all().item()
+            )
+        optimizer_checks[f"slot_{parameter_id}"] = valid_slot
+    failed_optimizer = [
+        name for name, passed in optimizer_checks.items() if not passed
+    ]
+    if failed_optimizer:
+        raise ValueError(
+            "invalid exact-resume optimizer: " + ", ".join(failed_optimizer)
+        )
+
+    parent_lr_lambda = _parent_cosine_lambda(receipt_config)
+    expected_floor = config["schedule_extension"]["floor_learning_rate"]
+    expected_floor_fraction = config["schedule_extension"]["floor_fraction"]
+    scheduler_checks = {
+        "base_lrs": scheduler_state.get("base_lrs") == [config["peak_lr"]],
+        "last_epoch": scheduler_state.get("last_epoch")
+        == parent["checkpoint_step"],
+        "step_count": scheduler_state.get("_step_count")
+        == parent["checkpoint_step"] + 1,
+        "last_lr": isinstance(scheduler_state.get("_last_lr"), list)
+        and len(scheduler_state["_last_lr"]) == 1
+        and math.isclose(
+            scheduler_state["_last_lr"][0],
+            expected_floor,
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        ),
+        "lambda_slots": scheduler_state.get("lr_lambdas") == [None],
+        "reconstructed_floor": math.isclose(
+            parent_lr_lambda(parent["checkpoint_step"]),
+            expected_floor_fraction,
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        ),
+    }
+    failed_scheduler = [
+        name for name, passed in scheduler_checks.items() if not passed
+    ]
+    if failed_scheduler:
+        raise ValueError(
+            "invalid exact-resume scheduler: " + ", ".join(failed_scheduler)
+        )
+
+    python_rng_probe = random.Random()
+    try:
+        python_rng_probe.setstate(saved_rng.get("python_data"))
+    except (TypeError, ValueError) as error:
+        raise ValueError("invalid exact-resume RNG: python_data") from error
+    cpu_rng = saved_rng.get("torch_cpu")
+    if not isinstance(cpu_rng, torch.Tensor) or cpu_rng.dtype != torch.uint8:
+        raise ValueError("invalid exact-resume RNG: torch_cpu")
+    if environment["device"] == "cuda":
+        cuda_rng = saved_rng.get("torch_cuda_all")
+        if (
+            not isinstance(cuda_rng, list)
+            or len(cuda_rng) != environment["cuda_device_count"]
+            or not all(
+                isinstance(state, torch.Tensor) and state.dtype == torch.uint8
+                for state in cuda_rng
+            )
+        ):
+            raise ValueError("invalid exact-resume RNG: torch_cuda_all")
+    elif "torch_cuda_all" in saved_rng:
+        raise ValueError("invalid exact-resume RNG: unexpected CUDA state")
+    training_state = parent["training_state"]
+    state_checks = {
+        "optimizer_state_slots": len(optimizer_slots)
+        == training_state["optimizer_state_slots"],
+        "optimizer_step": all(
+            _scalar_step(slot["step"]) == training_state["optimizer_step"]
+            for slot in optimizer_slots.values()
+        ),
+        "scheduler_last_epoch": scheduler_state["last_epoch"]
+        == training_state["scheduler_last_epoch"],
+        "scheduler_step_count": scheduler_state["_step_count"]
+        == training_state["scheduler_step_count"],
+        "learning_rate": math.isclose(
+            group["lr"],
+            training_state["learning_rate"],
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        ),
+        "cuda_rng_state_count": (
+            len(saved_rng.get("torch_cuda_all", []))
+            == training_state["cuda_rng_state_count"]
+        ),
+        "next_batch_manifest": next_batch_manifest_sha256(payload)
+        == training_state["next_batch_manifest_sha256"],
+    }
+    failed_training_state = [
+        name for name, passed in state_checks.items() if not passed
+    ]
+    if failed_training_state:
+        raise ValueError(
+            "invalid exact-resume training state: "
+            + ", ".join(failed_training_state)
+        )
+
+    identity = {
+        "mode": "exact_state_resume_only",
+        "classification": "full_state_horizon_extension_not_uninterrupted_replay",
+        "parent_receipt": {
+            "path": str(resolved_receipt),
+            "sha256": receipt_sha,
+            "schema": receipt["schema"],
+            "experiment": parent["experiment"],
+            "status": receipt["status"],
+            "source_identity": receipt_source,
+            "environment_sha256": environment_sha256(receipt_environment),
+        },
+        "parent_checkpoint": {
+            "path": str(resolved_checkpoint),
+            "sha256": checkpoint_sha,
+            "schema": payload["schema"],
+            "step": payload["step"],
+            "state_dict_signature_sha256": actual_signature_sha,
+        },
+        "schedule_extension": config["schedule_extension"],
+        "restoration": {
+            "model_state": True,
+            "optimizer_state": True,
+            "scheduler_state": True,
+            "python_data_rng": True,
+            "torch_cpu_rng": True,
+            "torch_cuda_rng": environment["device"] == "cuda",
+            "environment_exact": True,
+            "boundary_screen_exact": False,
+        },
+    }
+    return identity, payload, last_row["tiers"]
+
+
+def restore_training_rng(
+    saved_rng: dict[str, Any],
+    data_rng: random.Random,
+    device: torch.device,
+) -> None:
+    data_rng.setstate(saved_rng["python_data"])
+    torch.set_rng_state(saved_rng["torch_cpu"])
+    if device.type == "cuda":
+        torch.cuda.set_rng_state_all(saved_rng["torch_cuda_all"])
+    elif device.type == "mps" and "torch_mps" in saved_rng:
+        torch.mps.set_rng_state(saved_rng["torch_mps"])
+
+
 def resolve_device(requested: str) -> torch.device:
     if requested == "auto":
         if torch.cuda.is_available():
@@ -1769,11 +2337,25 @@ def run(args: argparse.Namespace) -> int:
     config = json.loads(config_path.read_text())
     arm = validate_config(config, args.arm)
     architecture = arm["architecture"]
-    if args.resume is not None:
-        raise ValueError(
-            "resume is not implemented; warm_start_only loads model weights and "
-            "deliberately resets optimizer, scheduler, and RNG state"
-        )
+    initialization_mode = initialization_spec(config)["mode"]
+    resume_checkpoint_path = getattr(args, "resume", None)
+    resume_receipt_path = getattr(args, "resume_receipt", None)
+    warm_start_path = getattr(args, "warm_start", None)
+    parent_receipt_path = getattr(args, "parent_receipt", None)
+    predecessor_receipt_path = getattr(args, "predecessor_receipt", None)
+    if initialization_mode == "exact_state_resume_only":
+        if resume_checkpoint_path is None or resume_receipt_path is None:
+            raise ValueError(
+                "exact_state_resume_only requires --resume-receipt and --resume"
+            )
+        if (
+            warm_start_path is not None
+            or parent_receipt_path is not None
+            or predecessor_receipt_path is not None
+        ):
+            raise ValueError("exact-state resume rejects warm-start parent arguments")
+    elif resume_checkpoint_path is not None or resume_receipt_path is not None:
+        raise ValueError("resume artifacts require exact_state_resume_only")
     output = args.out.resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f"refusing nonempty output directory: {output}")
@@ -1802,24 +2384,43 @@ def run(args: argparse.Namespace) -> int:
     }
     environment = environment_identity(device)
 
+    started_at = datetime.now(timezone.utc).isoformat()
+    started = time.perf_counter()
     torch.manual_seed(seeds["initialization"])
     data_rng = random.Random(seeds["training_data"])
-    predecessor_identity = validate_predecessor_receipt(
-        args.predecessor_receipt,
-        args.arm,
-        arm,
-        config,
-        source_identity,
-        seeds,
-        environment,
-    )
-    parent_identity, parent_state_dict = validate_warm_start_parent(
-        args.parent_receipt,
-        args.warm_start,
-        args.arm,
-        arm,
-        config,
-    )
+    predecessor_identity = None
+    parent_identity = None
+    parent_state_dict = None
+    resume_identity = None
+    resume_payload = None
+    boundary_tiers = None
+    if initialization_mode == "exact_state_resume_only":
+        resume_identity, resume_payload, boundary_tiers = validate_exact_resume_parent(
+            resume_receipt_path,
+            resume_checkpoint_path,
+            args.arm,
+            arm,
+            config,
+            environment,
+        )
+        parent_state_dict = resume_payload["state_dict"]
+    else:
+        predecessor_identity = validate_predecessor_receipt(
+            predecessor_receipt_path,
+            args.arm,
+            arm,
+            config,
+            source_identity,
+            seeds,
+            environment,
+        )
+        parent_identity, parent_state_dict = validate_warm_start_parent(
+            parent_receipt_path,
+            warm_start_path,
+            args.arm,
+            arm,
+            config,
+        )
     model = Cell(**architecture)
     if parent_state_dict is not None:
         load_result = model.load_state_dict(parent_state_dict, strict=True)
@@ -1836,34 +2437,76 @@ def run(args: argparse.Namespace) -> int:
         None if parent_identity is None else parent_identity["parent_checkpoint"]
     )
 
-    output.mkdir(parents=True, exist_ok=True)
-
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=config["peak_lr"],
         weight_decay=config["weight_decay"],
     )
-    warmup = max(1, int(config["warmup_fraction"] * config["steps"]))
-
-    def lr_lambda(step: int) -> float:
-        if step < warmup:
-            return (step + 1) / warmup
-        progress = (step - warmup) / max(1, config["steps"] - warmup)
-        cosine = 0.5 * (1 + math.cos(math.pi * progress))
-        minimum = config["minimum_lr_fraction"]
-        return minimum + (1 - minimum) * cosine
-
+    if resume_payload is not None:
+        lr_lambda = _parent_cosine_lambda(resume_payload["experiment_config"])
+    else:
+        lr_lambda = _parent_cosine_lambda(config)
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+    if resume_payload is not None:
+        optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
+        scheduler.load_state_dict(resume_payload["scheduler_state_dict"])
+        restore_training_rng(resume_payload["rng_state"], data_rng, device)
+        if not all_parameters_finite(model):
+            raise ValueError("exact-resume model became nonfinite after loading")
+        expected_floor = config["schedule_extension"]["floor_learning_rate"]
+        if any(
+            not math.isclose(
+                group["lr"], expected_floor, rel_tol=0.0, abs_tol=1e-15
+            )
+            for group in optimizer.param_groups
+        ):
+            raise ValueError("exact-resume optimizer did not restore the floor LR")
+        if any(
+            isinstance(optimizer.state[parameter].get(moment_name), torch.Tensor)
+            and optimizer.state[parameter][moment_name].device != parameter.device
+            for parameter in model.parameters()
+            for moment_name in ("exp_avg", "exp_avg_sq")
+        ):
+            raise ValueError("exact-resume optimizer state is on the wrong device")
     loss_function = nn.BCEWithLogitsLoss()
-    started_at = datetime.now(timezone.utc).isoformat()
     history: list[dict[str, Any]] = []
     checkpoints: list[dict[str, Any]] = []
     selection = selection_spec(config)
     screen_thresholds = selection_minimum_correct_by_tier(config, "screen")
     confirmation_thresholds = selection_minimum_correct_by_tier(config, "confirmation")
     selected_checkpoint: dict[str, Any] | None = None
+    if resume_payload is not None:
+        assert resume_identity is not None
+        assert boundary_tiers is not None
+        model.eval()
+        observed_boundary = evaluate_rollouts(
+            model,
+            config,
+            seeds,
+            device,
+            selection["screen_n"],
+        )
+        if observed_boundary != boundary_tiers:
+            raise RuntimeError(
+                "exact-resume boundary screen differs from the parent receipt"
+            )
+        boundary_sha = sha256_bytes(canonical_json(observed_boundary).encode())
+        resume_identity["restoration"]["boundary_screen_exact"] = True
+        resume_identity["boundary_screen"] = {
+            "step": resume_payload["step"],
+            "count": selection["screen_n"],
+            "tiers_sha256": boundary_sha,
+            "matches_parent_receipt": True,
+        }
+        restore_training_rng(resume_payload["rng_state"], data_rng, device)
+
+    output.mkdir(parents=True, exist_ok=True)
     meta = {
-        "schema": RECEIPT_SCHEMA,
+        "schema": (
+            HORIZON_RECEIPT_SCHEMA
+            if config.get("schema") == HORIZON_CONFIG_SCHEMA
+            else RECEIPT_SCHEMA
+        ),
         "status": "running",
         "experiment": config["name"],
         "role": config["role"],
@@ -1874,10 +2517,12 @@ def run(args: argparse.Namespace) -> int:
         "seeds": seeds,
         "source_identity": source_identity,
         "initialization": (
-            {"mode": "scratch"} if parent_identity is None else parent_identity
+            resume_identity
+            if resume_identity is not None
+            else ({"mode": "scratch"} if parent_identity is None else parent_identity)
         ),
         "warm_start": warm_start_identity,
-        "resume": None,
+        "resume": resume_identity,
         "predecessor_receipt": predecessor_identity,
         "runtime_policy": runtime_policy,
         "environment": environment,
@@ -1890,7 +2535,11 @@ def run(args: argparse.Namespace) -> int:
     }
     write_json(output / "receipt.json", meta)
     print(
-        "=== NeuralHorner v0.2 === "
+        (
+            "=== NeuralHorner v0.3 === "
+            if config.get("schema") == HORIZON_CONFIG_SCHEMA
+            else "=== NeuralHorner v0.2 === "
+        )
         + canonical_json(
             {
                 "experiment": config["name"],
@@ -1905,9 +2554,12 @@ def run(args: argparse.Namespace) -> int:
         flush=True,
     )
 
-    started = time.perf_counter()
     last_loss = math.nan
-    first_step = 0 if selection.get("evaluate_step_zero", False) else 1
+    first_step = (
+        resume_payload["step"] + 1
+        if resume_payload is not None
+        else (0 if selection.get("evaluate_step_zero", False) else 1)
+    )
     for step in range(first_step, config["steps"] + 1):
         if step > 0:
             model.train()
@@ -2115,6 +2767,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--warm-start", type=pathlib.Path)
     parser.add_argument("--parent-receipt", type=pathlib.Path)
     parser.add_argument("--predecessor-receipt", type=pathlib.Path)
+    parser.add_argument("--resume-receipt", type=pathlib.Path)
     parser.add_argument("--resume", type=pathlib.Path)
     return parser.parse_args()
 

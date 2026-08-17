@@ -6,6 +6,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 research/v02/runs/
+research/v03/runs/
 *.aux
 *.fdb_latexmk
 *.fls

@@ -5,6 +5,7 @@ import json
 import random
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import torch
 import pytest
@@ -31,6 +32,14 @@ TRACE = load_script("trace_direct_f11")
 NO_SHORTCUT = load_script("verify_no_shortcut")
 OFFICIAL = load_script("run_official_eval")
 HELD_OUT = load_script("held_out_battery")
+
+
+def test_frozen_battery_resolves_legacy_and_explicit_model_widths() -> None:
+    assert HELD_OUT.model_state_width(SimpleNamespace(L=2048, width=512)) == 2048
+    assert HELD_OUT.model_state_width(SimpleNamespace(width=2048)) == 2048
+    assert HELD_OUT.model_state_width(SimpleNamespace()) == 32
+    with pytest.raises(ValueError, match="positive integer"):
+        HELD_OUT.model_state_width(SimpleNamespace(width=False))
 
 
 def test_trace_count_gates_reject_truncation_and_asymmetry() -> None:

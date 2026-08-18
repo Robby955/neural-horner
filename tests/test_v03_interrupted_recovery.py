@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import importlib.util
 import json
 import random
@@ -112,6 +113,15 @@ def _fixture(
         }
         for tier in config["tiers"]
     }
+    screen_gate = TRAINER.rollout_gate(
+        tiers,
+        config["tiers"],
+        config["evaluation_width_modes"],
+        config["selection"]["screen_n"],
+        TRAINER.selection_minimum_correct_by_tier(config, "screen"),
+    )
+    screen_gate["parameters_finite"] = True
+    screen_gate["passed"] = screen_gate["passed"] and True
     receipt = {
         "schema": TRAINER.HORIZON_RECEIPT_SCHEMA,
         "status": "running",
@@ -138,8 +148,15 @@ def _fixture(
         "history": [
             {
                 "step": step,
+                "loss": 0.125,
+                "learning_rate": config["schedule_extension"][
+                    "floor_learning_rate"
+                ],
                 "elapsed_s": 10.0,
                 "tiers": tiers,
+                "screen_gate": screen_gate,
+                "confirmation": None,
+                "small_prime_exhaustive": None,
                 "parameters_finite": True,
             }
         ],
@@ -165,6 +182,150 @@ def _validate(
     monkeypatch.setattr(RECOVERY, "_original_source_is_available", lambda source: None)
     return RECOVERY.validate_interrupted_receipt(
         output, config, "B127", environment, receipt_sha
+    )
+
+
+def _add_passing_confirmation(receipt: dict[str, Any]) -> dict[str, Any]:
+    config = receipt["config"]
+    row = receipt["history"][-1]
+    screen_n = config["selection"]["screen_n"]
+    confirmation_n = config["selection"]["confirmation_n"]
+
+    def tiers(count: int) -> dict[str, Any]:
+        return {
+            str(tier): {
+                mode: {
+                    "correct": count,
+                    "total": count,
+                    "case_manifest_sha256": "a" * 64,
+                    "prime_sha256": "b" * 64,
+                }
+                for mode in config["evaluation_width_modes"]
+            }
+            for tier in config["tiers"]
+        }
+
+    row["tiers"] = tiers(screen_n)
+    row["screen_gate"] = TRAINER.rollout_gate(
+        row["tiers"],
+        config["tiers"],
+        config["evaluation_width_modes"],
+        screen_n,
+        TRAINER.selection_minimum_correct_by_tier(config, "screen"),
+    )
+    row["screen_gate"]["parameters_finite"] = True
+    row["screen_gate"]["passed"] = row["screen_gate"]["passed"] and True
+    confirmation_tiers = tiers(confirmation_n)
+    expected_total = sum(
+        2 * prime * prime
+        for prime in range(2, config["small_prime_limit"])
+        if TRAINER.is_prime(prime)
+    )
+    small_prime = {
+        "fixed": {
+            "prime_limit_exclusive": config["small_prime_limit"],
+            "sequence_width": config["width"],
+            "total": expected_total,
+            "correct": expected_total,
+        },
+        "dynamic": {
+            "prime_limit_exclusive": config["small_prime_limit"],
+            "sequence_width": min(config["width"], 32),
+            "total": expected_total,
+            "correct": expected_total,
+        },
+    }
+    gate = TRAINER.confirmed_gate(
+        confirmation_tiers,
+        small_prime,
+        config,
+        True,
+        confirmation_n,
+    )
+    row["confirmation"] = {
+        "tiers": confirmation_tiers,
+        "small_prime_exhaustive": small_prime,
+        "gate": gate,
+    }
+    row["small_prime_exhaustive"] = small_prime
+    selected = {
+        **receipt["checkpoints"][-1],
+        "reason": "first_confirmed_pass",
+        "confirmation_gate": gate,
+    }
+    receipt["selected_checkpoint"] = selected
+    return selected
+
+
+def _extend_fixture_to_horizon(output: Path, receipt: dict[str, Any]) -> None:
+    original_row = receipt["history"][0]
+    for step in range(66_000, 120_000, 3_000):
+        row = deepcopy(original_row)
+        row["step"] = step
+        row["elapsed_s"] = float(step - 60_000)
+        receipt["history"].append(row)
+        path = output / f"weights_step{step}.pt"
+        path.write_bytes(f"committed-{step}".encode())
+        receipt["checkpoints"].append(
+            {
+                "step": step,
+                "path": path.name,
+                "sha256": TRAINER.sha256_file(path),
+            }
+        )
+
+    latest_path = output / "weights_step63000.pt"
+    payload = torch.load(latest_path, map_location="cpu", weights_only=False)
+    payload["step"] = 120_000
+    for slot in payload["optimizer_state_dict"]["state"].values():
+        slot["step"] = torch.tensor(120_000.0)
+    payload["scheduler_state_dict"]["last_epoch"] = 120_000
+    payload["scheduler_state_dict"]["_step_count"] = 120_001
+    terminal_path = output / "weights_step120000.pt"
+    torch.save(payload, terminal_path)
+    row = deepcopy(original_row)
+    row["step"] = 120_000
+    row["elapsed_s"] = 60_000.0
+    receipt["history"].append(row)
+    receipt["checkpoints"].append(
+        {
+            "step": 120_000,
+            "path": terminal_path.name,
+            "sha256": TRAINER.sha256_file(terminal_path),
+        }
+    )
+
+
+def _patch_run_environment(
+    monkeypatch: pytest.MonkeyPatch,
+    environment: dict[str, Any],
+    boundary_tiers: dict[str, Any],
+) -> None:
+    monkeypatch.setattr(RECOVERY.TRAINER, "configure_canonical_runtime", lambda *_: None)
+    monkeypatch.setattr(
+        RECOVERY.TRAINER, "resolve_device", lambda _: torch.device("cpu")
+    )
+    monkeypatch.setattr(
+        RECOVERY.TRAINER, "environment_identity", lambda _: environment
+    )
+    monkeypatch.setattr(
+        RECOVERY,
+        "recovery_source_identity",
+        lambda _: {
+            "git": {"head": "f" * 40, "branch": "test", "status": []},
+            "runner_sha256": "a" * 64,
+        },
+    )
+    monkeypatch.setattr(RECOVERY, "_original_source_is_available", lambda _: None)
+    monkeypatch.setattr(
+        RECOVERY.TRAINER,
+        "evaluate_rollouts",
+        lambda *_: deepcopy(boundary_tiers),
+    )
+    monkeypatch.setattr(
+        RECOVERY.TRAINER,
+        "train_batch",
+        lambda *_: pytest.fail("terminal recovery retrained the model"),
     )
 
 
@@ -219,7 +380,10 @@ def test_quarantines_uncommitted_artifact_without_accepting_it(tmp_path: Path) -
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
-        (lambda receipt: receipt.update(status="completed_failed_gate"), "status"),
+        (
+            lambda receipt: receipt.update(status="completed_failed_gate"),
+            "completed-failure",
+        ),
         (
             lambda receipt: receipt["checkpoints"][0].update(step=66_000),
             "alignment",
@@ -230,7 +394,7 @@ def test_quarantines_uncommitted_artifact_without_accepting_it(tmp_path: Path) -
         ),
         (
             lambda receipt: receipt.update(final_gate={"passed": False}),
-            "final_gate_unset",
+            "final gate",
         ),
     ],
 )
@@ -340,3 +504,205 @@ def test_atomic_checkpoint_refuses_existing_target(tmp_path: Path) -> None:
             {},
         )
     assert path.read_bytes() == b"preserve"
+
+
+def test_accepts_pending_confirmed_checkpoint_for_terminal_finalization(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    selected = _add_passing_confirmation(receipt)
+    TRAINER.write_json(receipt_path, receipt)
+
+    validated, _, _, _ = _validate(
+        monkeypatch,
+        output,
+        config,
+        environment,
+        TRAINER.sha256_file(receipt_path),
+    )
+
+    assert validated["_validated_phase"] == "pending_terminal_pass"
+    assert validated["selected_checkpoint"] == selected
+
+
+def test_run_finalizes_pending_confirmation_without_retraining_and_repairs_marker(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    _add_passing_confirmation(receipt)
+    TRAINER.write_json(receipt_path, receipt)
+    _patch_run_environment(monkeypatch, environment, receipt["history"][-1]["tiers"])
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps(config))
+    args = argparse.Namespace(
+        config=config_path,
+        arm="B127",
+        out=output,
+        expected_receipt_sha256=TRAINER.sha256_file(receipt_path),
+        device="cpu",
+    )
+
+    assert RECOVERY.run(args) == 0
+    terminal = json.loads(receipt_path.read_text())
+    assert terminal["status"] == "completed_pass"
+    assert terminal["steps_completed"] == 63_000
+    assert terminal["interrupted_recoveries"][-1]["status"] == "completed"
+    assert (output / "SELECTED.json").is_file()
+    assert (output / "DONE").read_text() == "completed_pass\n"
+
+    (output / "DONE").unlink()
+    terminal_bytes = receipt_path.read_bytes()
+    args.expected_receipt_sha256 = TRAINER.sha256_file(receipt_path)
+    assert RECOVERY.run(args) == 0
+    assert receipt_path.read_bytes() == terminal_bytes
+    assert (output / "DONE").read_text() == "completed_pass\n"
+
+
+def test_rejects_confirmed_checkpoint_with_missing_or_tampered_selection(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    _add_passing_confirmation(receipt)
+    receipt["selected_checkpoint"] = None
+    TRAINER.write_json(receipt_path, receipt)
+
+    with pytest.raises(ValueError, match="selected checkpoint"):
+        _validate(
+            monkeypatch,
+            output,
+            config,
+            environment,
+            TRAINER.sha256_file(receipt_path),
+        )
+
+    selected = _add_passing_confirmation(receipt)
+    selected["sha256"] = "f" * 64
+    receipt["selected_checkpoint"] = selected
+    TRAINER.write_json(receipt_path, receipt)
+    with pytest.raises(ValueError, match="selected checkpoint"):
+        _validate(
+            monkeypatch,
+            output,
+            config,
+            environment,
+            TRAINER.sha256_file(receipt_path),
+        )
+
+
+def test_terminal_pass_artifacts_are_repairable_and_idempotent(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    selected = _add_passing_confirmation(receipt)
+    receipt.update(
+        status="completed_pass",
+        final_gate=selected["confirmation_gate"],
+        finished_at="2026-08-17T01:00:00+00:00",
+        steps_completed=63_000,
+        stopped_at_first_confirmed_pass=True,
+        elapsed_s=10.0,
+    )
+    TRAINER.write_json(receipt_path, receipt)
+
+    validated, _, _, _ = _validate(
+        monkeypatch,
+        output,
+        config,
+        environment,
+        TRAINER.sha256_file(receipt_path),
+    )
+    assert validated["_validated_phase"] == "terminal_pass"
+
+    validated.pop("_validated_phase")
+    validated.pop("_validated_uncommitted_artifacts")
+    RECOVERY.ensure_terminal_artifacts(output, validated)
+    first_selected = (output / "SELECTED.json").read_bytes()
+    first_done = (output / "DONE").read_bytes()
+    RECOVERY.ensure_terminal_artifacts(output, validated)
+    assert (output / "SELECTED.json").read_bytes() == first_selected
+    assert (output / "DONE").read_bytes() == first_done
+
+
+def test_accepts_pending_failed_horizon_for_terminal_finalization(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    _extend_fixture_to_horizon(output, receipt)
+    TRAINER.write_json(receipt_path, receipt)
+
+    validated, _, _, _ = _validate(
+        monkeypatch,
+        output,
+        config,
+        environment,
+        TRAINER.sha256_file(receipt_path),
+    )
+
+    assert validated["_validated_phase"] == "pending_terminal_fail"
+    validated.pop("_validated_phase")
+    validated.pop("_validated_uncommitted_artifacts")
+    event = {"status": "running"}
+    RECOVERY.complete_receipt(validated, event, None)
+    assert validated["status"] == "completed_failed_gate"
+    assert validated["steps_completed"] == 120_000
+    assert validated["selected_checkpoint"] is None
+    assert validated["final_gate"]["passed"] is False
+    assert event["terminal_status"] == "completed_failed_gate"
+    RECOVERY.ensure_terminal_artifacts(output, validated)
+    assert (output / "FAILED_GATE").read_text() == "completed_failed_gate\n"
+
+
+def test_rejects_terminal_artifact_that_disagrees_with_receipt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output, config, environment, _ = _fixture(tmp_path)
+    receipt_path = output / "receipt.json"
+    receipt = json.loads(receipt_path.read_text())
+    selected = _add_passing_confirmation(receipt)
+    receipt.update(
+        status="completed_pass",
+        final_gate=selected["confirmation_gate"],
+        finished_at="2026-08-17T01:00:00+00:00",
+        steps_completed=63_000,
+        stopped_at_first_confirmed_pass=True,
+        elapsed_s=10.0,
+    )
+    TRAINER.write_json(receipt_path, receipt)
+    TRAINER.write_json(output / "SELECTED.json", {"step": 66_000})
+
+    with pytest.raises(ValueError, match="SELECTED.json differs"):
+        _validate(
+            monkeypatch,
+            output,
+            config,
+            environment,
+            TRAINER.sha256_file(receipt_path),
+        )
+
+
+def test_finds_stale_terminal_temporaries_for_quarantine(tmp_path: Path) -> None:
+    output = tmp_path / "run"
+    output.mkdir()
+    for name in ("DONE.tmp", "FAILED_GATE.tmp", "SELECTED.json.tmp"):
+        (output / name).write_text("partial")
+
+    artifacts = RECOVERY.find_uncommitted_artifacts(output, set(), 63_000)
+
+    assert [artifact["path"] for artifact in artifacts] == [
+        "DONE.tmp",
+        "FAILED_GATE.tmp",
+        "SELECTED.json.tmp",
+    ]
+    assert {artifact["kind"] for artifact in artifacts} == {
+        "terminal_artifact_temporary"
+    }

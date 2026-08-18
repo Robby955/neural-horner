@@ -997,6 +997,16 @@ def finalize_artifact_identity(
     return unchanged
 
 
+def model_state_width(model: Any) -> int:
+    """Resolve the state-width declaration used to generate the battery."""
+    width = getattr(model, "L", None)
+    if width is None:
+        width = getattr(model, "width", 32)
+    if type(width) is not int or width <= 0:
+        raise ValueError("model state width must be a positive integer")
+    return width
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("submission")
@@ -1319,7 +1329,7 @@ def main():
         receipt["manifest_unchanged_during_load"] = manifest == preloaded_manifest
         receipt["loaded_manifest_sha256"] = canonical_json_sha256(manifest)
         output_base = manifest["output_base"]
-        L = getattr(model, "L", 32)
+        L = model_state_width(model)
         declared_batch_size, batch_size = scorer_batch_size(model)
         environment = model_environment(model)
         receipt.update(

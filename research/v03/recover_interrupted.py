@@ -31,6 +31,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 TRAINER_PATH = ROOT / "research/v02/train_scale.py"
 RECOVERY_SCHEMA = "neuralhorner-v03-interrupted-recovery-v1"
 INTERRUPTED_STATUSES = {"running", "interrupted_operational"}
+TERMINAL_STATUSES = {"completed_pass", "completed_failed_gate"}
 
 
 def _load_trainer() -> Any:
@@ -170,6 +171,9 @@ def find_uncommitted_artifacts(
         elif name == "receipt.json.tmp":
             raw_step = ""
             kind = "receipt_temporary"
+        elif name in {"DONE.tmp", "FAILED_GATE.tmp", "SELECTED.json.tmp"}:
+            raw_step = ""
+            kind = "terminal_artifact_temporary"
         else:
             continue
         if raw_step:
@@ -221,6 +225,166 @@ def quarantine_uncommitted_artifacts(
     return moved
 
 
+def failed_final_gate(final: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "parameters_finite": final["parameters_finite"],
+        "rollout_threshold_passed": False,
+        "rollout_exact": False,
+        "small_prime_exact": False,
+        "passed": False,
+        "reason": "no checkpoint passed the confirmation gate",
+    }
+
+
+def validate_history_semantics(
+    receipt: dict[str, Any],
+    config: dict[str, Any],
+) -> dict[str, Any] | None:
+    history = receipt["history"]
+    checkpoints = receipt["checkpoints"]
+    selection = TRAINER.selection_spec(config)
+    screen_thresholds = TRAINER.selection_minimum_correct_by_tier(config, "screen")
+    floor = config["schedule_extension"]["floor_learning_rate"]
+    prior_elapsed = -math.inf
+    passing_rows: list[tuple[dict[str, Any], dict[str, Any], dict[str, Any]]] = []
+    checkpoints_by_step = {entry["step"]: entry for entry in checkpoints}
+    for row in history:
+        step = row["step"]
+        loss = row.get("loss")
+        learning_rate = row.get("learning_rate")
+        elapsed = row.get("elapsed_s")
+        parameters_finite = row.get("parameters_finite")
+        if (
+            not isinstance(loss, (int, float))
+            or isinstance(loss, bool)
+            or not math.isfinite(float(loss))
+        ):
+            raise ValueError(f"invalid interrupted history loss at step {step}")
+        if (
+            not isinstance(learning_rate, (int, float))
+            or isinstance(learning_rate, bool)
+            or not math.isclose(
+                float(learning_rate), floor, rel_tol=0.0, abs_tol=1e-15
+            )
+        ):
+            raise ValueError(
+                f"invalid interrupted history learning rate at step {step}"
+            )
+        if (
+            not isinstance(elapsed, (int, float))
+            or isinstance(elapsed, bool)
+            or not math.isfinite(float(elapsed))
+            or float(elapsed) < prior_elapsed
+        ):
+            raise ValueError(f"invalid interrupted history elapsed time at step {step}")
+        prior_elapsed = float(elapsed)
+        if type(parameters_finite) is not bool:
+            raise ValueError(
+                f"invalid interrupted parameter-finiteness flag at step {step}"
+            )
+        tiers = row.get("tiers")
+        if not isinstance(tiers, dict):
+            raise ValueError(f"invalid interrupted tiers at step {step}")
+        recomputed_screen = TRAINER.rollout_gate(
+            tiers,
+            config["tiers"],
+            config["evaluation_width_modes"],
+            selection["screen_n"],
+            screen_thresholds,
+        )
+        recomputed_screen["parameters_finite"] = parameters_finite
+        recomputed_screen["passed"] = (
+            recomputed_screen["passed"] and parameters_finite
+        )
+        if row.get("screen_gate") != recomputed_screen:
+            raise ValueError(f"invalid interrupted screen gate at step {step}")
+
+        confirmation = row.get("confirmation")
+        if confirmation is None:
+            if row.get("small_prime_exhaustive") is not None:
+                raise ValueError(
+                    f"unexpected interrupted small-prime result at step {step}"
+                )
+            continue
+        if not isinstance(confirmation, dict):
+            raise ValueError(f"invalid interrupted confirmation at step {step}")
+        confirmation_tiers = confirmation.get("tiers")
+        small_prime = confirmation.get("small_prime_exhaustive")
+        if not isinstance(confirmation_tiers, dict) or not isinstance(
+            small_prime, dict
+        ):
+            raise ValueError(
+                f"invalid interrupted confirmation evidence at step {step}"
+            )
+        recomputed_confirmation = TRAINER.confirmed_gate(
+            confirmation_tiers,
+            small_prime,
+            config,
+            parameters_finite,
+            selection["confirmation_n"],
+        )
+        if confirmation.get("gate") != recomputed_confirmation:
+            raise ValueError(
+                f"invalid interrupted confirmation gate at step {step}"
+            )
+        if row.get("small_prime_exhaustive") != small_prime:
+            raise ValueError(
+                f"interrupted small-prime evidence mismatch at step {step}"
+            )
+        if recomputed_confirmation["passed"]:
+            passing_rows.append(
+                (row, checkpoints_by_step[step], recomputed_confirmation)
+            )
+
+    if len(passing_rows) > 1:
+        raise ValueError("interrupted receipt contains multiple confirmed checkpoints")
+    selected = receipt.get("selected_checkpoint")
+    if not passing_rows:
+        if selected is not None:
+            raise ValueError("interrupted receipt selects an unconfirmed checkpoint")
+        return None
+    row, checkpoint, gate = passing_rows[0]
+    if row is not history[-1]:
+        raise ValueError("interrupted receipt continued after a confirmed checkpoint")
+    expected_selected = {
+        **checkpoint,
+        "reason": "first_confirmed_pass",
+        "confirmation_gate": gate,
+    }
+    if selected != expected_selected:
+        raise ValueError("interrupted selected checkpoint is inconsistent")
+    return expected_selected
+
+
+def validate_terminal_artifacts(
+    output: pathlib.Path,
+    receipt: dict[str, Any],
+) -> None:
+    status = receipt["status"]
+    selected_path = output / "SELECTED.json"
+    done_path = output / "DONE"
+    failed_path = output / "FAILED_GATE"
+    if status == "completed_pass":
+        if failed_path.exists():
+            raise ValueError("passing interrupted receipt has FAILED_GATE marker")
+        if selected_path.exists():
+            try:
+                selected = json.loads(selected_path.read_text())
+            except (OSError, json.JSONDecodeError) as error:
+                raise ValueError("invalid interrupted SELECTED.json") from error
+            if selected != receipt["selected_checkpoint"]:
+                raise ValueError("interrupted SELECTED.json differs from receipt")
+        if done_path.exists() and done_path.read_text() != status + "\n":
+            raise ValueError("interrupted DONE marker differs from receipt")
+    elif status == "completed_failed_gate":
+        if selected_path.exists() or done_path.exists():
+            raise ValueError("failed interrupted receipt has passing artifacts")
+        if failed_path.exists() and failed_path.read_text() != status + "\n":
+            raise ValueError("interrupted FAILED_GATE marker differs from receipt")
+    elif any(path.exists() for path in (selected_path, done_path, failed_path)):
+        raise ValueError("nonterminal interrupted receipt has terminal artifacts")
+
+
 def validate_interrupted_receipt(
     output: pathlib.Path,
     config: dict[str, Any],
@@ -245,9 +409,10 @@ def validate_interrupted_receipt(
     latest = history_steps[-1]
     expected_steps = list(range(parent_end + eval_every, latest + 1, eval_every))
     source = receipt.get("source_identity")
+    status = receipt.get("status")
     checks = {
         "schema": receipt.get("schema") == TRAINER.HORIZON_RECEIPT_SCHEMA,
-        "status": receipt.get("status") in INTERRUPTED_STATUSES,
+        "status": status in INTERRUPTED_STATUSES | TERMINAL_STATUSES,
         "experiment": receipt.get("experiment") == config["name"],
         "role": receipt.get("role") == config["role"],
         "arm": receipt.get("arm") == arm_name,
@@ -259,21 +424,13 @@ def validate_interrupted_receipt(
         "runtime_policy": receipt.get("runtime_policy") == config["runtime_policy"],
         "history_checkpoint_alignment": history_steps == checkpoint_steps,
         "contiguous_evaluation_steps": history_steps == expected_steps,
-        "latest_step_range": 63_000 <= latest <= 117_000,
-        "latest_step_alignment": latest % 3_000 == 0,
-        "selected_checkpoint": receipt.get("selected_checkpoint") is None,
-        "final_gate_unset": receipt.get("final_gate") is None,
-        "no_finished_at": "finished_at" not in receipt,
-        "no_steps_completed": "steps_completed" not in receipt,
+        "latest_step_range": parent_end + eval_every <= latest <= config["steps"],
+        "latest_step_alignment": (latest - parent_end) % eval_every == 0,
         "original_started_at": isinstance(receipt.get("started_at"), str)
         and bool(receipt["started_at"]),
         "latest_elapsed": isinstance(history[-1].get("elapsed_s"), (int, float))
         and not isinstance(history[-1].get("elapsed_s"), bool)
         and math.isfinite(float(history[-1]["elapsed_s"])),
-        "no_stop_marker": not any(
-            (output / marker).exists()
-            for marker in ("DONE", "FAILED_GATE", "SELECTED.json")
-        ),
         "initial_parent_step": receipt.get("resume", {})
         .get("parent_checkpoint", {})
         .get("step")
@@ -309,6 +466,67 @@ def validate_interrupted_receipt(
                 f"interrupted checkpoint SHA-256 mismatch: {checkpoint_path.name}"
             )
 
+    selected = validate_history_semantics(receipt, config)
+    terminal_elapsed_valid = (
+        isinstance(receipt.get("elapsed_s"), (int, float))
+        and not isinstance(receipt.get("elapsed_s"), bool)
+        and math.isfinite(float(receipt["elapsed_s"]))
+        and float(receipt["elapsed_s"]) >= float(history[-1]["elapsed_s"])
+    )
+    if status in INTERRUPTED_STATUSES:
+        if receipt.get("final_gate") is not None:
+            raise ValueError("nonterminal interrupted receipt has a final gate")
+        if "finished_at" in receipt or "steps_completed" in receipt:
+            raise ValueError("nonterminal interrupted receipt has terminal fields")
+        if selected is not None:
+            phase = "pending_terminal_pass"
+        elif latest == config["steps"]:
+            phase = "pending_terminal_fail"
+        else:
+            phase = "training"
+    elif status == "completed_pass":
+        terminal_checks = {
+            "selected": selected is not None,
+            "last_selected": selected is not None
+            and selected.get("step") == latest,
+            "final_gate": selected is not None
+            and receipt.get("final_gate") == selected["confirmation_gate"],
+            "finished_at": isinstance(receipt.get("finished_at"), str)
+            and bool(receipt["finished_at"]),
+            "steps_completed": receipt.get("steps_completed") == latest,
+            "stopped": receipt.get("stopped_at_first_confirmed_pass") is True,
+            "elapsed": terminal_elapsed_valid,
+        }
+        failed_terminal = [
+            name for name, passed in terminal_checks.items() if not passed
+        ]
+        if failed_terminal:
+            raise ValueError(
+                "invalid completed-pass receipt: " + ", ".join(failed_terminal)
+            )
+        phase = "terminal_pass"
+    else:
+        terminal_checks = {
+            "at_horizon": latest == config["steps"],
+            "unselected": selected is None,
+            "final_gate": receipt.get("final_gate")
+            == failed_final_gate(history[-1]),
+            "finished_at": isinstance(receipt.get("finished_at"), str)
+            and bool(receipt["finished_at"]),
+            "steps_completed": receipt.get("steps_completed") == latest,
+            "stopped": receipt.get("stopped_at_first_confirmed_pass") is False,
+            "elapsed": terminal_elapsed_valid,
+        }
+        failed_terminal = [
+            name for name, passed in terminal_checks.items() if not passed
+        ]
+        if failed_terminal:
+            raise ValueError(
+                "invalid completed-failure receipt: " + ", ".join(failed_terminal)
+            )
+        phase = "terminal_fail"
+    validate_terminal_artifacts(output, receipt)
+
     latest_entry = checkpoints[-1]
     latest_path = output / latest_entry["path"]
     payload = torch.load(latest_path, map_location="cpu", weights_only=False)
@@ -329,6 +547,7 @@ def validate_interrupted_receipt(
         {entry["path"] for entry in checkpoints},
         latest,
     )
+    receipt["_validated_phase"] = phase
     return receipt, latest_path, payload, receipt_sha
 
 
@@ -552,6 +771,53 @@ def write_text_atomic(path: pathlib.Path, value: str) -> None:
     os.replace(temporary, path)
 
 
+def ensure_terminal_artifacts(
+    output: pathlib.Path,
+    receipt: dict[str, Any],
+) -> None:
+    status = receipt["status"]
+    if status == "completed_pass":
+        selected_path = output / "SELECTED.json"
+        if not selected_path.exists():
+            TRAINER.write_json(selected_path, receipt["selected_checkpoint"])
+        done_path = output / "DONE"
+        if not done_path.exists():
+            write_text_atomic(done_path, status + "\n")
+    elif status == "completed_failed_gate":
+        failed_path = output / "FAILED_GATE"
+        if not failed_path.exists():
+            write_text_atomic(failed_path, status + "\n")
+    else:
+        raise ValueError("cannot write terminal artifacts for a running receipt")
+    validate_terminal_artifacts(output, receipt)
+
+
+def complete_receipt(
+    receipt: dict[str, Any],
+    recovery_event: dict[str, Any],
+    selected_checkpoint: dict[str, Any] | None,
+) -> None:
+    final = receipt["history"][-1]
+    final_gate = (
+        selected_checkpoint["confirmation_gate"]
+        if selected_checkpoint is not None
+        else failed_final_gate(final)
+    )
+    receipt["status"] = (
+        "completed_pass" if final_gate["passed"] else "completed_failed_gate"
+    )
+    receipt["finished_at"] = datetime.now(timezone.utc).isoformat()
+    receipt["elapsed_s"] = float(final["elapsed_s"])
+    receipt["steps_completed"] = final["step"]
+    receipt["stopped_at_first_confirmed_pass"] = selected_checkpoint is not None
+    receipt["selected_checkpoint"] = selected_checkpoint
+    receipt["final_gate"] = final_gate
+    recovery_event["status"] = "completed"
+    recovery_event["completed_at"] = receipt["finished_at"]
+    recovery_event["completed_step"] = final["step"]
+    recovery_event["terminal_status"] = receipt["status"]
+
+
 def run(args: argparse.Namespace) -> int:
     config_path = args.config.resolve()
     output = args.out.resolve()
@@ -635,6 +901,7 @@ def run(args: argparse.Namespace) -> int:
         raise RuntimeError("interrupted receipt changed during boundary replay")
 
     latest_step = payload["step"]
+    phase = receipt.pop("_validated_phase")
     backup_path = _bank_receipt(output, input_receipt_sha, latest_step)
     recovered_at = datetime.now(timezone.utc).isoformat()
     recovery_id = recovered_at.replace(":", "-").replace("+", "_")
@@ -644,6 +911,10 @@ def run(args: argparse.Namespace) -> int:
         uncommitted_artifacts,
         recovery_id,
     )
+    if phase in {"terminal_pass", "terminal_fail"}:
+        ensure_terminal_artifacts(output, receipt)
+        return 0 if receipt["status"] == "completed_pass" else 2
+
     recovery_event = {
         "schema": RECOVERY_SCHEMA,
         "classification": "provider_forced_exit_operational_interruption",
@@ -686,6 +957,16 @@ def run(args: argparse.Namespace) -> int:
         raise ValueError("interrupted_recoveries must be a list")
     events.append(recovery_event)
     receipt["status"] = "running"
+    if phase in {"pending_terminal_pass", "pending_terminal_fail"}:
+        complete_receipt(receipt, recovery_event, receipt["selected_checkpoint"])
+        TRAINER.write_json(output / "receipt.json", receipt)
+        ensure_terminal_artifacts(output, receipt)
+        print(
+            "=== recovered run finalized === "
+            + TRAINER.canonical_json(receipt["final_gate"]),
+            flush=True,
+        )
+        return 0 if receipt["status"] == "completed_pass" else 2
     TRAINER.write_json(output / "receipt.json", receipt)
 
     started = time.perf_counter()
@@ -802,41 +1083,16 @@ def run(args: argparse.Namespace) -> int:
         if selected_checkpoint is not None:
             break
 
-    final = history[-1]
-    if selected_checkpoint is not None:
-        final_gate = selected_checkpoint["confirmation_gate"]
-    else:
-        final_gate = {
-            "parameters_finite": final["parameters_finite"],
-            "rollout_threshold_passed": False,
-            "rollout_exact": False,
-            "small_prime_exact": False,
-            "passed": False,
-            "reason": "no checkpoint passed the confirmation gate",
-        }
-    receipt["status"] = (
-        "completed_pass" if final_gate["passed"] else "completed_failed_gate"
-    )
-    receipt["finished_at"] = datetime.now(timezone.utc).isoformat()
+    complete_receipt(receipt, recovery_event, selected_checkpoint)
     receipt["elapsed_s"] = round(elapsed_offset + time.perf_counter() - started, 3)
-    receipt["steps_completed"] = final["step"]
-    receipt["stopped_at_first_confirmed_pass"] = selected_checkpoint is not None
-    receipt["selected_checkpoint"] = selected_checkpoint
-    receipt["final_gate"] = final_gate
-    recovery_event["status"] = "completed"
-    recovery_event["completed_at"] = receipt["finished_at"]
-    recovery_event["completed_step"] = final["step"]
-    recovery_event["terminal_status"] = receipt["status"]
     TRAINER.write_json(output / "receipt.json", receipt)
-    if selected_checkpoint is not None:
-        TRAINER.write_json(output / "SELECTED.json", selected_checkpoint)
-    marker = "DONE" if final_gate["passed"] else "FAILED_GATE"
-    write_text_atomic(output / marker, receipt["status"] + "\n")
+    ensure_terminal_artifacts(output, receipt)
     print(
-        "=== recovered run completed === " + TRAINER.canonical_json(final_gate),
+        "=== recovered run completed === "
+        + TRAINER.canonical_json(receipt["final_gate"]),
         flush=True,
     )
-    return 0 if final_gate["passed"] else 2
+    return 0 if receipt["final_gate"]["passed"] else 2
 
 
 def parse_args() -> argparse.Namespace:

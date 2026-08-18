@@ -58,6 +58,44 @@ widths, and recorded failures. It then restores the saved RNG states again.
 Training starts at update 60,001. No child checkpoint is written for update
 60,000.
 
+## Provider interruption recovery
+
+A provider exit may interrupt this fixed experiment after a completed child
+evaluation. Recovery uses the last step for which `receipt.json` contains both
+a history row and a hash-verified checkpoint entry. An unreferenced checkpoint
+or temporary file is not accepted as progress. It is retained under
+`interrupted_uncommitted/` before the recorded boundary is recomputed.
+
+The recovery runner requires the SHA-256 of the authoritative interrupted
+receipt as an operator pin:
+
+```bash
+V3_RUN=research/v03/runs/horizon_l2048_b127_60k_120k/B127
+V3_RECEIPT_SHA=$(shasum -a 256 "$V3_RUN/receipt.json" | awk '{print $1}')
+
+CUBLAS_WORKSPACE_CONFIG=:4096:8 python3 -u \
+  research/v03/recover_interrupted.py \
+  --config research/v03/configs/horizon_l2048_b127_60k_120k.json \
+  --arm B127 \
+  --device cuda \
+  --expected-receipt-sha256 "$V3_RECEIPT_SHA" \
+  --out "$V3_RUN"
+```
+
+Before modifying the receipt, recovery validates the exact experiment config,
+original source bytes, environment, ordered evaluation history, every recorded
+checkpoint hash, optimizer and scheduler counters, floor learning rate, and
+Python, Torch, and CUDA random states. It then recomputes the latest screen and
+requires exact structured equality with the latest receipt row. The original
+receipt is copied to a hash-named backup before recovery provenance is added.
+New checkpoints and receipts use temporary files followed by atomic rename.
+
+The original `started_at` and scientific source identity remain unchanged.
+Each recovery attempt records its receipt input hash, checkpoint hash, recovery
+timestamp, executor commit and source hashes, environment hash, boundary hash,
+and terminal status. A provider exit is classified as an operational
+interruption, not as a failed gate.
+
 ## Schedule
 
 The parent cosine schedule is reconstructed using its original 60,000-update

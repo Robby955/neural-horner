@@ -39,7 +39,15 @@ npm run render:poster
 npm run render:film
 ```
 
-The delivery render is H.264 at 1920×1080 with BT.709 color, `yuv420p`, CRF 18, a 60-frame GOP, and no audio stream. Outputs are written to the ignored `out/` directory.
+The delivery render is H.264 at 1920×1080 with BT.709 color, `yuv420p`, CRF
+18, a 60-frame GOP, and no audio stream. Outputs are written to the ignored
+`out/` directory.
+
+The GitHub Pages player uses a separate mobile delivery encode. It preserves the
+same 2,830 frames and duration while constraining H.264 to High Profile Level
+4.1, three reference frames, two B-frames without B-pyramid, explicit BT.709,
+and a fast-start MP4 layout. The transcode and decoder checks are recorded in
+[`receipts/neuralhorner-research-film-v1-mobile.json`](receipts/neuralhorner-research-film-v1-mobile.json).
 
 ## Evidence sources
 

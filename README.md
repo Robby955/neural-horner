@@ -27,15 +27,17 @@ compression protocol is under [`research/v02/`](research/v02/); the terminal
 
 ## Research film
 
-[![Watch the NeuralHorner research film](assets/video/neuralhorner-research-film-v1-poster.png)](https://github.com/Robby955/neural-horner/releases/download/research-film-v1/neuralhorner-research-film-v1-1080p.mp4)
+[![Watch the NeuralHorner research film](assets/video/neuralhorner-research-film-v1-poster.png)](https://robby955.github.io/neural-horner/film/)
 
 A 94-second silent film covering the modular-arithmetic problem, the fixed
 Horner program, MiniNeuralHorner compression, the hosted evaluation, and the
 full-width and Fermat failure boundaries.
 
-[Watch or download the film](https://github.com/Robby955/neural-horner/releases/download/research-film-v1/neuralhorner-research-film-v1-1080p.mp4)
+[Play the film](https://robby955.github.io/neural-horner/film/)
+· [Download mobile MP4](https://robby955.github.io/neural-horner/assets/neuralhorner-research-film-v1-mobile.mp4)
+· [Release archive](https://github.com/Robby955/neural-horner/releases/tag/research-film-v1)
 · [Source](video/research-film/)
-· [Render receipt](video/research-film/receipts/neuralhorner-research-film-v1.json)
+· [Receipts](video/research-film/receipts/)
 
 ## Method
 

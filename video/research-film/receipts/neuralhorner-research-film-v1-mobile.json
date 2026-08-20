@@ -1,0 +1,58 @@
+{
+  "schema": "neuralhorner-film-mobile-delivery-receipt-v1",
+  "createdAt": "2026-08-20T22:45:28Z",
+  "source": {
+    "path": "video/research-film/out/neuralhorner-research-film-v1-1080p.mp4",
+    "sha256": "428cb0e34c5cab6dd4694b81250e6012b31a370991ed98840090343242396c0c",
+    "bytes": 8918683,
+    "renderReceipt": "video/research-film/receipts/neuralhorner-research-film-v1.json"
+  },
+  "output": {
+    "path": "docs/assets/neuralhorner-research-film-v1-mobile.mp4",
+    "sha256": "0c114f3e3c62fb69f7d51fa801590ada3da6cfce13a726d7e6dba49c98ff7385",
+    "bytes": 8891377,
+    "container": "mp4",
+    "codec": "h264",
+    "codecTag": "avc1",
+    "mimeCodec": "avc1.640029",
+    "profile": "High",
+    "level": "4.1",
+    "referenceFrames": 3,
+    "maximumReorderFrames": 1,
+    "pixelFormat": "yuv420p",
+    "colorRange": "limited",
+    "colorPrimaries": "bt709",
+    "colorTransfer": "bt709",
+    "colorMatrix": "bt709",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 2830,
+    "durationSeconds": 94.333333,
+    "audioStreams": 0
+  },
+  "transcode": {
+    "ffmpeg": "8.1.1",
+    "workingDirectory": "repository root",
+    "command": "ffmpeg -i video/research-film/out/neuralhorner-research-film-v1-1080p.mp4 -map 0:v:0 -vf sidedata=mode=delete:type=ICC_PROFILE,setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709 -c:v libx264 -preset slow -crf 18 -profile:v high -level:v 4.1 -pix_fmt yuv420p -r 30 -fps_mode cfr -g 60 -keyint_min 60 -sc_threshold 0 -refs 3 -bf 2 -x264-params b-pyramid=none:open-gop=0:force-cfr=1 -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -tag:v avc1 -movflags +faststart+write_colr -map_metadata -1 -an docs/assets/neuralhorner-research-film-v1-mobile.mp4"
+  },
+  "verification": {
+    "strictSoftwareDecode": "passed",
+    "videoToolboxHardwareDecode": "passed",
+    "frameCountAndDurationMatchSource": true,
+    "iccProfileRemoved": true,
+    "fastStartAtomOrder": [
+      "ftyp",
+      "moov",
+      "free",
+      "mdat"
+    ],
+    "maximumGopSeconds": 2,
+    "ssimAgainstSource": 0.999753
+  },
+  "delivery": {
+    "playerPath": "docs/film/index.html",
+    "intendedPlayerUrl": "https://robby955.github.io/neural-horner/film/",
+    "reason": "GitHub Release assets are served as attachment downloads. GitHub Pages can serve the MP4 as video/mp4 with byte-range requests for inline mobile playback."
+  }
+}

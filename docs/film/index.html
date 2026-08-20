@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#070b14" />
+    <link rel="icon" href="data:," />
+    <meta
+      name="description"
+      content="A short research film about NeuralHorner, MiniNeuralHorner, exact modular arithmetic, compression, and failure analysis."
+    />
+    <title>NeuralHorner research film</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #070b14;
+        color: #f5f7fb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(39, 94, 173, 0.22), transparent 42rem),
+          #070b14;
+      }
+
+      main {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          max(16px, env(safe-area-inset-right))
+          max(36px, env(safe-area-inset-bottom))
+          max(16px, env(safe-area-inset-left));
+      }
+
+      header {
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+
+      p {
+        color: #b9c2d0;
+        line-height: 1.55;
+      }
+
+      .meta {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .player {
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 16px;
+        background: #000;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      }
+
+      video {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        background: #000;
+      }
+
+      .summary {
+        max-width: 760px;
+        margin: 22px 0 0;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        margin-top: 20px;
+      }
+
+      a {
+        color: #91c8ff;
+        text-underline-offset: 3px;
+      }
+
+      a:focus-visible {
+        outline: 3px solid #91c8ff;
+        outline-offset: 4px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>NeuralHorner</h1>
+        <p class="meta">Research film · 1:34 · Silent</p>
+      </header>
+
+      <div class="player">
+        <video
+          aria-label="NeuralHorner research film"
+          controls
+          playsinline
+          webkit-playsinline
+          preload="metadata"
+          poster="../assets/neuralhorner-research-film-v1-poster.png"
+        >
+          <source
+            src="../assets/neuralhorner-research-film-v1-mobile.mp4"
+            type='video/mp4; codecs="avc1.640029"'
+          />
+          Your browser cannot play this video.
+          <a href="../assets/neuralhorner-research-film-v1-mobile.mp4">Download the MP4</a>.
+        </video>
+      </div>
+
+      <p class="summary">
+        NeuralHorner places a learned residue transition inside a fixed Horner
+        program for modular multiplication. The film covers the original model,
+        MiniNeuralHorner compression, full-width evaluation, and the Fermat/F11
+        failure boundary.
+      </p>
+
+      <nav aria-label="Film links">
+        <a href="../assets/neuralhorner-research-film-v1-mobile.mp4" download>Download MP4</a>
+        <a href="https://github.com/Robby955/neural-horner">Repository</a>
+        <a href="https://github.com/Robby955/neural-horner/releases/tag/research-film-v1">Release archive</a>
+      </nav>
+    </main>
+  </body>
+</html>

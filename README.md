@@ -20,8 +20,22 @@ algorithm.
 [Lean formalization](lean/) ·
 [Research record](research/)
 
-The compression and L2048 results below postdate the paper draft. Their frozen
-protocols and evidence are under [`research/v02/`](research/v02/).
+The compression and L2048 results below postdate the paper draft. The frozen
+compression protocol is under [`research/v02/`](research/v02/); the terminal
+120,000-update receipts used by the film are under
+[`video/research-film/evidence/`](video/research-film/evidence/).
+
+## Research film
+
+[![Watch the NeuralHorner research film](assets/video/neuralhorner-research-film-v1-poster.png)](https://github.com/Robby955/neural-horner/releases/download/research-film-v1/neuralhorner-research-film-v1-1080p.mp4)
+
+A 94-second silent film covering the modular-arithmetic problem, the fixed
+Horner program, MiniNeuralHorner compression, the hosted evaluation, and the
+full-width and Fermat failure boundaries.
+
+[Watch or download the film](https://github.com/Robby955/neural-horner/releases/download/research-film-v1/neuralhorner-research-film-v1-1080p.mp4)
+· [Source](video/research-film/)
+· [Render receipt](video/research-film/receipts/neuralhorner-research-film-v1.json)
 
 ## Method
 
@@ -106,7 +120,7 @@ B127 was then continued through progressively larger state widths:
 | 256 | 21,000 | 512/512 per tier and mode on tiers 4-7 |
 | 512 | 48,000 | 256/256 per tier and mode on tiers 6-8 |
 | 1,024 | 0 | 256/256 per tier and mode on tiers 6-9 |
-| 2,048 | none (60,000-update cap) | no checkpoint passed the exact fixed/dynamic screen on tiers 6-10 |
+| 2,048 | none (120,000-update horizon) | 640/640 screen at update 120,000; 2,548/2,560 confirmation; strict gate failed |
 
 The L1024 checkpoint was selected before an optimizer step. Its model tensors
 are unchanged from the selected L512 checkpoint. Every selected stage through
@@ -115,19 +129,30 @@ dynamic sequence contexts.
 
 At L2048, update 3,000 repaired the 64-case tier-10 screen and kept every
 fixed-width tier exact, but dynamic tier 7 scored 61/64 and dynamic tier 8
-scored 63/64. No checkpoint passed the joint screen, so no confirmation or
-small-prime gate ran. This single-seed result exposes a repair/retention
-tradeoff across sequence contexts; it does not establish a parameter lower
-bound. Full protocol definitions, hashes, and the
-[terminal evidence](research/v02/evidence/l2048_scale_repair_b310c5e_terminal.json)
-are in [`research/v02/`](research/v02/).
+scored 63/64. The original run ended at update 60,000 without a joint screen
+pass. An exact-state horizon extension restored the saved model, AdamW,
+scheduler, and random-number-generator states and continued at the fixed
+learning-rate floor. At update 120,000, all ten 64-case tier/mode screens were
+exact. The larger confirmation scored 2,548/2,560: fixed tiers 6-10 scored
+256, 256, 256, 256, and 252; dynamic tiers scored 255, 256, 254, 255, and 252.
+Both small-prime transition checks were 40,954/40,954. The declared gate still
+failed, so the checkpoint was not selected. This single-seed result shows
+delayed recovery on the small screen without exact retention on the larger
+confirmation; it does not establish a parameter lower bound or a general
+grokking transition. The exact
+[terminal receipt](video/research-film/evidence/l2048-horizon-120k-receipt.json)
+is included with the film source.
 
 ## Structured failures and repair experiments
 
 v8 was exact on the random scorer cases but scored 759/768 on its first
 structured evaluation. All nine failures were Fermat-family cases. The battery
 was later used to choose repair attempts, so it is now development evidence
-rather than a sealed test set.
+rather than a sealed test set. The public Mini checkpoint was evaluated
+separately on the same 128-case Fermat family and also scored 119/128; all nine
+observed Mini failures were F11 rows. This output-only diagnostic does not
+establish that Mini and v8 made the same predictions or followed the same
+internal trajectories.
 
 On five traced failing F11 probes, the first incorrect transition was the final
 step of reducing `a = 2^2048 + 1`. It occurred after 2,048 correct steps at

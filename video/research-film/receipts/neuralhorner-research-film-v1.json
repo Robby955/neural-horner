@@ -1,0 +1,82 @@
+{
+  "schema": "neuralhorner-film-render-receipt-v1",
+  "composition": {
+    "id": "NeuralHorner-Research-Film",
+    "frames": 2830,
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "durationSeconds": 94.333333
+  },
+  "source": {
+    "commit": "778ddb38bb6ccccb27d9f0d222720cf35faf2be8",
+    "tree": "60f59d14c24c41ac7df2af4b0759106806ce90ce",
+    "cleanAtRender": true,
+    "animationDataPath": "src/data/animation-data.json",
+    "animationDataSha256": "0df0b817a2f4e0d4dab79b09aa1f7570c983fca8b26a7f2904e1d1273926af56"
+  },
+  "render": {
+    "completedAt": "2026-08-20T16:41:03-0500",
+    "command": "npm run render:film",
+    "resolvedCommand": "remotion render src/index.ts NeuralHorner-Research-Film out/neuralhorner-research-film-v1-1080p.mp4 --codec=h264 --crf=18 --x264-preset=slow --pixel-format=yuv420p --color-space=bt709 --gop=60 --muted",
+    "runtime": {
+      "os": "macOS 26.4.1 (25E253)",
+      "node": "v26.0.0",
+      "remotion": "4.0.512",
+      "ffmpeg": "8.1.1"
+    }
+  },
+  "video": {
+    "path": "out/neuralhorner-research-film-v1-1080p.mp4",
+    "sha256": "428cb0e34c5cab6dd4694b81250e6012b31a370991ed98840090343242396c0c",
+    "bytes": 8918683,
+    "container": "mp4",
+    "codec": "h264",
+    "profile": "High",
+    "pixelFormat": "yuv420p",
+    "colorSpace": "bt709",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 2830,
+    "durationSeconds": 94.333333,
+    "audioStreams": 0
+  },
+  "poster": {
+    "composition": "NeuralHorner-Research-Poster",
+    "path": "out/neuralhorner-research-film-v1-poster.png",
+    "sha256": "3ce81fc2b5a7036274cb39f9baf0b91aaf3bc763843f1e363131a8140e552a2f",
+    "bytes": 772958,
+    "width": 1920,
+    "height": 1080
+  },
+  "verification": {
+    "preflight": "passed",
+    "eslintAndTypeScript": "passed",
+    "compositionEnumeration": "passed",
+    "bundle": "passed",
+    "fullVideoDecode": "passed",
+    "representativeFrameInspection": "passed",
+    "deliveryProbe": "passed"
+  },
+  "evidence": {
+    "hostedEvaluationSha256": "c44d4b33cd1be11ea18e219553344c32dcce6d254821312e7bb8cf8d8a59642e",
+    "fullWidthReceiptSha256": "1ca59daf066fd5037858a6d8704fa74a61627e28be59cb0bbe7012d5b17b4a0c",
+    "fullWidthCheckpointSha256": "68d595c2438c0074f41399a742e8e47db732cf166d98970bac0a29039f13e7c6",
+    "miniFermatReceiptSha256": "21e0524a6a37f00f99aecab1db322b40f5caeaeeb1105f090c7bd0e9eea8b651",
+    "historicalV8HeldoutReceiptSha256": "1c97ba07053b57cfa483212aad5428cf4dc135632e056649c0a85b8a37b6720e",
+    "historicalV8TraceReceiptSha256": "206c63749009d727a9dac969f43a450b5fe8cd744ee6942c16563096b1fb4f8b"
+  },
+  "renderedClaims": {
+    "miniParameters": 126603,
+    "hostedTiers1Through9": "100/100 each",
+    "hostedTier10": "85/100",
+    "fullWidthScreen": "640/640",
+    "fullWidthConfirmation": "2548/2560",
+    "smallPrimeFixed": "40954/40954",
+    "smallPrimeDynamic": "40954/40954",
+    "miniFermat": "119/128",
+    "historicalV8Structured": "759/768"
+  },
+  "boundary": "The L2048 horizon checkpoint failed the declared 256-case confirmation gate and was not selected or promoted. The film reports the terminal result as a negative result."
+}

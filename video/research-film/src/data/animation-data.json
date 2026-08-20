@@ -1,0 +1,176 @@
+{
+  "schema": "neuralhorner-research-film-data-v2",
+  "sourceCommits": {
+    "pilot": "658ef2ba5356196ea2d26455c5d24d7aae8b521a",
+    "horizon": "d0d1c684237d6a0a0ac01de407de3a048acf5f90",
+    "recoveryExecutor": "014eff5cb6711e5810d21bace84c82260f629b9d"
+  },
+  "recurrence": {
+    "formula": "s' = (2s + d x) mod p",
+    "statePolicy": "hard binary state",
+    "phases": ["reduce_a", "reduce_b", "multiply"]
+  },
+  "pilot": {
+    "status": "complete",
+    "role": "single-seed development screen",
+    "width": 128,
+    "optimizerSteps": 24000,
+    "masterSeed": 23,
+    "evaluationTiers": [4, 5, 6],
+    "endpointCasesPerTierMode": 512,
+    "selectedArm": "B127",
+    "arms": [
+      {
+        "id": "B471",
+        "hidden": 128,
+        "parameters": 470849,
+        "outcome": "passed",
+        "receiptSha256": "e58fe04cfb5e45e17cff257d9c04232765e94ec7e2ee372af38bc953441fab7d",
+        "checkpointSha256": "30f998daf22e3b38f7fe2bcefcae3703c5a1e98860d9eae9e3591cbc46a9c7be"
+      },
+      {
+        "id": "B249",
+        "hidden": 90,
+        "parameters": 249157,
+        "outcome": "passed",
+        "receiptSha256": "f1147d15088d95a287a1ba834d1387c38b18c08e33e593d24abb64c31bf3588e",
+        "checkpointSha256": "dc22e5d2dc0cc850d321e5625e863a0a83a536561de08e6b7647d27439719af4"
+      },
+      {
+        "id": "B127",
+        "hidden": 61,
+        "parameters": 126603,
+        "outcome": "passed",
+        "receiptSha256": "fd6acc818adf73a4d3773b45bb9f7926de7551454ca4d4755827882fef9b5163",
+        "checkpointSha256": "9a20eabd025060307697d718eea0dd415ee489155ff069dc726d1bd6d2acbae7"
+      },
+      {
+        "id": "B063",
+        "hidden": 40,
+        "parameters": 63057,
+        "outcome": "failed_endpoint",
+        "receiptSha256": "48db8fd137423f01dfd9bcdf6e706437c5962a75759c37d5d2a01fe0da4a9c87",
+        "checkpointSha256": "c2f8c09b84169d5945d24f53f362c53ce43088e6b3d45cce0925750fa6b1ae2c"
+      }
+    ],
+    "b063": {
+      "smallPrimeCasesPerWidth": 40954,
+      "smallPrimeFixedExact": true,
+      "smallPrimeDynamicExact": true,
+      "endpoint": {
+        "tier4": { "fixed": 512, "dynamic": 506, "total": 512 },
+        "tier5": { "fixed": 512, "dynamic": 509, "total": 512 },
+        "tier6": { "fixed": 499, "dynamic": 499, "total": 512 }
+      }
+    }
+  },
+  "hostedEvaluation": {
+    "status": "completed",
+    "classification": "owner-transcribed Playground UI result",
+    "repository": "TrickyRex/mini-neuralhorner-v02",
+    "evaluatedRevision": "d9d611833d340c72d90a97d995a94031b798cf7c",
+    "frontierTier": 9,
+    "tiers": [
+      { "tier": 1, "correct": 100, "total": 100 },
+      { "tier": 2, "correct": 100, "total": 100 },
+      { "tier": 3, "correct": 100, "total": 100 },
+      { "tier": 4, "correct": 100, "total": 100 },
+      { "tier": 5, "correct": 100, "total": 100 },
+      { "tier": 6, "correct": 100, "total": 100 },
+      { "tier": 7, "correct": 100, "total": 100 },
+      { "tier": 8, "correct": 100, "total": 100 },
+      { "tier": 9, "correct": 100, "total": 100 },
+      { "tier": 10, "correct": 85, "total": 100 }
+    ],
+    "scored": { "correct": 985, "total": 1000 },
+    "uiRoundedPercent": 99,
+    "diagnosticTier0": { "correct": 40, "total": 100 },
+    "visibleTotal": { "correct": 1025, "total": 1100 },
+    "runtimeSeconds": 156.602,
+    "artifactSizeDisplay": "520 KB",
+    "evidenceSha256": "c44d4b33cd1be11ea18e219553344c32dcce6d254821312e7bb8cf8d8a59642e"
+  },
+  "fullWidth": {
+    "status": "completed_failed_gate",
+    "targetWidth": 2048,
+    "parameters": 126603,
+    "startStep": 60000,
+    "endStep": 120000,
+    "floorLearningRate": 0.000045,
+    "nearPass": { "step": 117000, "correct": 639, "total": 640 },
+    "screen": {
+      "casesPerTierMode": 64,
+      "correct": 640,
+      "total": 640,
+      "tiers": {
+        "6": { "fixed": 64, "dynamic": 64, "total": 64 },
+        "7": { "fixed": 64, "dynamic": 64, "total": 64 },
+        "8": { "fixed": 64, "dynamic": 64, "total": 64 },
+        "9": { "fixed": 64, "dynamic": 64, "total": 64 },
+        "10": { "fixed": 64, "dynamic": 64, "total": 64 }
+      }
+    },
+    "confirmation": {
+      "casesPerTierMode": 256,
+      "correct": 2548,
+      "total": 2560,
+      "passed": false,
+      "tiers": {
+        "6": { "fixed": 256, "dynamic": 255, "total": 256 },
+        "7": { "fixed": 256, "dynamic": 256, "total": 256 },
+        "8": { "fixed": 256, "dynamic": 254, "total": 256 },
+        "9": { "fixed": 256, "dynamic": 255, "total": 256 },
+        "10": { "fixed": 252, "dynamic": 252, "total": 256 }
+      }
+    },
+    "smallPrime": {
+      "fixed": { "correct": 40954, "total": 40954, "width": 2048 },
+      "dynamic": { "correct": 40954, "total": 40954, "width": 32 }
+    },
+    "receiptSha256": "1ca59daf066fd5037858a6d8704fa74a61627e28be59cb0bbe7012d5b17b4a0c",
+    "checkpointSha256": "68d595c2438c0074f41399a742e8e47db732cf166d98970bac0a29039f13e7c6"
+  },
+  "miniFermat": {
+    "status": "completed_failed",
+    "classification": "identity-locked local development diagnostic",
+    "family": "fermat numbers",
+    "orientation": "original",
+    "seed": 20260627,
+    "correct": 119,
+    "total": 128,
+    "f11FailureCount": 9,
+    "failureIndices": [62, 87, 89, 94, 99, 108, 109, 117, 120],
+    "artifactRevision": "d9d611833d340c72d90a97d995a94031b798cf7c",
+    "artifactSetSha256": "c205010cb9b118ad466a667b34e51fe5a2375e958f00771686d729a7d08e4c2e",
+    "receiptSha256": "21e0524a6a37f00f99aecab1db322b40f5caeaeeb1105f090c7bd0e9eea8b651"
+  },
+  "historicalV8": {
+    "parameters": 470849,
+    "structuredCorrect": 759,
+    "structuredTotal": 768,
+    "fermatCorrect": 119,
+    "fermatTotal": 128,
+    "f11": {
+      "phase": "reduce_a",
+      "phaseStep": 2048,
+      "certifiedExactPrefixTransitions": 2048,
+      "state": "2^2047",
+      "digit": 1,
+      "wrongOutputBits": 642,
+      "minimumSignedTargetLogitMargin": -20.836912155151367
+    },
+    "heldoutReceiptSha256": "1c97ba07053b57cfa483212aad5428cf4dc135632e056649c0a85b8a37b6720e",
+    "traceReceiptSha256": "206c63749009d727a9dac969f43a450b5fe8cd744ee6942c16563096b1fb4f8b"
+  },
+  "sources": [
+    "research/v02/runs/pilot_l128_658ef2b/B471/receipt.json",
+    "research/v02/runs/pilot_l128_658ef2b/B249/receipt.json",
+    "research/v02/runs/pilot_l128_658ef2b/B127/receipt.json",
+    "research/v02/runs/pilot_l128_658ef2b/B063/receipt.json",
+    "research/v02/evidence/sair_playground_d9d611833d340c72d90a97d995a94031b798cf7c.json",
+    "research/v03/runs/horizon_l2048_b127_60k_120k_d0d1c68/B127/receipt.json",
+    "research/v03/runs/mini_public_d9d611_fermat_original_rerun3/receipt.json",
+    "model/receipts/heldout_v8.txt",
+    "research/receipts/f11_v8_original_decisive_inductive_cpu.json"
+  ]
+}
